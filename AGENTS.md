@@ -156,9 +156,17 @@ Ratification is a **three-way checkpoint, not a role**:
 
 1. **Fizz** assembles the candidate with citations, and states its blast radius — which
    downstream phases it gates, per `Domain-Phase-Mapping.md`'s Freeze Point table — not
-   just its value.
+   just its value. Every closed set the candidate proposes (an enum, a transition
+   graph, a schema) carries a **negative test** — a concrete scenario the PRD itself
+   documents, shown representable under the proposed closure — and states explicitly
+   which **object classes** the closure applies to. A field's scope is part of its
+   contract; it does not get left for someone downstream to infer.
 2. **Pollen** blast-radius-verifies independently, and tries to break the candidate
-   rather than co-signing Fizz's reasoning.
+   rather than co-signing Fizz's reasoning — checking two separable things, not one:
+   whether the artefact is **accurate** (citations correct, transcription faithful) and
+   whether its **shape is sufficient** (the closure actually covers what the PRD
+   documents, the stated scope is right). Passing the first has been mistaken for
+   passing both more than once this session; they are checked separately, every time.
 3. **Ashley** signs off.
 
 Fizz and Pollen have each independently committed to the same guard: **fast agreement
