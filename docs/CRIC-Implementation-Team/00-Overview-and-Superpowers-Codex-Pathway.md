@@ -209,13 +209,11 @@ only the content of each field changes.
 
 ---
 
-## 6. Placeholder — folding in the domain-phase mapping
+## 6. Companion document — the domain-phase mapping
 
-Fizz's `Domain-Phase-Mapping.md` (currently on branch
-`fizz/cric-implementation-team-domain-mapping`) is the domain-mapping half of this
-study — for each of the 14 phases, which PRD sections are authoritative, which of the
-8 Architecture Freeze Points gate it, and where parallelism is safe. It is deliberately
-not duplicated or re-derived here. During final assembly, the Engineering Coordinator
-will merge that branch's `Domain-Phase-Mapping.md` into this same
-`docs/CRIC-Implementation-Team/` folder alongside this document and the two that
-follow it, so the folder reads as one coherent study rather than two disjoint halves.
+`Domain-Phase-Mapping.md`, in this same folder, is the domain-mapping half of this
+study, produced independently by Fizz and merged in alongside this document and the
+two that follow it — for each of the 14 phases, which PRD sections are authoritative,
+which of the 8 Architecture Freeze Points gate it, and where parallelism is safe. It
+is deliberately not duplicated or re-derived here; read it as this document's
+companion, not a subset.
