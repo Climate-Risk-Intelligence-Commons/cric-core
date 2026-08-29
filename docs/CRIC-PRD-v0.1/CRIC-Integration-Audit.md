@@ -57,3 +57,39 @@ Earlier batch documents are preserved substantially as authored. Some contain il
 - `product/Product-Scope-and-Domain-Architecture.md`
 - `product/Product-Vision-and-Principles.md`
 - `product/Repository-and-System-Architecture.md`
+
+---
+
+# CRIC Batch 08 Integration Audit
+
+## Scope
+
+Integrated the deterministic OKF multi-hop context-retrieval architecture (a hybrid graph-plus-vector retrieval design assembling bounded, inspectable LLM context deterministically, ahead of any LLM reasoning) into the canonical PRD tree: one new engineering-tier specification and six amended files.
+
+## Resolutions Applied
+
+- Added `engineering/Deterministic-Retrieval-Engine-Specification.md` — the engine-level design (package responsibilities, node/edge indexes, deterministic traversal ordering, compiled-graph incremental recompilation, versioned ranking function, five-way failure classification) underneath the already-committed requirements R-025 and R-026.
+- Formalised `interfaces/Search-and-Graph-Interfaces.md`'s previously ad hoc navigation/policy examples into named, versioned Traversal Profiles and a structured Query Template catalogue; extended the Context Package schema with `uncertainty`, `missing_expected_information`, `exclusions`, `evidence`, `sources`, `traversal_profile`, and `engine_version`; added a Retrieval Completeness section.
+- Added an explicit adjacency-derivation rule to `knowledge/OKF-Knowledge-Graph-Specification.md`'s Relationship Grammar: a relationship is declared once, the compiler derives both `out_edges` and `in_edges`; paired predicate names remain for authoring ergonomics only, not as a dual-declaration requirement.
+- Deprecated `connected_to` and `associated_with` as canonical relationship predicates (`CRIC-Schema-and-Vocabulary-Registry.md` §8 and `OKF-Knowledge-Graph-Specification.md`) as vague/semantically-empty; added `exposes`, `supported_by`, `threatens`, `depends_on`, `has_snapshot`; considered and rejected `caused_by` as redundant with the existing `triggered_by`.
+- Registered `TraversalProfile`, `ContextSubgraph`, and `ContextPack` as canonical `ComputationalObject` types (`CRIC-Schema-and-Vocabulary-Registry.md` §3).
+- Added an "LLM Knowledge Boundary" (read only via Context Pack API; write only via structured mutation → validation → human/policy check → atomic write) and an "LLM Prompt Contract" section to `ai/Agent-Commons-Architecture.md`.
+- Added a five-way retrieval-failure classification (knowledge / retrieval / context-construction / reasoning / generation) and a ranking-reproducibility test to `engineering/Testing-and-Quality-Assurance.md`.
+- Added traversal-profile-selected retrieval as a named Graph API request mode in `interfaces/API-and-SDK-Specification.md`.
+- Promoted "the LLM must not perform graph traversal; deterministic software assembles context first" from architecture guidance to Constitutional Product Rule 13 (see `CRIC-PRD-MASTER.md`).
+
+## Known Integration Note
+
+`OKF-Knowledge-Graph-Specification.md`'s "Core predicates should include" list was already a representative/illustrative subset of `CRIC-Schema-and-Vocabulary-Registry.md` §8's full predicate list before this batch — the two lists have never been identical (e.g. `is_a`, `generated_by`, `contributes_to`, `trained_on`, `evaluated_on`, `predicted_by`, `reviewed_by` appear only in the former; most spatial/domain predicates appear only in the latter). This batch removed `associated_with` from both, but did not otherwise reconcile the pre-existing divergence — that remains open for a future editorial pass, same disposition as the general "Known Integration Note" from Batch 07 above.
+
+A candidate requirement R-041 (an explicit LLM write-side knowledge-boundary requirement, parallel to how R-026 covers reads) was identified during this integration and is pending a decision; it has not been added to `CRIC-Requirements-Traceability-Matrix.md`.
+
+## File Inventory
+
+- `CRIC-Schema-and-Vocabulary-Registry.md` (amended)
+- `ai/Agent-Commons-Architecture.md` (amended)
+- `engineering/Deterministic-Retrieval-Engine-Specification.md` (new)
+- `engineering/Testing-and-Quality-Assurance.md` (amended)
+- `interfaces/API-and-SDK-Specification.md` (amended)
+- `interfaces/Search-and-Graph-Interfaces.md` (amended)
+- `knowledge/OKF-Knowledge-Graph-Specification.md` (amended)
