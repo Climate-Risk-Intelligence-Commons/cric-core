@@ -234,3 +234,34 @@ Ruling for v0.1: Codex is an **adversarial second opinion** on Freeze Point and
 security-sensitive work packages. It is **not** a primary implementer, and **not** a
 substitute for Pollen's independent verification pass — those packages get both, not
 one instead of the other. Revisit at the first parallel wave (Phases 2/3/4).
+
+## 9. Fan-out and decomposition
+
+`CLAUDE.md` §12 sets the mechanical test for when a work package may split and run in
+parallel. This section states what that means for **whoever holds the parent package**.
+
+**The parent's three obligations** — this is what stops fan-out from becoming invisible:
+
+1. **Declare the split before dispatching.** The parent's work package gains a
+   `decomposition:` block naming each child and its disjoint file set (or, per the
+   vacuous-disjointness fix, its unique deliverable) — reviewable *before* any subagent
+   runs. A fan-out that appears with no prior audit trail is the failure mode this
+   obligation exists to prevent.
+2. **Whoever splits it, lands it.** The agent that fans a work package out is the
+   integrator — a fan-out with no integrator produces N branches nobody merges.
+3. **Verify the merged result, never the slices** — the same rule as `CLAUDE.md` §12,
+   stated here as the accountable person's obligation rather than the mechanism.
+
+**Per-role decomposition shape** — fan-out looks different depending on which role (§2)
+is holding the parent work package:
+
+- **Fizz** decomposes along document/contract boundaries, and must populate each child's
+  `authoritative_prd_sections` individually.
+- **Honey** decomposes along file boundaries and integrates his own fan-out (Honey is
+  both the one who splits work-package-shaped implementation tasks and the one who lands
+  them).
+- **Pollen** verifies the merged result and explicitly does **not** split verification
+  into per-slice verifiers — one verification pass covers the whole merged fan-out,
+  never N independent partial passes.
+- **Memory & Knowledge Manager**'s document work parallelises naturally, one document per
+  child.
