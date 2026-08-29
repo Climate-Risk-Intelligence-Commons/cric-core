@@ -18,15 +18,19 @@ Source: `docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md`.
 
 - **Channel:** CRIC-Dev (`17bd72a0-4d90-4e0b-b102-f9163f0cfd4b`)
 - **Repo root:** `/home/ash/Eyekyam/CRIC-Core`
-- **Remote:** `github.com/Climate-Risk-Intelligence-Commons/cric-core.git` — **transfer
-  confirmed complete**, 2026-08-29T14:08:50Z. The old `ashley-eyekyam/cric-core` URL
-  redirects (GitHub's standard post-transfer behaviour, confirmed by the Engineering
-  Coordinator, not merely expected). Org-owned, public, default branch `main`, branch
-  protection survived the move unchanged and enforcement was re-verified against the
-  new URL. Full decision history: `decisions/0002-defer-github-organisation.md`
-  (superseded) and `decisions/0003-create-github-organisation.md` (current — including
-  the still-open item, whether repo creation works *inside* the org, proven by the
-  first real Phase 0 repository rather than a throwaway test).
+- **Remote:** authoritative value is `git remote get-url origin`, or the repo's
+  `full_name` from `GET /repos/{owner}/{repo}` — check one of those directly for
+  current truth rather than trusting this line, which is a dated observation, not a
+  live pointer, and *will* go stale the next time this changes. Last verified:
+  `Climate-Risk-Intelligence-Commons/cric-core`, transfer confirmed complete
+  2026-08-29T14:08:50Z. The old `ashley-eyekyam/cric-core` URL redirects (GitHub's
+  standard post-transfer behaviour, confirmed by the Engineering Coordinator, not
+  merely expected). Org-owned, public, default branch `main`, branch protection
+  survived the move unchanged and enforcement was re-verified against the new URL.
+  Full decision history: `decisions/0002-defer-github-organisation.md` (superseded)
+  and `decisions/0003-create-github-organisation.md` (current — including the still-open
+  item, whether repo creation works *inside* the org, proven by the first real Phase 0
+  repository rather than a throwaway test).
 - **Default branch:** `main`, AGPL-3.0 (repo-creation-time choice for `cric-core`
   specifically — see D2 in `OPEN_QUESTIONS.md` for whether this generalises to every
   repository in the family)
