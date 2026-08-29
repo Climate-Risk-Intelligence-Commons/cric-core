@@ -236,6 +236,10 @@ relationships:
       to:
 ```
 
+## Adjacency Derivation
+
+A relationship needs to be declared on only one of its two participating nodes. The runtime graph compiler derives both directions — `out_edges` on the source and `in_edges` on the target — automatically from that single declaration; an author is never required to also write the paired predicate on the other node. Paired predicate names (e.g. `feeds` / `fed_by`, `supports` / `supported_by`) remain in the vocabulary purely as an authoring convenience, so a relationship can be phrased from whichever node the author happens to be editing. If both directions of what is semantically the same relationship are ever declared independently, the compiler must treat this as a duplicate edge and resolve it through canonical-direction deduplication, not materialise it as two live edges.
+
 Core predicates should include:
 
 - is_a;
@@ -253,7 +257,6 @@ Core predicates should include:
 - refines;
 - supersedes;
 - superseded_by;
-- associated_with;
 - triggered_by;
 - contributes_to;
 - affected;
@@ -262,6 +265,8 @@ Core predicates should include:
 - evaluated_on;
 - predicted_by;
 - reviewed_by.
+
+`CRIC-Schema-and-Vocabulary-Registry.md` section 8 is the sole authority for the canonical predicate list; the list above is illustrative, not exhaustive.
 
 Domain repositories may extend predicates through ontology proposals.
 
