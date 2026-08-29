@@ -9,7 +9,7 @@ applicable, otherwise `Proposed` / `Accepted` / `Superseded`.
 |---|---|---|---|---|---|
 | [0001](../decisions/0001-adr-location.md) | ADRs live in `decisions/`, not `docs/adr/` | Accepted | Engineering Coordinator | 2026-08-29 | No |
 | [0002](../decisions/0002-defer-github-organisation.md) | Defer creating the `climate-risk-intelligence-commons` GitHub organisation | **Superseded** by 0003 | Ashley | 2026-08-29 | No |
-| [0003](../decisions/0003-create-github-organisation.md) | Create the `Climate-Risk-Intelligence-Commons` GitHub organisation and transfer `cric-core` into it | Accepted (transfer in progress — see ADR's Execution status) | Ashley | 2026-08-29 | No |
+| [0003](../decisions/0003-create-github-organisation.md) | Create the `Climate-Risk-Intelligence-Commons` GitHub organisation and transfer `cric-core` into it | Accepted, transfer confirmed complete | Ashley | 2026-08-29 | No |
 
 No Architecture Freeze Point has been ratified yet — Phase 1 (`cric-core`) has not
 started. When one is, its ADR's **Freeze Point?** column entry links to the specific

@@ -18,16 +18,19 @@ Source: `docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md`.
 
 - **Channel:** CRIC-Dev (`17bd72a0-4d90-4e0b-b102-f9163f0cfd4b`)
 - **Repo root:** `/home/ash/Eyekyam/CRIC-Core`
-- **Remote:** `github.com/ashley-eyekyam/cric-core.git` as of this writing — **transfer
-  to `github.com/Climate-Risk-Intelligence-Commons` in progress, not yet confirmed
-  complete.** Ashley created that organisation and stated intent to transfer
-  `cric-core` into it 2026-08-29T14:01:12Z (`decisions/0003-create-github-organisation.md`,
-  which supersedes `decisions/0002-defer-github-organisation.md`'s earlier "stay put"
-  decision). Do not treat the new remote as live until the Coordinator confirms the
-  transferred repository directly. `product/Repository-and-System-Architecture.md`'s
-  `github.com/climate-risk-intelligence-commons/` layout is expected to become
-  descriptive rather than aspirational once the transfer completes — see ADR-0003's
-  Execution status section for the current step.
+- **Remote:** authoritative value is `git remote get-url origin`, or the repo's
+  `full_name` from `GET /repos/{owner}/{repo}` — check one of those directly for
+  current truth rather than trusting this line, which is a dated observation, not a
+  live pointer, and *will* go stale the next time this changes. Last verified:
+  `Climate-Risk-Intelligence-Commons/cric-core`, transfer confirmed complete
+  2026-08-29T14:08:50Z. The old `ashley-eyekyam/cric-core` URL redirects (GitHub's
+  standard post-transfer behaviour, confirmed by the Engineering Coordinator, not
+  merely expected). Org-owned, public, default branch `main`, branch protection
+  survived the move unchanged and enforcement was re-verified against the new URL.
+  Full decision history: `decisions/0002-defer-github-organisation.md` (superseded)
+  and `decisions/0003-create-github-organisation.md` (current — including the still-open
+  item, whether repo creation works *inside* the org, proven by the first real Phase 0
+  repository rather than a throwaway test).
 - **Default branch:** `main`, AGPL-3.0 (repo-creation-time choice for `cric-core`
   specifically — see D2 in `OPEN_QUESTIONS.md` for whether this generalises to every
   repository in the family)
@@ -85,3 +88,30 @@ yet ratified" in that file; tracked as an open item until Ashley rules on it.
 - `docs/LESSONS.md` captures recurring defects and reusable patterns.
 - `docs/PHASE_EXIT_LOG.md` (created once Phase 0/1 produce exit evidence) will hold the
   durable record of each phase's exit criterion and the evidence that satisfied it.
+- **Recording a fact about live external state (a remote URL, a branch's protection
+  config, an org's settings — anything that can change out from under this file)**:
+  classify it when it's written, not later — the moment you know whether re-derivation
+  is cheap is the moment you've just done it.
+  - **Cheap and deterministic to re-derive** (one command or API call): record the
+    authoritative source plus a dated observation, never an embargo instruction. E.g.
+    `authoritative: git remote get-url origin; currently
+    Climate-Risk-Intelligence-Commons/cric-core (verified 2026-08-29T14:08Z)`. A
+    pointer to where truth lives cannot go stale the way "don't treat X as live until
+    confirmed" can — that construction is stale the instant confirmation happens, and
+    goes stale *silently*, because nothing re-reads it. (This is exactly what happened
+    to this file's own Remote field between authoring and merge on 2026-08-29 — see
+    `docs/LESSONS.md`.)
+  - **Expensive or judgment-based** (a human decision, an external party, real work to
+    establish): record value, date, owner, **and a trigger that names an event a
+    person performs** — not a review cadence, and not an absence or a deadline either.
+    "Re-check when Phase 0 creates the first additional repository" fires by itself,
+    because someone is necessarily present when it happens. "Re-check if the transfer
+    hasn't completed by Friday" or "revisit if no one has claimed this in a month" have
+    nobody present when they fire — nothing happens, so nothing notices — and are the
+    same failure as "owner: Coordinator, review periodically" wearing a date. **If the
+    honest trigger for a fact is an absence or a deadline rather than a performed
+    event, the fact does not belong in this file.** It belongs in
+    `docs/OPEN_QUESTIONS.md` with an owner, where chasing it on no particular schedule
+    is that owner's actual job — that is the boundary between the two files: this one
+    holds facts with performed-event triggers, `OPEN_QUESTIONS.md` holds the ones whose
+    trigger is an absence.

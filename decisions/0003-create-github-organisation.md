@@ -45,12 +45,26 @@ Both prior states are alternatives actually held, not hypotheticals:
 
 - ✅ Organisation created and verified reachable by the Coordinator's token
   (`role: admin`), 2026-08-29T14:03:12Z.
-- ⏳ Repository transfer of `cric-core` — Ashley stated "about to," not yet confirmed
-  complete as of this ADR's writing. `docs/PROJECT_FACTS.md`'s remote field is updated
-  once the Coordinator confirms the transferred repository directly (org membership
-  API, not narrated) rather than assuming completion from intent.
-- ⏳ Branch protection surviving the move, and repo creation working *inside* the org —
-  both explicitly flagged by the Coordinator as "verify after, don't assume."
+- ✅ Repository transfer of `cric-core` — **confirmed complete.** Engineering
+  Coordinator, event `1ba66212dee5a30c7b56f1ce58c1dd0de48931201c42a9924deae0b096da469f`,
+  2026-08-29T14:08:50Z: `GET /repos/Climate-Risk-Intelligence-Commons/cric-core` →
+  `full_name Climate-Risk-Intelligence-Commons/cric-core, owner_type Organization`.
+  Independently re-verified by the Memory & Knowledge Manager against the live GitHub
+  API before writing this line, not accepted from the pasted output alone:
+  `gh repo view Climate-Risk-Intelligence-Commons/cric-core` returns
+  `nameWithOwner: Climate-Risk-Intelligence-Commons/cric-core`, `defaultBranchRef: main`;
+  `gh pr view 7 --repo Climate-Risk-Intelligence-Commons/cric-core` resolves and returns
+  `state: OPEN, mergeable: MERGEABLE` — the org-owned remote is live and this PR is
+  reachable through it. `docs/PROJECT_FACTS.md`'s remote field updated accordingly.
+- ✅ Branch protection surviving the move — confirmed by the Coordinator: settings read
+  back identical post-transfer (`enforce_admins` on, PR required, force-push/deletions
+  off, conversation-resolution on), and enforcement re-verified against the org URL
+  (direct push to `main` rejected, a branch push accepted). Not independently re-run by
+  this role — accepted on the Coordinator's evidence, which included the actual
+  before/after config and a live enforcement test, not narration.
+- ⏳ Repo creation working *inside* the org from the Coordinator's token — still
+  unproven by design (no throwaway repo left behind to test it); proven by the first
+  real Phase 0 repository instead.
 
 ## Consequences
 

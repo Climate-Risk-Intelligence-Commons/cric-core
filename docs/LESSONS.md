@@ -54,3 +54,39 @@ source this time: `decisions/0001-adr-location.md` no longer claims a precedent 
 doesn't need (the Engineering Coordinator's own WP-0 proposal is sufficient), and the
 `core`/`energymatrix-facts` mem slugs were corrected the same session so the claim
 stops propagating.
+
+## A snapshot-with-caveat went stale between authoring and merge
+
+**What happened:** while D1 (GitHub org placement) was still unresolved, this file's
+Remote field read *"transfer in progress, not yet confirmed complete... do not treat
+the new remote as live until the Coordinator confirms."* That was accurate when
+written. The Engineering Coordinator's confirmation landed between this role's last
+push and the PR's merge — so the merged result stated an instruction ("don't treat the
+org remote as live") that was already false the moment it landed on `main`, and stayed
+that way silently, because nothing re-reads a caveat once it's written. Caught by the
+Coordinator checking the *merged result* against current reality (the same discipline
+`CLAUDE.md` §9 names for code), not by either author — Pollen's review of the branch
+and the Coordinator's confirmation were each individually accurate; only their merge
+into a world that had moved produced the false statement.
+
+**Why it matters:** a value-plus-embargo ("X is currently A; don't treat B as true
+until someone confirms") is structurally different from a stale fact — it doesn't just
+describe an outdated state, it *instructs* the reader to disbelieve the current true
+state until a condition fires. Nothing forces that condition to be re-checked, so the
+instruction outlives its own justification by default. This is the third staleness
+incident in one session (see the two lessons above), and the first where the record
+was actively wrong rather than merely outdated.
+
+**Pattern to reuse, per the Engineering Coordinator's ruling:** classify a fact about
+live external state when it's written, not later.
+- **Cheap and deterministic to re-derive** (one command or API call — a remote URL, a
+  branch's protection state, an org's settings): record the authoritative source plus
+  a dated observation, never an embargo. A pointer to where truth lives cannot go
+  stale the way an instruction to disbelieve reality can.
+- **Expensive or judgment-based** (a human decision, external party, real work to
+  establish): record value, date, owner, **and the trigger that makes it stale** — the
+  event that means "re-check this now," not a review cadence. An owner without a
+  trigger is a wish; nothing fires it.
+
+See `docs/PROJECT_FACTS.md`'s own conventions section for where this rule now lives,
+applied to its own Remote field as the worked example.
