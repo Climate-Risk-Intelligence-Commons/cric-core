@@ -236,6 +236,88 @@ Repeated failures must not result in silently malformed canonical knowledge.
 
 ---
 
+# LLM Knowledge Boundary
+
+Constitutional Product Rule #13 requires that an LLM never crawl the knowledge graph itself. Deterministic software assembles a bounded Context Pack first, and every agent's read and write access to CRIC knowledge is scoped by this boundary.
+
+## Reads
+
+An LLM or agent may access CRIC knowledge only through the Context Pack API produced by deterministic retrieval.
+
+```text
+LLM READ ACCESS
+      ↓
+Context Pack API only
+
+NOT
+
+LLM
+ ↓
+filesystem
+ ↓
+vault
+```
+
+Direct filesystem access and direct vault access by the model are prohibited, regardless of agent risk class.
+
+## Writes
+
+An LLM or agent may never write directly to the knowledge store. A proposed change must flow through a fixed pipeline before it reaches canonical knowledge.
+
+```text
+LLM WRITE REQUEST
+       ↓
+Structured proposed mutation
+       ↓
+Pydantic validation
+       ↓
+human / policy check
+       ↓
+atomic Markdown write
+```
+
+The "human / policy check" step is not a new mechanism. It is the existing Responsible Autonomy review framework: a Level 2 (Autonomous Provisional Knowledge) mutation is created as a candidate, and any promotion toward Level 3 (Trusted Scientific Graph Promotion) resolves through deterministic corroboration rules or a ReviewRequest/ReviewDecision cycle before an atomic Markdown write occurs. No agent, regardless of risk class, may bypass this pipeline to write canonical knowledge directly.
+
+This write-side boundary is intentionally as strict as the read-side boundary above, even though it is not yet backed by its own numbered requirement. A dedicated traceability-matrix requirement for the write-side boundary specifically (candidate identifier "R-041") is under separate consideration; this document does not assume or cite that identifier.
+
+---
+
+# LLM Prompt Contract
+
+Every LLM invocation inside a CRIC agent should carry the same standard framing, independent of the underlying model provider.
+
+The agent should tell the model:
+
+```text
+You are provided with a deterministically assembled
+knowledge subgraph.
+
+Do not assume information outside this context.
+
+Distinguish:
+
+- observed facts
+- derived facts
+- claims
+- hypotheses
+- missing evidence
+- contradictory evidence
+
+Reference node IDs when making material claims.
+```
+
+The context pack is then supplied as delimited input rather than as free-form instructions:
+
+```text
+<context-pack>
+...
+</context-pack>
+```
+
+Under this contract, the model acts as a reasoner over the supplied evidence rather than as a retrieval agent. Any output that asserts a fact must be traceable to a node ID inside the context pack; an assertion with no corresponding node ID cannot be treated as an observed or derived fact.
+
+---
+
 # Agent Manifest
 
 Every reusable agent should publish an `agent.yaml`.
