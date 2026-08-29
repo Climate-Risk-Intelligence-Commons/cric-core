@@ -93,9 +93,9 @@ build`. All four confirmed non-vacuous — each caught a planted violation (unus
 import, bad return type) before the planting was reverted, not just a clean pass
 against near-empty source. `.gitignore` covers `dist/`, `build/`, `*.egg-info`,
 `__pycache__/`, `.pytest_cache/`, `.mypy_cache/`, `.ruff_cache/`. Required status
-checks on `main` are deliberately not yet enabled — that is the Engineering
-Coordinator's action, to be taken now that the workflow has run green twice
-(`gh run list --branch feat/wp4-wave2-ci`, both `success`, zero annotations).
+checks on `main` are **enabled** (`contexts: ["test"]`, `strict: true`) — confirmed
+live via `gh api repos/.../branches/main/protection`, not narrated from the
+Engineering Coordinator's own report of taking the action.
 
 Host-only note, not a project requirement: this machine's harness leaks
 `PYTHONHOME`/`PYTHONPATH` into child processes, which breaks bare
