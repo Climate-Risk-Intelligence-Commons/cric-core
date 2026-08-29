@@ -68,11 +68,10 @@ vocabulary, review decision schema, agent manifest schema. Per
 `CRIC-Repository-Dependency-and-Implementation-Sequence.md`, each "remains possible to
 change but requires explicit migration after freeze." Ratification checkpoint: Fizz
 assembles and cites the candidate → Pollen does blast-radius verification → Ashley
-signs off (`docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2). None are
-ratified yet. Phase 1 has started (see the packaging/CI facts below); Freeze Point 1
-(ID format) has cleared assembly and verification and is awaiting only Ashley's
-signature — tracked as **D4** in `docs/OPEN_QUESTIONS.md`, not this file, because its
-trigger (Ashley signs) is a pending event, not yet a fact.
+signs off (`docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2).
+**Freeze Point 1 (ID format) is ratified and locked** — `decisions/0004-freeze-point-1-identifier-format.md`,
+approver Ashley, 2026-08-29. The remaining 7 are not yet ratified. WP-6 (build-order
+item 1, identifier types) is dispatched against the locked grammar.
 
 ## cric-core: package and CI (WP-4, waves 1–2)
 
