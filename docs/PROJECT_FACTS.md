@@ -18,12 +18,16 @@ Source: `docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md`.
 
 - **Channel:** CRIC-Dev (`17bd72a0-4d90-4e0b-b102-f9163f0cfd4b`)
 - **Repo root:** `/home/ash/Eyekyam/CRIC-Core`
-- **Remote:** `github.com/ashley-eyekyam/cric-core.git` — deliberate and current, not
-  provisional. `product/Repository-and-System-Architecture.md` names
-  `github.com/climate-risk-intelligence-commons/` as the eventual layout; Ashley
-  decided 2026-08-29 to defer creating that organisation (see
-  `decisions/0002-defer-github-organisation.md`). Treat the PRD's org layout as
-  aspirational, not descriptive, until that ADR is revisited.
+- **Remote:** `github.com/ashley-eyekyam/cric-core.git` as of this writing — **transfer
+  to `github.com/Climate-Risk-Intelligence-Commons` in progress, not yet confirmed
+  complete.** Ashley created that organisation and stated intent to transfer
+  `cric-core` into it 2026-08-29T14:01:12Z (`decisions/0003-create-github-organisation.md`,
+  which supersedes `decisions/0002-defer-github-organisation.md`'s earlier "stay put"
+  decision). Do not treat the new remote as live until the Coordinator confirms the
+  transferred repository directly. `product/Repository-and-System-Architecture.md`'s
+  `github.com/climate-risk-intelligence-commons/` layout is expected to become
+  descriptive rather than aspirational once the transfer completes — see ADR-0003's
+  Execution status section for the current step.
 - **Default branch:** `main`, AGPL-3.0 (repo-creation-time choice for `cric-core`
   specifically — see D2 in `OPEN_QUESTIONS.md` for whether this generalises to every
   repository in the family)
