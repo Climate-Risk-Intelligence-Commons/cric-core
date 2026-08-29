@@ -18,9 +18,12 @@ Source: `docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md`.
 
 - **Channel:** CRIC-Dev (`17bd72a0-4d90-4e0b-b102-f9163f0cfd4b`)
 - **Repo root:** `/home/ash/Eyekyam/CRIC-Core`
-- **Remote:** `github.com/ashley-eyekyam/cric-core.git` (current — see D1 in
-  `OPEN_QUESTIONS.md`; `product/Repository-and-System-Architecture.md` names the
-  eventual layout as `github.com/climate-risk-intelligence-commons/`, not yet created)
+- **Remote:** `github.com/ashley-eyekyam/cric-core.git` — deliberate and current, not
+  provisional. `product/Repository-and-System-Architecture.md` names
+  `github.com/climate-risk-intelligence-commons/` as the eventual layout; Ashley
+  decided 2026-08-29 to defer creating that organisation (see
+  `decisions/0002-defer-github-organisation.md`). Treat the PRD's org layout as
+  aspirational, not descriptive, until that ADR is revisited.
 - **Default branch:** `main`, AGPL-3.0 (repo-creation-time choice for `cric-core`
   specifically — see D2 in `OPEN_QUESTIONS.md` for whether this generalises to every
   repository in the family)
