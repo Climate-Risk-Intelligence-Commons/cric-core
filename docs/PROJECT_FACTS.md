@@ -88,3 +88,21 @@ yet ratified" in that file; tracked as an open item until Ashley rules on it.
 - `docs/LESSONS.md` captures recurring defects and reusable patterns.
 - `docs/PHASE_EXIT_LOG.md` (created once Phase 0/1 produce exit evidence) will hold the
   durable record of each phase's exit criterion and the evidence that satisfied it.
+- **Recording a fact about live external state (a remote URL, a branch's protection
+  config, an org's settings — anything that can change out from under this file)**:
+  classify it when it's written, not later — the moment you know whether re-derivation
+  is cheap is the moment you've just done it.
+  - **Cheap and deterministic to re-derive** (one command or API call): record the
+    authoritative source plus a dated observation, never an embargo instruction. E.g.
+    `authoritative: git remote get-url origin; currently
+    Climate-Risk-Intelligence-Commons/cric-core (verified 2026-08-29T14:08Z)`. A
+    pointer to where truth lives cannot go stale the way "don't treat X as live until
+    confirmed" can — that construction is stale the instant confirmation happens, and
+    goes stale *silently*, because nothing re-reads it. (This is exactly what happened
+    to this file's own Remote field between authoring and merge on 2026-08-29 — see
+    `docs/LESSONS.md`.)
+  - **Expensive or judgment-based** (a human decision, an external party, real work to
+    establish): record value, date, owner, **and the trigger that makes it stale** —
+    the event that means "re-check this now," not a review cadence. "Re-check when
+    Phase 0 creates the first additional repository" fires by itself; "owner:
+    Coordinator, review periodically" does not.
