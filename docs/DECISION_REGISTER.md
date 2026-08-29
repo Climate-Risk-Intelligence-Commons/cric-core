@@ -11,9 +11,15 @@ applicable, otherwise `Proposed` / `Accepted` / `Superseded`.
 | [0002](../decisions/0002-defer-github-organisation.md) | Defer creating the `climate-risk-intelligence-commons` GitHub organisation | **Superseded** by 0003 | Ashley | 2026-08-29 | No |
 | [0003](../decisions/0003-create-github-organisation.md) | Create the `Climate-Risk-Intelligence-Commons` GitHub organisation and transfer `cric-core` into it | Accepted, transfer confirmed complete | Ashley | 2026-08-29 | No |
 
-No Architecture Freeze Point has been ratified yet — Phase 1 (`cric-core`) has not
-started. When one is, its ADR's **Freeze Point?** column entry links to the specific
-freeze point (of the 8 listed in `docs/PROJECT_FACTS.md`), names Ashley as approver
-(not the Engineering Coordinator), and its consequences section states explicitly that
+No Architecture Freeze Point has been ratified yet, but Phase 1 (`cric-core`) has
+started: packaging and CI landed and merged (WP-4 waves 1–2, see
+`docs/PROJECT_FACTS.md`), and Freeze Point 1 (identifier format) has a
+fully-assembled candidate — cited by Fizz, blast-radius-verified and attacked by
+Pollen with nothing broken — awaiting only Ashley's signature. Tracked as **D4** in
+`docs/OPEN_QUESTIONS.md` until signed; no ADR file exists for it yet because writing
+one is the performed event that happens once ratification is final, not before. When
+it is, its ADR's **Freeze Point?** column entry links to the specific freeze point (of
+the 8 listed in `docs/PROJECT_FACTS.md`), names Ashley as approver (not the
+Engineering Coordinator or Fizz), and its consequences section states explicitly that
 reversal requires a formal migration, not routine amendment — per the ratification
 checkpoint in `docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2.

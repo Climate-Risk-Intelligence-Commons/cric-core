@@ -69,7 +69,41 @@ vocabulary, review decision schema, agent manifest schema. Per
 change but requires explicit migration after freeze." Ratification checkpoint: Fizz
 assembles and cites the candidate → Pollen does blast-radius verification → Ashley
 signs off (`docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2). None are
-ratified yet — Phase 1 has not started.
+ratified yet. Phase 1 has started (see the packaging/CI facts below); Freeze Point 1
+(ID format) has cleared assembly and verification and is awaiting only Ashley's
+signature — tracked as **D4** in `docs/OPEN_QUESTIONS.md`, not this file, because its
+trigger (Ashley signs) is a pending event, not yet a fact.
+
+## cric-core: package and CI (WP-4, waves 1–2)
+
+`cric-core` is a real, installable, versioned Python package as of 2026-08-29 (PR #13,
+merged to `main` at `a41306d`): version `0.1.0`, declared in both `pyproject.toml` and
+`src/cric_core/__init__.py`, kept in sync by a version-drift test proven to fail in
+both directions (edit either file alone → red; revert → green). Build via
+`python -m build` (`hatchling` backend, build-time only — not a runtime dependency).
+Tests via `pytest`; either bare `pytest` or `python -m pytest` work from a cold shell,
+because `[tool.pytest.ini_options]` sets `pythonpath = ["src"]` explicitly — not
+because of `-m`'s cwd-insertion behaviour, which was this file's sibling `CLAUDE.md`'s
+original (now corrected) reasoning. Zero runtime dependencies beyond the package
+itself, confirmed via `pip list` in a clean venv.
+
+CI (PR #14, merged to `main` at `e2867de`) runs on every push and pull request via
+GitHub Actions: lint (`ruff`), type check (`mypy`), `python -m pytest`, `python -m
+build`. All four confirmed non-vacuous — each caught a planted violation (unused
+import, bad return type) before the planting was reverted, not just a clean pass
+against near-empty source. `.gitignore` covers `dist/`, `build/`, `*.egg-info`,
+`__pycache__/`, `.pytest_cache/`, `.mypy_cache/`, `.ruff_cache/`. Required status
+checks on `main` are deliberately not yet enabled — that is the Engineering
+Coordinator's action, to be taken now that the workflow has run green twice
+(`gh run list --branch feat/wp4-wave2-ci`, both `success`, zero annotations).
+
+Host-only note, not a project requirement: this machine's harness leaks
+`PYTHONHOME`/`PYTHONPATH` into child processes, which breaks bare
+`python3`/`pip`/`pytest`/`build` invocations locally (`ModuleNotFoundError: No module
+named 'encodings'`) — `env -u PYTHONHOME -u PYTHONPATH` is required locally and is
+documented in `CLAUDE.md` §7, not duplicated here. CI runs clean without the unset,
+confirmed by PR #14's own green run — the falsification test the Engineering
+Coordinator proposed for that exact assumption.
 
 ## Requirements traceability
 
@@ -85,6 +119,17 @@ yet ratified" in that file; tracked as an open item until Ashley rules on it.
 - ADRs live in `decisions/` (not `docs/adr/`) — see `decisions/0001-adr-location.md`.
 - `docs/DECISION_REGISTER.md` indexes all ADRs.
 - `docs/OPEN_QUESTIONS.md` tracks D/U items with owner, blocks, raised/resolved dates.
+- **Standing job (assigned by the Engineering Coordinator, 2026-08-29, event
+  `4e262256…f326454`):** the Memory & Knowledge Manager posts a consolidated decision
+  digest to Ashley in this thread, triggered by a performed event, never a clock —
+  either Ashley posts in the thread (he's present, hand him the current list), or a new
+  Ashley-owned item is registered in `docs/OPEN_QUESTIONS.md` (the list changed, so
+  replace it — superseding, not accumulating; one current list at a time). Format:
+  **Blocking** (work stopped, who's idle) / **Non-blocking** (proceeding under a stated
+  assumption he can overturn) / **Coverage window** stated explicitly (event range
+  swept), so a silent gap is detectable rather than invisible. Each item: the question
+  in one line, what it blocks, who's waiting, the recommendation and whose it is, and
+  the event id it was raised at.
 - `docs/LESSONS.md` captures recurring defects and reusable patterns.
 - `docs/PHASE_EXIT_LOG.md` (created once Phase 0/1 produce exit evidence) will hold the
   durable record of each phase's exit criterion and the evidence that satisfied it.
