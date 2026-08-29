@@ -210,11 +210,15 @@ seed_nodes: []
 selected_nodes: []
 selected_edges: []
 claims: []
+evidence: []
+sources: []
 contradictions: []
 provenance_roots: []
 temporal_scope:
 spatial_scope:
 retrieval_policy:
+traversal_profile:
+engine_version:
 truncation:
 uncertainty: []
 missing_expected_information: []
@@ -222,6 +226,12 @@ exclusions: []
 ```
 
 This package itself should be inspectable.
+
+`evidence` and `sources` are exposed as explicit top-level fields rather than being reachable only indirectly through `provenance_roots` or nested inside `claims`, so supporting evidence and the sources it derives from can be inspected directly.
+
+`traversal_profile` records the name and version of the Traversal Profile (see Traversal Profiles) used to produce this package, and `engine_version` records the version of the retrieval engine that produced it; together with `query_id` these support the `(query, vault state, traversal profile, engine version)` reproducibility tuple described above.
+
+Each entry in `claims` and `evidence` carries the `epistemic_status` tag already defined in `Temporal-and-Epistemic-Ontology.md` (observed / reported / derived / inferred / simulated / hypothesised / disputed / unknown), so the LLM can distinguish observed from derived facts using that existing controlled vocabulary rather than a new one.
 
 `uncertainty`, `missing_expected_information` and `exclusions` make explicit what the retrieval engine could not resolve or deliberately left out, so the LLM is told what context was unavailable rather than being left to infer completeness silently.
 
