@@ -90,3 +90,29 @@ live external state when it's written, not later.
 
 See `docs/PROJECT_FACTS.md`'s own conventions section for where this rule now lives,
 applied to its own Remote field as the worked example.
+
+## A pronoun guess about a real person entered the permanent decision record
+
+**What happened:** `decisions/0002-defer-github-organisation.md`, `decisions/0003-create-github-organisation.md`,
+and `docs/OPEN_QUESTIONS.md` each described Ashley creating the GitHub organisation
+"herself." Ashley's pronouns have not been stated anywhere in this channel. A name is
+not a pronoun; the word was written on the strength of an assumption, not a fact, and
+signed into three separate permanent records before anyone checked it. Caught by the
+Engineering Coordinator's sweep, not self-caught — a presence-scan for stale org
+references (this session's other lesson) would never have found it, because the word
+"herself" isn't stale, it was wrong from the moment it was written.
+
+**Why it matters:** this class of error is quieter than a factual mistake about a
+system — nobody's git log or API response ever "corrects" a wrong pronoun, so unlike
+this session's other staleness lessons, there is no external signal that will ever
+surface it on its own. It only gets caught by a reader who notices, and the record
+stays wrong indefinitely if nobody does. It is also about a real person, not a
+system — the cost of guessing wrong is different in kind, not just probability, from
+guessing wrong about a remote URL.
+
+**Pattern to reuse, standing rule:** never infer a pronoun for a real person from their
+name. Use they/them for anyone whose pronouns have not been explicitly stated,
+including Ashley, in every record this role writes — ADRs, the decision register,
+`OPEN_QUESTIONS.md`, channel messages, everywhere. If precision without a pronoun reads
+awkwardly, restructure the sentence (e.g. "created the organisation directly" instead
+of "created the organisation herself") rather than reach for a guess.
