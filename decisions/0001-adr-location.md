@@ -20,11 +20,14 @@ file per decision (`decisions/NNNN-slug.md`), indexed from `docs/DECISION_REGIST
 1. **`docs/adr/`** — the Memory & Knowledge Manager role's own generic default output
    path. Rejected for this repo: no prior CRIC convention existed to anchor it, and the
    Engineering Coordinator's WP-0 proposal named `decisions/` directly.
-2. **`decisions/`** — chosen. Matches the precedent already set on EnergyMatrix (that
-   project's own ADR-0004 moved ADRs out of `docs/adr/` into `decisions/` for the same
-   reason: keep `docs/` for narrative/reference material and use a separate top-level
-   folder for the append-only ratified-decision log). Consistency across the projects
-   this identity maintains reduces the chance of writing to the wrong path from habit.
+2. **`decisions/`** — chosen. No prior-project precedent is needed or claimed: the
+   Engineering Coordinator's WP-0 proposal (event `feb934ea…62a706e`) names `decisions/`
+   directly, and that is sufficient on its own. (An earlier draft of this ADR cited
+   EnergyMatrix's ADR-0004 as precedent for a `docs/adr/`→`decisions/` migration there;
+   that citation was checked against the EnergyMatrix repo by Pollen and found false —
+   EnergyMatrix used `decisions/` from its own ADR-0001 onward, a full day before
+   ADR-0004 existed, so there was never a migration to cite. Corrected here rather than
+   left uncorrected in a permanent record.)
 
 ## Consequences
 
