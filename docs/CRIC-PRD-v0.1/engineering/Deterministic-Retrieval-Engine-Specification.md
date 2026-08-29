@@ -209,7 +209,7 @@ This classification is what makes evidence-grade AI auditable in practice: each 
 
 # Open Gap: Trust / Review-Status Vocabulary
 
-No controlled vocabulary for trust or review-status enum values (for example, distinguishing `machine-confirmed` from `human-reviewed`) currently exists anywhere in the PRD. `Evidence-Provenance-and-Trust.md`, `Temporal-and-Epistemic-Ontology.md` and `Claims-Contradictions-and-Knowledge-Lifecycle.md` each list "review status" as a trust or state dimension, but none of them enumerate its permitted values.
+No controlled vocabulary for trust or review-status enum values (for example, distinguishing `machine-confirmed` from `human-reviewed`) currently exists anywhere in the PRD. `Evidence-Provenance-and-Trust.md` and `Claims-Contradictions-and-Knowledge-Lifecycle.md` each list "review status" as a trust or state dimension, but neither enumerates its permitted values. (`Temporal-and-Epistemic-Ontology.md` was also checked — it defines a `review_time` timestamp and describes a "Reviewed and not accepted" case within its `Rejected` knowledge-state, but does not itself carry a "review status" dimension.)
 
 The `by_trust` index and the ranking function's trust weight above both assume such values exist and are comparable/orderable. This document does not invent that enumeration — doing so here, outside the ontology/trust specifications that own the concept, would create a competing and likely inconsistent definition. This is flagged as an open gap and future work: a controlled review-status/trust vocabulary should be specified in the knowledge-tier documents that already own the "review status" dimension, then consumed here.
 
@@ -244,26 +244,25 @@ These are software-engineering responsibilities, not LLM responsibilities.
 
 # Context Pack Responsibilities
 
-The Context Pack exposes:
+`interfaces/Search-and-Graph-Interfaces.md`'s "Context Package" YAML schema is the single canonical definition of this artefact — registered as the `ContextPack` type in `CRIC-Schema-and-Vocabulary-Registry.md` §3 ("Context Pack" and "Context Package" name the same object; "ContextPack" is its canonical type identifier). This section maps engine-level responsibilities onto that canonical schema's actual field names, rather than restating a parallel list under different names:
 
-```text
-Query
-Seed entities
-Temporal scope
-Relevant nodes
-Relevant edges
-Observed facts
-Derived facts
-Claims
-Evidence
-Sources
-Contradictory evidence
-Uncertainty
-Missing expected information
-Completeness assessment
-Retrieval metadata
-Traversal profile
-Engine version
-```
+| Responsibility | Canonical field(s) |
+|---|---|
+| Query | `query_id`, `question` |
+| Seed entities | `seed_nodes` |
+| Temporal scope | `temporal_scope` |
+| Relevant nodes | `selected_nodes` |
+| Relevant edges | `selected_edges` |
+| Observed facts / Derived facts | `claims` and `evidence` entries, each carrying the existing `epistemic_status` tag (observed / derived / etc., per `Temporal-and-Epistemic-Ontology.md`) rather than separate fields |
+| Claims | `claims` |
+| Evidence | `evidence` |
+| Sources | `sources` |
+| Contradictory evidence | `contradictions` |
+| Uncertainty | `uncertainty` |
+| Missing expected information | `missing_expected_information` |
+| Completeness assessment | the Retrieval Completeness ✓/✗ table accompanying the pack (a report, not a single field) |
+| Retrieval metadata | `retrieval_policy` plus the Retrieval Reproducibility fields (index version, graph release, ranking version, embedding version) |
+| Traversal profile | `traversal_profile` |
+| Engine version | `engine_version` |
 
-The context pack must be independently inspectable before it reaches the LLM.
+A Pydantic `ContextPack` model must be built against these canonical field names; this table exists so that model and the schema in `Search-and-Graph-Interfaces.md` cannot drift apart. The context pack must be independently inspectable before it reaches the LLM.

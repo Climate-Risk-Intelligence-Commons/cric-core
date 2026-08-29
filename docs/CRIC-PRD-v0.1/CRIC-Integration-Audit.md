@@ -82,7 +82,9 @@ Integrated the deterministic OKF multi-hop context-retrieval architecture (a hyb
 
 `OKF-Knowledge-Graph-Specification.md`'s "Core predicates should include" list was already a representative/illustrative subset of `CRIC-Schema-and-Vocabulary-Registry.md` §8's full predicate list before this batch — the two lists have never been identical (e.g. `is_a`, `generated_by`, `contributes_to`, `trained_on`, `evaluated_on`, `predicted_by`, `reviewed_by` appear only in the former; most spatial/domain predicates appear only in the latter). This batch removed `associated_with` from both, but did not otherwise reconcile the pre-existing divergence — that remains open for a future editorial pass, same disposition as the general "Known Integration Note" from Batch 07 above.
 
-A candidate requirement R-041 (an explicit LLM write-side knowledge-boundary requirement, parallel to how R-026 covers reads) was identified during this integration and is pending a decision; it has not been added to `CRIC-Requirements-Traceability-Matrix.md`.
+A candidate requirement R-041 (an explicit LLM write-side knowledge-boundary requirement, parallel to how R-026 covers reads) was identified during this integration and is pending Ashley's decision. It has been added to `CRIC-Requirements-Traceability-Matrix.md`, explicitly marked *PROPOSED — pending Ashley's decision, not yet ratified*, so its existence is visible for review without it being treated as an active requirement before that decision is made.
+
+`domains/Cryosphere-Ontology.md` (not touched by this batch) still lists `associated_with` (twice) and `connected_to` (twice) as live predicates for Glacier/GlacierTerminus/spatial relationships, with no deprecation notice, even though both were just deprecated project-wide in this batch (see Resolutions Applied above). Cryosphere is CRIC's first domain implementation, so this is not a low-priority corner case — it is flagged here rather than silently fixed, since editing domain-specific predicate usage is outside this batch's reviewed scope and belongs to whoever owns that file's next revision.
 
 ## File Inventory
 

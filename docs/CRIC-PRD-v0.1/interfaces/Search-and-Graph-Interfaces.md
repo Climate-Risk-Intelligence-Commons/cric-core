@@ -117,9 +117,10 @@ A traversal profile declares:
 - profile version;
 - start_types (permitted seed node types);
 - allowed_paths (permitted sequences of predicate and node type);
-- max_depth.
+- max_depth;
+- max_nodes (upper bound on nodes admitted into the result, so truncation behaviour is part of the versioned profile rather than a separate, unrecorded request parameter).
 
-`allowed_paths` enumerates the legal predicate/node-type sequences a traversal may follow from a seed node; any path not listed is not traversed. Changing `allowed_paths` or `max_depth` for a named profile requires a new profile version, so that a context package can always be reproduced from the `(query, vault state, traversal profile, engine version)` tuple recorded in its retrieval metadata.
+`allowed_paths` enumerates the legal predicate/node-type sequences a traversal may follow from a seed node; any path not listed is not traversed. `max_nodes` bounds how many nodes a traversal may return even when more would satisfy `allowed_paths`/`max_depth` — it is a declared field of the profile, not a per-request option, specifically so it cannot silently change between two calls that cite the same profile. Changing `allowed_paths`, `max_depth` or `max_nodes` for a named profile requires a new profile version, so that a context package can always be reproduced from the `(query, vault state, traversal profile, engine version)` tuple recorded in its retrieval metadata — every parameter that can affect node selection is captured inside "traversal profile," with nothing left as an uncaptured side-channel.
 
 Example profile:
 
@@ -140,6 +141,7 @@ allowed_paths:
   - [derived_from, Source]
 
 max_depth: 4
+max_nodes: 100
 ```
 
 A traversal request then reduces to a profile reference plus concrete seeds:
@@ -199,7 +201,7 @@ Every result should expose:
 
 # Context Package
 
-The retrieval layer should produce a structured context package for an LLM or agent.
+The retrieval layer should produce a structured context package for an LLM or agent. This is the same artefact `CRIC-Schema-and-Vocabulary-Registry.md` §3 registers as the canonical `ContextPack` type, and that `engineering/Deterministic-Retrieval-Engine-Specification.md` refers to in prose as the "Context Pack" — one object, three names in three documents for historical reasons (this section predates the type's registration); the YAML schema below is its single canonical definition.
 
 Example:
 

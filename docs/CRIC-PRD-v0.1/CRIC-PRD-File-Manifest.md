@@ -2,10 +2,10 @@
 
 | File | SHA-256 |
 |---|---|
-| `CRIC-Integration-Audit.md` | `1e0b070708415abf4db13b213583422af736c5ad13d9c03d19d5d165311ab51c` |
-| `CRIC-PRD-MASTER.md` | `4f07c56367f5aed1ed61973e1aaac0a52660bdff7d6d4f1870fc9db2b04a0c13` |
+| `CRIC-Integration-Audit.md` | `5a53dd67b71b2b1d449e290f2b7585c42e4eb2955d4f6061c721dabfe60496d0` |
+| `CRIC-PRD-MASTER.md` | `641d377f40e4462c18892901fb50dec75f04e2855205d99c653390c127ec83df` |
 | `CRIC-Repository-Dependency-and-Implementation-Sequence.md` | `60acee798f5b6298cb0c4e8115f3b0a2ac8da20d0d9a09a68f3f8ebe12187c5b` |
-| `CRIC-Requirements-Traceability-Matrix.md` | `70c0c80eb909b7ce962670a8afde939639c8a48c63db5ebe7697043ab7fce3ad` |
+| `CRIC-Requirements-Traceability-Matrix.md` | `03d6976ff6e921e67448174e1508f421edb44a0cecffb8830f087961e23b98f6` |
 | `CRIC-Schema-and-Vocabulary-Registry.md` | `af18099a627c56e2736bdb326f976b438e8ca0aa6a8b6023aa33db05b077516b` |
 | `ai/Agent-Commons-Architecture.md` | `bdba6b517763effa5772ee45d6ce16474bbc56d3e3f056f42948d519c8bda8fd` |
 | `ai/Agent-Team-Specifications.md` | `5a49f104b814c532835622fa49e4c28bb97f67d90480a6f52d05a87be7b4cc39` |
@@ -22,7 +22,7 @@
 | `domains/GLOF-Ontology.md` | `5ed35f54a3bbba069867d19db0612cc5ffc343adb308fc3f01d0873550eca659` |
 | `domains/StateSnapshot-and-Event-Cube-Specification.md` | `a1899d4dace9ea2b69606488337fcf907ff19bd5fa119db012b54f6782a9ef78` |
 | `engineering/Deployment-Versioning-and-Releases.md` | `0fdb3932cf092a4f6fd58a6571f367f6515ef17a334fa664be5d4b4e1ab0239e` |
-| `engineering/Deterministic-Retrieval-Engine-Specification.md` | `93bdafb1104ee1c65b535283a9eb10daa145680e2cc1a582862107d8c7381d15` |
+| `engineering/Deterministic-Retrieval-Engine-Specification.md` | `60317b17e78b8d6f8aa428d0257610b8da822f6c40723f9b9f41421013a695a5` |
 | `engineering/Security-and-Responsible-AI.md` | `803fed12850fe68f3e4172ee97056ed909564924045a07cdaab7ea505e3c3cb0` |
 | `engineering/Software-Architecture.md` | `e29e32672ea13bf42d9c691ec9d17972574b1b2e18a31ae9512fe9ce52cffe56` |
 | `engineering/Testing-and-Quality-Assurance.md` | `de49c07f4ecce4f8ca0811d3f9ca25ca900dc6aa1a6ec2d64c5ff30221e1b0f9` |
@@ -30,7 +30,7 @@
 | `implementation/CRIC-v0.2-Implementation-Specification.md` | `67dad07c6c839def54ae293e1f0c5acb2995f738f7d441e494620d7f5cc95c10` |
 | `interfaces/API-and-SDK-Specification.md` | `b0b888d515521b5ba43c5646c7db28eaf7422607fa76adec05cd92c9dc9921b6` |
 | `interfaces/Human-Applications-and-UI.md` | `5d7a8b8a4de9c92e2609802addbf8c92e1db531752b567d6b231d067ea9daa32` |
-| `interfaces/Search-and-Graph-Interfaces.md` | `a1a486f0b19440995babb68ff9826aec313b0091eb5d8df14d5bf740e94c803a` |
+| `interfaces/Search-and-Graph-Interfaces.md` | `3ccb1a67cfa57e31bbe5033f8a5b9cf5eb94e015e4b13f1e51620d327047f26f` |
 | `knowledge/Claims-Contradictions-and-Knowledge-Lifecycle.md` | `754ba3a0d3ec091dc0f1c7bb12f074592a0938edc8e45cf5dc6d6ff924cf3b35` |
 | `knowledge/Core-Ontology-Specification.md` | `f98d0ec99947327bc7c764771bdea8e519cb75ca0c2169b3001e1b07a1eaa696` |
 | `knowledge/Evidence-Provenance-and-Trust.md` | `4cd317b2fb80a75c47037ce410a579f12eca2240fb59044ac9b6f64c309e9e05` |
