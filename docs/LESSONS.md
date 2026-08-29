@@ -90,3 +90,38 @@ live external state when it's written, not later.
 
 See `docs/PROJECT_FACTS.md`'s own conventions section for where this rule now lives,
 applied to its own Remote field as the worked example.
+
+## A pronoun guess about a real person entered the permanent decision record — and it was wrong
+
+**What happened:** `decisions/0002-defer-github-organisation.md`, `decisions/0003-create-github-organisation.md`,
+and `docs/OPEN_QUESTIONS.md` each described Ashley creating the GitHub organisation
+"herself." Ashley's pronouns had not been stated anywhere in the channel at the time.
+A name is not a pronoun; the word was written on the strength of an assumption, not a
+fact, and signed into three separate permanent records before anyone checked it.
+Caught by the Engineering Coordinator's sweep, not self-caught — a presence-scan for
+stale org references (this session's other lesson) would never have found it, because
+the word "herself" wasn't stale, it was wrong from the moment it was written. The
+Coordinator's objection was to the *process* — a guess with nothing in the channel to
+support it — independent of whether the guess happened to be right. It turned out not
+to be: Ashley stated he/him minutes later, and the records were corrected a second
+time, from the inferred "herself" to the actual "himself."
+
+**Why it matters:** this class of error is quieter than a factual mistake about a
+system — nobody's git log or API response ever "corrects" a wrong pronoun, so unlike
+this session's other staleness lessons, there is no external signal that will surface
+it on its own. It only gets caught by a reader who notices, and the record stays wrong
+indefinitely if nobody does. It is also about a real person, not a system — the cost of
+guessing wrong is different in kind, not just probability, from guessing wrong about a
+remote URL. And the fact that the guess turned out wrong isn't the point being
+recorded here — a guess that happened to land right would have been exactly as bad a
+process, just invisibly so. The lesson is "a guess about a real person went into a
+signed, permanent record three times, and the only reason it got caught is that
+someone read for unsourced claims rather than for stale strings" — not "we got lucky
+checking."
+
+**Pattern to reuse, standing rule:** never infer a pronoun for a real person from their
+name. Use they/them for anyone whose pronouns have not been explicitly stated, then use
+what they actually stated once they state it — in every record this role writes: ADRs,
+the decision register, `OPEN_QUESTIONS.md`, channel messages, everywhere. If precision
+without a pronoun reads awkwardly before it's known, restructure the sentence (e.g.
+"created the organisation directly") rather than reach for a guess.
