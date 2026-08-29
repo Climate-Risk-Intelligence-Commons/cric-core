@@ -188,3 +188,68 @@ CRIC v0.1 is a research and reference implementation. Model scores, risk states 
 agent outputs **must not** be presented as official warnings. CRIC never silently
 assumes institutional warning authority (Rule 11). Operational warning authority stays
 with competent external institutions.
+
+## 12. Fan-out and decomposition
+
+An agent holding a work package must split it into **two or more child packages**
+dispatched to subagents unless it can state, in one line, why not. Two or more children
+may run in **parallel** only if all four of the following hold:
+
+- **(a) Disjoint files** — the children's `files_allowed_to_change` globs have a
+  pairwise-empty intersection, checked over **every pair** in the fan-out, not just the
+  first two. Pairwise-disjoint is globally sufficient: if no two children share a
+  declared glob, no file has two writers.
+- **(b) No producer/consumer edge** — for every pair, neither child's
+  `upstream_contracts` names something the other child produces. This pairwise check is
+  sufficient even for chains and cycles without needing a full graph traversal: any
+  directed edge A→B means the pair `{A, B}` already fails on its own, so a cycle
+  A→B→C→A is caught at its first edge.
+- **(c) No shared Freeze Point** — for every pair, if two children would both touch one
+  of the 8 Architecture Freeze Points (§5), they are not two packages, they are one:
+  a Freeze Point produced by two agents in parallel is two candidate definitions of it.
+- **(d) A named integrator, before dispatch** — unlike (a)–(c), this is checked **once**
+  for the whole fan-out, not pairwise: who merges the children and runs the merged tree.
+
+**(a)–(c) apply pairwise, over every pair in the fan-out; (d) applies once, for the
+fan-out as a whole.** Fail any one of the four → the work proceeds sequentially instead,
+and the agent says which one failed.
+
+**The vacuous-disjointness fix.** A child that changes no files at all (a research,
+analysis or review child) has an empty `files_allowed_to_change` set, and the empty set
+trivially doesn't intersect any other empty set — so naively, two such children would
+pass test (a) automatically. This is wrong: it is exactly how the redundant-fan-out
+anti-pattern below would sneak through the admission test. Fix: **for a child that
+changes no files, disjointness is judged on its stated deliverable, not its file set —
+every child must name a deliverable no sibling also names.** Two children pointed at the
+same question are not a valid split; they are the anti-pattern.
+
+A parent work package that fans out gains a `decomposition:` block naming each child and
+the integrator, alongside the work-package shape in §4 (adapt freely — this is
+illustrative):
+
+```yaml
+decomposition:
+  integrator: <name>
+  children:
+    - id: <child-id>
+      deliverable: <one-line, must be unique across siblings>
+      files_allowed_to_change: [...]
+```
+
+**One worktree per child.**
+
+**Verify the merged result, never the slices.** Two subagents can each stay perfectly
+inside their own `files_allowed_to_change` and still jointly violate an invariant
+neither touches alone — a child changing file A and a sibling changing file B can still
+produce two files that contradict each other. Verification runs against the merged
+result of the entire fan-out, not per child — the same shape as §9's existing "verify
+the merged tree's tests, not each branch's" rule, one level up.
+
+**The redundant-fan-out anti-pattern.** Stated because it looks like diligence rather
+than a mistake: fanning out N subagents on the *same* question is not N independent
+checks — it's one answer restated N times, which reads as corroboration but isn't.
+Parallelism is for disjoint work, never for redundant opinions. A genuine second opinion
+comes from a different **method** (e.g. an independent verification pass by a different
+role, or a different tool/engine in challenge mode), never from a second instance of the
+same prompt run again. A child too small to carry its own meaningful test/acceptance
+criteria is not a child package, it's a step, and shouldn't have been split out.
