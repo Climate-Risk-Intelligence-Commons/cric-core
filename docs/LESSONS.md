@@ -125,3 +125,39 @@ what they actually stated once they state it — in every record this role write
 the decision register, `OPEN_QUESTIONS.md`, channel messages, everywhere. If precision
 without a pronoun reads awkwardly before it's known, restructure the sentence (e.g.
 "created the organisation directly") rather than reach for a guess.
+
+## Hand-abbreviated event ids are unreliable even when the underlying verification is real
+
+**What happened, twice independently in one PR (#15):** the Memory & Knowledge Manager
+wrote several `first8…last7`-style abbreviations of 64-character hex event ids into
+`docs/OPEN_QUESTIONS.md` and `docs/PROJECT_FACTS.md` that didn't match the full id they
+were meant to shorten — real substrings of the correct id, but from the wrong position
+(e.g. `8d0c3e56…649a4a6` written for an id whose actual tail is `…4a66628`). Caught by
+re-slicing every full id with a script and diffing, not by re-reading the prose. Then,
+reviewing that exact fix, Pollen restated nine of those same abbreviations from memory
+in a channel message rather than re-slicing them, and three of the nine were wrong the
+same way — despite Pollen's own message claiming "every single event id checked against
+the raw thread, not sampled," which was true of the verification step and false of the
+transcription step.
+
+**Why this is the important part:** in every instance, the underlying claim — this
+event, this author, this content, this timestamp — was independently verified and
+correct. What failed both times was purely mechanical: turning a full id already held
+correctly in hand into a short human-readable string, by recall or by eye rather than
+by re-slicing the actual bytes. This is not the same failure as this file's other
+staleness lessons (a true-when-written fact going stale) or the pronoun lesson (an
+unsourced guess) — the fact was never wrong, the *citation string representing it* was
+garbled in transcription. It recurred within minutes, on the same PR, by two different
+parties, one of whom was specifically trying to demonstrate rigour at the moment it
+happened — evidence this is a generic hand-transcription failure mode, not a one-off
+lapse by either party.
+
+**Pattern to reuse, standing rule:** never hand-type or recall-from-memory an
+abbreviated event id for a permanent record or a claim about rigour. Either (a) slice
+it mechanically from the full id at the moment of writing (`full_id[:8] + '…' +
+full_id[-7:]`, via script, never by eye), or (b) prefer the full, untruncated id
+entirely for anything that will outlive the conversation — ADRs in this repo now do
+this throughout, specifically to remove the failure mode rather than mitigate it.
+Restating a citation you already verified is a fresh act of transcription with its own
+failure rate; "I checked this" about the underlying fact does not make "I copied this
+correctly" true about the shorthand.
