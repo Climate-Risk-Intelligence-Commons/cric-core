@@ -1,7 +1,7 @@
 # ADR-0002: Defer creating the `climate-risk-intelligence-commons` GitHub organisation
 
 - **Status:** Superseded by [ADR-0003](0003-create-github-organisation.md), 2026-08-29
-  (18 minutes after this ADR — Ashley created the organisation directly and reversed
+  (18 minutes after this ADR — Ashley created the organisation himself and reversed
   this decision). Left in place, not deleted or edited to match the new outcome: this
   is the accurate record of what was decided and why for the 18 minutes it held.
 - **Approver:** Ashley

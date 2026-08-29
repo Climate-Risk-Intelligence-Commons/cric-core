@@ -38,7 +38,7 @@ Both prior states are alternatives actually held, not hypotheticals:
    (2) 12 minutes later.
 2. **Defer indefinitely, stay at `ashley-eyekyam/`** (ADR-0002, 13:43:22Z — "too
    complicated," revisit later). Superseded by (3) 18 minutes later, once Ashley
-   created the org directly rather than through the Coordinator's proposed mechanics.
+   created the org himself rather than through the Coordinator's proposed mechanics.
 3. **Create the org, transfer `cric-core` into it** (this ADR, 14:01:12Z). Current.
 
 ## Execution status (update this section in place as it progresses, do not re-ADR each step)
