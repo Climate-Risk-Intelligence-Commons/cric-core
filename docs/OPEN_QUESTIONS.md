@@ -16,6 +16,7 @@ will be whatever WP-1 (`/gsd-ingest-docs`) surfaces at its human-approval gates.
 
 | ID | Question | Owner | Notes | Raised | Resolved |
 |---|---|---|---|---|---|
+| U6 | Should a `gsd-health`-style lint be built that flags any `PROJECT_FACTS.md` trigger clause whose named event has already fired unnoticed? | Engineering Coordinator | **Explicit build threshold, not "later":** build it when either (a) a trigger clause is found to have already fired unnoticed — the first real instance, not the anticipated one — or (b) the count of trigger clauses in `PROJECT_FACTS.md` exceeds what a person plausibly re-reads in one sitting. Neither holds today (a handful of fields, one file). Building it now, against a failure that hasn't happened in a project with no source code yet, is named explicitly as the same trap as the decomposition checker's Hole 3 and the fan-out anti-pattern — "verification is the most legitimate-looking way to keep not building." | 2026-08-29 (Pollen raised the shape; Engineering Coordinator set the threshold, event `5a3eabb5…8d3aa`) | — |
 | U5 | R-041 ("LLMs may write to the knowledge store only via structured mutation → validation → human/policy check → atomic write") is marked "PROPOSED — pending Ashley's decision, not yet ratified" in `docs/CRIC-PRD-v0.1/CRIC-Requirements-Traceability-Matrix.md`. | Ashley | Doesn't block current work; tracked so it isn't forgotten before Phase 6/8 need it. | 2026-08-29 | — |
 
 ## Resolved

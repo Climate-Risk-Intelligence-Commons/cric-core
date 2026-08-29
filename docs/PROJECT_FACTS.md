@@ -102,7 +102,16 @@ yet ratified" in that file; tracked as an open item until Ashley rules on it.
     to this file's own Remote field between authoring and merge on 2026-08-29 — see
     `docs/LESSONS.md`.)
   - **Expensive or judgment-based** (a human decision, an external party, real work to
-    establish): record value, date, owner, **and the trigger that makes it stale** —
-    the event that means "re-check this now," not a review cadence. "Re-check when
-    Phase 0 creates the first additional repository" fires by itself; "owner:
-    Coordinator, review periodically" does not.
+    establish): record value, date, owner, **and a trigger that names an event a
+    person performs** — not a review cadence, and not an absence or a deadline either.
+    "Re-check when Phase 0 creates the first additional repository" fires by itself,
+    because someone is necessarily present when it happens. "Re-check if the transfer
+    hasn't completed by Friday" or "revisit if no one has claimed this in a month" have
+    nobody present when they fire — nothing happens, so nothing notices — and are the
+    same failure as "owner: Coordinator, review periodically" wearing a date. **If the
+    honest trigger for a fact is an absence or a deadline rather than a performed
+    event, the fact does not belong in this file.** It belongs in
+    `docs/OPEN_QUESTIONS.md` with an owner, where chasing it on no particular schedule
+    is that owner's actual job — that is the boundary between the two files: this one
+    holds facts with performed-event triggers, `OPEN_QUESTIONS.md` holds the ones whose
+    trigger is an absence.
