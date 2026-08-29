@@ -115,8 +115,16 @@ meaning of a stable core type.
   singular by design. Human-facing short IDs such as `CRIC-LAKE-001` may appear in
   examples and fixtures but **must not** be treated as the canonical production
   identifier. Do not add a second ID format "for flexibility".
-- Run tests as `python -m pytest` (the `-m` matters: it puts the repo root on `sys.path`;
-  a bare `pytest` from a cold shell can fail to import the package).
+- Run tests with `python -m pytest` or bare `pytest` — both work. `pyproject.toml`
+  sets `pythonpath = ["src"]` under `[tool.pytest.ini_options]`, so the `src` layout
+  resolves regardless of invocation or cwd; don't reinstate a `python -m` requirement
+  as folklore if this stops being true, check the config first.
+- **On this development host specifically:** prefix `python3`, `pip`, `pytest` and
+  `build` invocations with `env -u PYTHONHOME -u PYTHONPATH`. The local harness's
+  AppImage leaks those two variables into child processes, including venvs, and an
+  unset `python3` fails with `ModuleNotFoundError: No module named 'encodings'`. This
+  is an artefact of this machine, not a project requirement — it does not apply to
+  the GitHub Actions CI workflow, which runs on a clean image.
 
 ## 8. Test discipline
 
