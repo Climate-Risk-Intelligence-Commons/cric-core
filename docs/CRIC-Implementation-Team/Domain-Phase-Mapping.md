@@ -96,7 +96,7 @@ Repository Dependency doc's own Critical Path confirms it (`Core schemas → OKF
 |---|---|---|---|---|---|---|
 | **0** — Organisation and Contracts | (all, scaffolding) | `CRIC-Repository-Dependency-and-Implementation-Sequence.md` §Phase 0 | `community/Open-Source-Governance.md`, `engineering/Security-and-Responsible-AI.md` §Git Security | none | n/a — must complete first | Skipping CODEOWNERS/branch protection setup because it "can be added later" — it gates Phase 7's review-integrity requirements |
 | **1** — `cric-core` | `cric-core` | `knowledge/Core-Ontology-Specification.md`, `knowledge/OKF-Knowledge-Graph-Specification.md`, `knowledge/Temporal-and-Epistemic-Ontology.md`, `knowledge/Evidence-Provenance-and-Trust.md`, `CRIC-Schema-and-Vocabulary-Registry.md` | `knowledge/Claims-Contradictions-and-Knowledge-Lifecycle.md`, `ai/Responsible-Autonomy-and-HITL.md` (review contracts), `ai/Agent-Commons-Architecture.md` (agent manifest schema) | produces all 8, blocked on none | nothing meaningful — everything else depends on this | Producing all 8 freeze points from one document only; the freeze points are spread across 5 files and disagreements between them must resolve through the registry, not through whichever file the agent read first |
-| **2** — `cric-knowledge` | `cric-knowledge` | `knowledge/OKF-Knowledge-Graph-Specification.md` | `product/Repository-and-System-Architecture.md` §`cric-knowledge` | 2, 5 | 3, 4 (once Phase 1 exits) | Building a parser that assumes single-direction adjacency — see the open reverse-adjacency design call raised in the retrieval-architecture thread (below) |
+| **2** — `cric-knowledge` | `cric-knowledge` | `knowledge/OKF-Knowledge-Graph-Specification.md` | `product/Repository-and-System-Architecture.md` §`cric-knowledge` | 2, 5 | 3, 4 (once Phase 1 exits) | Building a parser that stores both directions of a relationship explicitly in frontmatter — **ruled** (retrieval-architecture thread): the compiler derives both directions from a single declared predicate; paired predicate names (`feeds`/`fed_by`) stay for authoring ergonomics only, not as two facts an author must keep in sync |
 | **3** — `cric-data` | `cric-data` | `data/Data-Commons-Architecture.md` | `data/Ingestion-and-Licensing.md` (licence vocabulary only, not pipelines yet) | 4 | 2, 4 | Treating `Asset` as the schema type instead of the registry's canonical `DataAsset` (registry §3, Asset Resolution) |
 | **4** — `cric-cryosphere` + `cric-glof` | `cric-cryosphere`, `cric-glof` | `domains/Cryosphere-Ontology.md`, `domains/GLOF-Ontology.md`, `domains/StateSnapshot-and-Event-Cube-Specification.md` | `knowledge/Core-Ontology-Specification.md` §Climate Risk Extension Types (Hazard/Trigger/Cascade must not be redefined, only extended) | 2, 3, 5, 6 | 2, 3 | Domain-specific redefinition of a core type instead of extension — `knowledge/Core-Ontology-Specification.md`'s own design rule ("domain repositories may extend the core ontology but must not redefine the semantic meaning of stable core types") is the direct test |
 | **5** — `cric-ingest` | `cric-ingest` | `data/Ingestion-and-Licensing.md` | `data/Data-Quality-and-Validation.md`, `ai/Agent-Team-Specifications.md` (agents 1–7, Scout through Contradiction — this is the *first* phase where product-agent specs and build-time work meet directly) | 2, 3, 4 | none (needs Phase 3+4 output) | Building non-idempotent ingestion — `data/Ingestion-and-Licensing.md` §Idempotency is a named requirement, easy to treat as optional in a first pass |
@@ -128,11 +128,17 @@ is squarely the Engineering Coordinator's half of this study.
 
 ---
 
-## Open item carried from the retrieval-architecture thread
+## Resolved items from the retrieval-architecture thread
 
-Phase 6's scope is not fully locked yet: the predicate-conflict finding
-(`connected_to` listed as canonical in the registry while the new retrieval-doc names
-it as an anti-pattern) and the reverse-adjacency design call (paired predicates vs.
-engine-derived reverse edges) are both still awaiting a ruling. Whoever staffs Phase 2
-and Phase 6 build-time agents should not start until those two calls land — both
-phases consume the relationship-representation freeze point directly.
+Both calls that gated Phase 2 and Phase 6 have landed and are no longer caveats:
+
+- **Predicate conflict** — `connected_to` and `associated_with` are deprecated;
+  `exposes`, `supported_by`, `threatens`, `depends_on` and `has_snapshot` are accepted
+  as new canonical predicates; `caused_by` is rejected as redundant with `triggered_by`.
+- **Reverse-adjacency** — the compiler derives both traversal directions from a single
+  declared predicate (reflected in the Phase 2 row above); paired predicate names
+  remain for authoring ergonomics only.
+- Ashley has separately confirmed the candidate 13th Constitutional Product Rule: the
+  LLM must not perform graph traversal; deterministic software assembles context first.
+
+Phase 2 and Phase 6 build-time agents are unblocked.
