@@ -30,6 +30,11 @@ business intent.
 Agents prepare branches and pull requests. **Agents do not autonomously merge stable
 core changes** (`community/Contribution-and-Review-Process.md` §Merge Rules).
 
+Repositories live in the `Climate-Risk-Intelligence-Commons` GitHub organisation,
+which defaults new members to `read` access (`default_repository_permission: read`):
+clone and open a pull request, yes; push a branch, no, until granted `write`
+explicitly. Don't assume push access follows from org membership alone.
+
 ## 2. The team
 
 Five build-time roles. All are **persistent cross-project identities reused here**, not
@@ -167,7 +172,9 @@ Carried by **Honey** under a widened scope, activation-windowed:
 
 - **Phase 0 (full):** repository scaffolding, licences, CODEOWNERS and branch
   protection, CI skeleton, coordinated release/version metadata — to the point
-  `cric-core` can publish a versioned Python package.
+  `cric-core` can publish a versioned Python package. Every Phase 0 repository is
+  created directly in the `Climate-Risk-Intelligence-Commons` org, never under a
+  personal account.
 - **Phases 1–13 (light custodial tail):** apply the Phase 0 template to each repository
   as it comes online; flag drift. No new judgment calls.
 - **Phase 14 (full):** coordinated release manifest, compatibility matrix, and

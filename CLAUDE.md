@@ -9,6 +9,11 @@ repository. Read `AGENTS.md` for **who** does what; this file is **how** work is
 open-source, provenance-preserving, temporally aware knowledge/data/model/agent
 infrastructure for climate-risk evidence. First domain: Himalayan cryosphere / GLOF.
 
+The repository is owned by the `Climate-Risk-Intelligence-Commons` GitHub
+organisation: `github.com/Climate-Risk-Intelligence-Commons/cric-core`. The prior
+location, `github.com/ashley-eyekyam/cric-core`, redirects — existing clones and
+remotes keep working unchanged, though new clones should use the org URL.
+
 It currently holds the **authoritative PRD family** (`docs/CRIC-PRD-v0.1/`, 39
 documents) and the **build-time team charter** (`docs/CRIC-Implementation-Team/`).
 Python package code lands here from Phase 1 onward.
@@ -134,6 +139,10 @@ Assert that the check actually reached the thing it claims to check.
 ## 9. Branch, review and merge policy
 
 - **Never commit directly to `main`.** One branch per work package, off `origin/main`.
+  `main` is branch-protected (`enforce_admins` on): a direct push to `main` is
+  rejected by GitHub itself ("protected branch hook declined"), for every token
+  including the Coordinator's. A push to any other branch succeeds — protection
+  only guards `main`, not the repository generally.
 - Use a git worktree (`/home/ash/Eyekyam/.worktrees/cric-core/<branch>`) — multiple
   agents work this repository concurrently and a shared checkout will collide.
 - **Agents prepare branches and pull requests; agents do not autonomously merge stable
@@ -142,8 +151,14 @@ Assert that the check actually reached the thing it claims to check.
   `acceptance_criteria` by someone who did not implement it.
 - Verify a merge by running the **merged tree's** tests. "No conflicts" and "the merged
   result passes" are different properties.
-- Open PRs with `buzz pr open --channel 17bd72a0-4d90-4e0b-b102-f9163f0cfd4b` so the
-  PR links back to the conversation that authorised it.
+- **Open two PRs — they do different jobs, neither substitutes for the other.**
+  `buzz pr open --channel 17bd72a0-4d90-4e0b-b102-f9163f0cfd4b` creates a NIP-34
+  Nostr PR that links the channel to the work; it is **not** a GitHub PR and cannot
+  satisfy branch protection. Merging requires an actual GitHub PR (`gh pr create`)
+  against `main` — open that too, and merge there.
+- New org members default to `read` access (`default_repository_permission: read`)
+  and cannot push a branch until granted `write` explicitly — confirm you have
+  write access to the repository before starting a work package if you're unsure.
 
 ## 10. Escalate to Ashley, do not decide alone
 
