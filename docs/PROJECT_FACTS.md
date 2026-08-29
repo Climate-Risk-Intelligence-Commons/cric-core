@@ -115,3 +115,42 @@ yet ratified" in that file; tracked as an open item until Ashley rules on it.
     is that owner's actual job — that is the boundary between the two files: this one
     holds facts with performed-event triggers, `OPEN_QUESTIONS.md` holds the ones whose
     trigger is an absence.
+- **Citing an ADR alongside a PRD section that reality has overtaken** (e.g.
+  `decisions/0003-create-github-organisation.md` recording that
+  `product/Repository-and-System-Architecture.md:137`'s org-layout illustration is now
+  descriptive, not aspirational): the citation is the right fix below a threshold, and
+  a tax on readability above it. **A PRD section earns a consolidated amendment pass —
+  folding the accumulated annotations back into the source — when understanding
+  current state requires opening a second document.** Test it by deletion, not by
+  status label: remove the superseded ADR from your reading; if you still understand
+  the current position, the chain counts as **one**; if you don't, it counts as
+  **two**, regardless of what the status lines say. Counting *live* citations (this
+  rule's own first draft, corrected before it ever merged) is the wrong proxy: status
+  is metadata anyone can attach, and it lets a superseding ADR
+  that says only "supersedes ADR-000N" without restating the substance sit at "one
+  live citation" forever while a reader still has to open both documents to understand
+  anything — exactly the decay this rule exists to prevent. The deletion test measures
+  what actually matters, reader burden, directly.
+  - Verified against the present case, not asserted: `decisions/0003`'s Consequences
+    section states the aspirational→descriptive move and the casing guidance directly;
+    delete `decisions/0002` from the reading and you still know where the repositories
+    live and which casing to use. `Repository-and-System-Architecture.md:137` passes
+    the test at one, so today's ruling (no PRD edit, ADR-0003 sufficient) doesn't
+    contradict itself.
+  - Below the threshold: annotate — cite the ADR alongside the PRD section, don't edit
+    the PRD.
+  - At or above it: writing the citation that fails the deletion test is itself the
+    performed event that trips the trigger — whoever writes it is present and can see
+    it happen. That ADR's author flags the section for a consolidation pass rather
+    than annotating past it.
+  - **A backstop trigger, also a performed event, not a deadline:** Phase 14 is the
+    v0.1 release gate, where the Definition of Done requires an external researcher to
+    walk the whole chain from a clean clone — a PRD that needs an ADR chain read
+    alongside it to be understood fails that bar on its own terms. So Phase 14 is when
+    all accumulated annotations get folded back into the source, regardless of whether
+    any single section crossed the threshold on its own.
+  - **Quality bar this gives supersession, now load-bearing rather than just good
+    style:** a superseding ADR should be self-contained on the point it supersedes —
+    state the current substance directly rather than only "supersedes ADR-000N" — so
+    the chain a reader must open stays at one. `decisions/0003` already does this; hold
+    future superseding ADRs to the same bar.
