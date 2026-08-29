@@ -15,8 +15,9 @@ applicable, otherwise `Proposed` / `Accepted` / `Superseded`.
 
 **Freeze Point 1 (ID format) is ratified — the first of 8 to lock.** Phase 1
 (`cric-core`) has started: packaging and CI are merged (WP-4 waves 1-2, see
-`docs/PROJECT_FACTS.md`), and WP-6 (build-order item 1, identifier types) is dispatched
-against ADR-0004. The remaining 7 Freeze Points are not yet ratified. Each of their
+`docs/PROJECT_FACTS.md`), and WP-6 (build-order item 1, identifier types), against
+ADR-0004, is merged (PR #17, `main` at `fda79b1`) — Freeze Point 1 is now executable
+code. The remaining 7 Freeze Points are not yet ratified. Each of their
 ADRs, when written, links its **Freeze Point?** column entry to the specific freeze
 point (of the 8 listed in `docs/PROJECT_FACTS.md`), names Ashley as approver (not the
 Engineering Coordinator or Fizz), and its consequences section states explicitly that

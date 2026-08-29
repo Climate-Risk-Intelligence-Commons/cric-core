@@ -40,7 +40,9 @@ Source: `docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md`.
 `cric-core, cric-knowledge, cric-data, cric-ingest, cric-cryosphere, cric-glof,
 cric-models, cric-agents, cric-review, cric-api, cric-ui, cric-docs` — 12 repositories,
 `cric-core` first (every other repository consumes its contracts). None except
-`cric-core` exist yet as of 2026-08-29; Phase 0 creates the rest, blocked on D1/D2.
+`cric-core` exist yet as of 2026-08-29; Phase 0 creates the rest. Not blocked on a
+decision anymore — D1 (org) and D2 (licence) are both Resolved in
+`docs/OPEN_QUESTIONS.md` — just not yet dispatched.
 
 ## Process stack (ruled by the Engineering Coordinator, 2026-08-29)
 
@@ -71,7 +73,9 @@ assembles and cites the candidate → Pollen does blast-radius verification → 
 signs off (`docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2).
 **Freeze Point 1 (ID format) is ratified and locked** — `decisions/0004-freeze-point-1-identifier-format.md`,
 approver Ashley, 2026-08-29. The remaining 7 are not yet ratified. WP-6 (build-order
-item 1, identifier types) is dispatched against the locked grammar.
+item 1, identifier types), against the locked grammar, is **merged** — `main` at
+`fda79b1` (PR #17): `src/cric_core/identifiers/`, 31 tests. Freeze Point 1 is now
+executable code, not only a locked grammar.
 
 ## cric-core: package and CI (WP-4, waves 1–2)
 

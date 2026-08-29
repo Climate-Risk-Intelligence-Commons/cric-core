@@ -64,10 +64,13 @@ containing `I`/`L`/`O`/`U`, and `CRIC-LAKE-001` (the short form — must not par
    validate the `<type>` segment against. The alternative — a validator that accepts any
    string as `<type>` — defeats `Core-Ontology-Specification.md`'s own v0.1 acceptance
    criterion, "unknown types fail validation unless explicitly allowed as experimental."
-   **Finding, not actioned by this ADR:** `Domain-Phase-Mapping.md`'s Freeze Point 1 row
-   cites only registry §2 as primary spec; it should be corrected to also cite §3. That
-   edit is outside this role's write scope (not `docs/DECISION_REGISTER.md`,
-   `OPEN_QUESTIONS.md`, `LESSONS.md`, or `PROJECT_FACTS.md`) and is not made here.
+   **Finding raised at ratification time, not actioned by this ADR:** editing
+   `Domain-Phase-Mapping.md` is outside this role's write scope (not
+   `docs/DECISION_REGISTER.md`, `OPEN_QUESTIONS.md`, `LESSONS.md`, or
+   `PROJECT_FACTS.md`). Rather than asserting what that row currently cites — a
+   claim this ADR cannot keep in sync with an external document — this ADR
+   names the authoritative location instead: **`Domain-Phase-Mapping.md`'s Freeze
+   Point 1 row is the current citation list for this decision; read it directly.**
 6. **The PascalCase→snake_case transform is not authoritative.** The ontology registry
    carries the `id_segment` explicitly per type. A converter still ships, demoted to a
    registration-time suggestion — the stored value is authoritative, not a derivation.
@@ -153,13 +156,17 @@ byte-exact comparison requirement.
   immutability guardrail after this point requires an explicit migration, not a routine
   amendment — per `CRIC-Repository-Dependency-and-Implementation-Sequence.md`'s Freeze
   Point rule.
-- **WP-6 (Phase 1, build-order item 1: identifier types)** is dispatched against this
-  ADR — `src/cric_core/identifiers/**`, TDD, rejection tests for every malformed example
-  Fizz enumerated, `CRIC-LAKE-001` must not parse. Does not implement the type registry
-  (decision 5) — that is a separate, later work package.
-- **`Domain-Phase-Mapping.md`'s Freeze Point 1 row is now known-incomplete** (cites only
-  §2, needs §3 added per decision 5) — flagged here as a finding for whoever owns that
-  document; not corrected by this ADR or this role.
+- **WP-6 (Phase 1, build-order item 1: identifier types), against this ADR, merged**
+  to `main` at `fda79b1` (PR #17, 2026-08-29T15:29:41Z) — `src/cric_core/identifiers/`,
+  TDD, rejection tests for every malformed example Fizz enumerated,
+  `CRIC-LAKE-001` correctly does not parse. Does not implement the type registry
+  (decision 5) — that is a separate, later work package. Freeze Point 1 is now
+  executable code, not only a ratified grammar.
+- **`Domain-Phase-Mapping.md`'s Freeze Point 1 row** — see decision 5 above: this
+  ADR names the row as the authoritative location rather than describing its
+  contents, precisely because that description would otherwise go stale the way
+  this line originally did (it asserted the row was incomplete after WP-8 had
+  already corrected it — see `docs/LESSONS.md` for the general pattern).
 - **The PascalCase→snake_case converter code Pollen wrote during verification is not
   wasted** — it ships as the registration-time suggestion tool per decision 6, just not
   as the authoritative resolver.
