@@ -1,0 +1,41 @@
+# CRIC PRD v0.1 File Manifest
+
+| File | SHA-256 |
+|---|---|
+| `CRIC-Integration-Audit.md` | `1e0b070708415abf4db13b213583422af736c5ad13d9c03d19d5d165311ab51c` |
+| `CRIC-PRD-MASTER.md` | `4f07c56367f5aed1ed61973e1aaac0a52660bdff7d6d4f1870fc9db2b04a0c13` |
+| `CRIC-Repository-Dependency-and-Implementation-Sequence.md` | `60acee798f5b6298cb0c4e8115f3b0a2ac8da20d0d9a09a68f3f8ebe12187c5b` |
+| `CRIC-Requirements-Traceability-Matrix.md` | `70c0c80eb909b7ce962670a8afde939639c8a48c63db5ebe7697043ab7fce3ad` |
+| `CRIC-Schema-and-Vocabulary-Registry.md` | `bae11f894c120ccf388b509aee64c9c4805ad0f3a25ed9afef31643fcc1d0792` |
+| `ai/Agent-Commons-Architecture.md` | `aaba1e0761bf13d2cce0071589452d06f14dc79d4c27592ff8c0ad7da4d02f41` |
+| `ai/Agent-Team-Specifications.md` | `5a49f104b814c532835622fa49e4c28bb97f67d90480a6f52d05a87be7b4cc39` |
+| `ai/Model-Commons-and-ML-Specification.md` | `2cb5fbf341072d971961b1a56728cf0e42ddb91d37a69007ed62da8d3ba8caca` |
+| `ai/Responsible-Autonomy-and-HITL.md` | `07b583ac411cb5d07159c8d4da872ed043225b95e51f853e4b3ab5a352e9e20e` |
+| `community/Contribution-and-Review-Process.md` | `c66c9880b046b4c941031eae31fbecf305a0f91139e94ddc31364375224de49d` |
+| `community/Open-Source-Governance.md` | `d2654e3ec31c5041e2fae91ab930ce51c4b26d910fa298ce0c887d2be4e07ac5` |
+| `community/Volunteer-HITL-Workflow.md` | `452fb45b6040107f4da16e80df50d246701be7d5160799da2bca5c7ed6e4ba42` |
+| `data/Data-Commons-Architecture.md` | `d9e462e77f9e73db22fa7d828210399c150579ab232bb9e122bf39328d5d9941` |
+| `data/Data-Quality-and-Validation.md` | `00925fc0db5f6947b7519bc7f000a1f1e84471f5a53f9ce74baf903ce0609eea` |
+| `data/Ingestion-and-Licensing.md` | `7ba6d144314750de7381631a9063c5d61838cb4db729a69579f1c7e6495e1f7f` |
+| `data/Training-Data-and-Benchmark-Specification.md` | `2786b727a42008a08b32f06d0f327ece8deb36ef456c439e8fad5d9d1009dfe1` |
+| `domains/Cryosphere-Ontology.md` | `40ecb75c1a51133976fbc3271e45c6aafd3fbbc9565acbdbcc8909834002c22a` |
+| `domains/GLOF-Ontology.md` | `5ed35f54a3bbba069867d19db0612cc5ffc343adb308fc3f01d0873550eca659` |
+| `domains/StateSnapshot-and-Event-Cube-Specification.md` | `a1899d4dace9ea2b69606488337fcf907ff19bd5fa119db012b54f6782a9ef78` |
+| `engineering/Deployment-Versioning-and-Releases.md` | `0fdb3932cf092a4f6fd58a6571f367f6515ef17a334fa664be5d4b4e1ab0239e` |
+| `engineering/Security-and-Responsible-AI.md` | `803fed12850fe68f3e4172ee97056ed909564924045a07cdaab7ea505e3c3cb0` |
+| `engineering/Software-Architecture.md` | `e29e32672ea13bf42d9c691ec9d17972574b1b2e18a31ae9512fe9ce52cffe56` |
+| `engineering/Testing-and-Quality-Assurance.md` | `f50bbdd45a2a867d969d61e903424528e2b5a6d2f5e22c725e53342eaae663b9` |
+| `implementation/CRIC-v0.1-Implementation-Specification.md` | `01beb2e309f7926aba440602d6d66731557d8df5bf0642339965d995d0dd4018` |
+| `implementation/CRIC-v0.2-Implementation-Specification.md` | `67dad07c6c839def54ae293e1f0c5acb2995f738f7d441e494620d7f5cc95c10` |
+| `interfaces/API-and-SDK-Specification.md` | `f696462ee938c119cdf6cd6993d4911795d9431245d0428e2db83da91b31fc4f` |
+| `interfaces/Human-Applications-and-UI.md` | `5d7a8b8a4de9c92e2609802addbf8c92e1db531752b567d6b231d067ea9daa32` |
+| `interfaces/Search-and-Graph-Interfaces.md` | `830194df7347fc980278ef029c74e6444bdbe0482a02173d4521e9684357274c` |
+| `knowledge/Claims-Contradictions-and-Knowledge-Lifecycle.md` | `754ba3a0d3ec091dc0f1c7bb12f074592a0938edc8e45cf5dc6d6ff924cf3b35` |
+| `knowledge/Core-Ontology-Specification.md` | `f98d0ec99947327bc7c764771bdea8e519cb75ca0c2169b3001e1b07a1eaa696` |
+| `knowledge/Evidence-Provenance-and-Trust.md` | `4cd317b2fb80a75c47037ce410a579f12eca2240fb59044ac9b6f64c309e9e05` |
+| `knowledge/OKF-Knowledge-Graph-Specification.md` | `dee64762437b15859499d6cbd9d67cfb69f9097f7fddefd9a5b1dfb88cddbb57` |
+| `knowledge/Ontology-Evolution-and-Governance.md` | `30c6b279f4332d478ce0fe4dc5af796fd0834ac89bcb3fdc64d6f1307d9f4d58` |
+| `knowledge/Temporal-and-Epistemic-Ontology.md` | `c63c2b21ad0634e5ceffce3ff5ee9f4a380a6755dab57ff12fe8dca56e88b5b0` |
+| `product/Product-Scope-and-Domain-Architecture.md` | `9b3d76cc70577a90554624292d602f8050ecc4be55e56d60d9d4a213092839b8` |
+| `product/Product-Vision-and-Principles.md` | `1d48d28416cb72643ea2d5f531381997d98ecc791aa3007975d49d0379be3fa1` |
+| `product/Repository-and-System-Architecture.md` | `86dfd1324f4dda733a5277381076becd0ef91237313ef1977a901ab882c862c5` |
