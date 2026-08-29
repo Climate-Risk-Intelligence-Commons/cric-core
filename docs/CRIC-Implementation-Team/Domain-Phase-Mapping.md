@@ -73,14 +73,20 @@ parallel is only safe once the freeze points that phase depends on are locked.
 
 | # | Freeze point | Produced in | Primary spec | Phases that cannot safely start before this locks |
 |---|---|---|---|---|
-| 1 | ID format | Phase 1 | `CRIC-Schema-and-Vocabulary-Registry.md` §2 | All (every node/edge/predicate reference depends on it) |
-| 2 | Base OKF frontmatter | Phase 1 | `knowledge/OKF-Knowledge-Graph-Specification.md` | 2, 4, 5, 6, 9 |
-| 3 | Temporal model | Phase 1 | `knowledge/Temporal-and-Epistemic-Ontology.md` | 4, 5, 6, 9, 10 |
-| 4 | Provenance model | Phase 1 | `knowledge/Evidence-Provenance-and-Trust.md` | 3, 5, 6, 9, 10 |
-| 5 | Relationship representation | Phase 1 | `knowledge/OKF-Knowledge-Graph-Specification.md` §Relationship Grammar + registry §8 | 2, 4, 6, 9 |
-| 6 | Knowledge-state vocabulary | Phase 1 | `CRIC-Schema-and-Vocabulary-Registry.md` §4, `knowledge/Claims-Contradictions-and-Knowledge-Lifecycle.md` | 4, 6, 7, 9, 13 |
-| 7 | Review decision schema | Phase 1 | `ai/Responsible-Autonomy-and-HITL.md` | 7, 8, 13 |
-| 8 | Agent manifest schema | Phase 1 | `ai/Agent-Commons-Architecture.md` | 8 |
+| 1 | ID format | Phase 1 | `CRIC-Schema-and-Vocabulary-Registry.md` §2 (identifier form) + §3 (Root Object Types — governs the `<type>` segment's legal values; ratified in ADR-0004) | All (every node/edge/predicate reference depends on it) |
+| 2 | Base OKF frontmatter | Phase 1 | `knowledge/OKF-Knowledge-Graph-Specification.md` (Universal Frontmatter, Node Categories) + registry §1 (Naming — defines OKF Markdown itself and Pydantic as runtime schema authority) + registry §3 (Root Object Types — governs the frontmatter's `type:`/`subtype:` field values, confirmed against the doc's own worked examples) | 2, 4, 5, 6, 9 |
+| 3 | Temporal model | Phase 1 | `knowledge/Temporal-and-Epistemic-Ontology.md` + registry §7 (Multi-Temporal Model — the doc's Temporal Structure block is a verbatim superset of §7's schema) + registry §5 (Epistemic Status — the doc's own Epistemic Model section duplicates it) + registry §6 (Negative-Case Vocabulary — the doc's Unknown Versus Negative section overlaps it, at coarser granularity) | 4, 5, 6, 9, 10 |
+| 4 | Provenance model | Phase 1 | `knowledge/Evidence-Provenance-and-Trust.md` + registry §9 (Evidence and Provenance Levels — the doc's Source→Acquired Asset→…→Decision-Support Output chain is the same lineage as §9's L0–L6; note §9 states backward traversal as MUST, the doc as "should" — registry's stronger modal wins) | 3, 5, 6, 9, 10 |
+| 5 | Relationship representation | Phase 1 | `knowledge/OKF-Knowledge-Graph-Specification.md` §Relationship Grammar + registry §8 — unchanged; the doc itself states "`CRIC-Schema-and-Vocabulary-Registry.md` section 8 is the sole authority for the canonical predicate list," the strongest possible confirmation of this row | 2, 4, 6, 9 |
+| 6 | Knowledge-state vocabulary | Phase 1 | `CRIC-Schema-and-Vocabulary-Registry.md` §4, `knowledge/Claims-Contradictions-and-Knowledge-Lifecycle.md` — unchanged; checked whether §5/§6 belong here too (both are Epistemic content, not Knowledge-state) and confirmed they don't, since `Claims-Contradictions-and-Knowledge-Lifecycle.md` carries no epistemic-status or negative-case content — that content lives in `Temporal-and-Epistemic-Ontology.md` instead, which is why it was added to row 3, not this row | 4, 6, 7, 9, 13 |
+| 7 | Review decision schema | Phase 1 | `ai/Responsible-Autonomy-and-HITL.md` + registry §10 (Canonical Review States — the doc's Review as Repository State folder list and its ReviewDecision.decision values are both verbatim matches of §10) | 7, 8, 13 |
+| 8 | Agent manifest schema | Phase 1 | `ai/Agent-Commons-Architecture.md` §Agent Manifest + registry §13 (Agent Composition Contract — the doc's Architectural Principle ten-part list is a verbatim match of §13's list) | 8 |
+
+**Provenance of the "Primary spec" column above:** every registry section cited was read in full, not matched by heading title alone (`CRIC-Implementation-Team/00-Overview-and-Superpowers-Codex-Pathway.md`'s own precedence framing and the Engineering Coordinator's audit of this table, 2026-08-29, both required this). Where a row's citation is unchanged from an earlier version of this table, that means it was checked and confirmed sufficient, not that it was skipped — rows 5 and 6 both carry an explicit note saying what was checked and why nothing else governs. `CRIC-Schema-and-Vocabulary-Registry.md` is authority rank 2, above every specialised document cited alongside it in this table; where a registry section and a specialised document's own wording differ in modal strength (e.g. row 4's MUST vs "should"), the registry's wording is authoritative.
+
+**Two things this pass surfaced that are findings, not table fixes, and are out of this table's scope to correct:**
+- `knowledge/OKF-Knowledge-Graph-Specification.md`'s own Node Categories list (row 2) still uses `Asset`, not `DataAsset` — the same drift ADR-0004 already named in `Core-Ontology-Specification.md`, now confirmed in a second file. Registry §3's Asset Resolution governs both.
+- Rows 3 and 6 were previously ambiguous about whether registry §5/§6 belonged to Temporal or Knowledge-state; this pass resolves it by reading both specialised documents directly rather than by title correspondence, per the acceptance criterion this work package was scoped against.
 
 **Practical consequence for scheduling build-time agents:** nothing outside Phase 0/1
 should be dispatched to a build-time agent until Phase 1's exit criterion ("canonical
