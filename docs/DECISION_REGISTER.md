@@ -12,6 +12,7 @@ applicable, otherwise `Proposed` / `Accepted` / `Superseded`.
 | [0003](../decisions/0003-create-github-organisation.md) | Create the `Climate-Risk-Intelligence-Commons` GitHub organisation and transfer `cric-core` into it | Accepted, transfer confirmed complete | Ashley | 2026-08-29 | No |
 | [0004](../decisions/0004-freeze-point-1-identifier-format.md) | Freeze Point 1 — object identifier format, `CRIC:<namespace>:<type>:<ulid>` | **Accepted — locked** | Ashley | 2026-08-29 | **Yes — Freeze Point 1 of 8** |
 | [0005](../decisions/0005-fanout-default-with-stated-reason.md) | Parallelisation is the default; declining it needs a stated reason | Accepted | Ashley | 2026-08-29 | No |
+| [0006](../decisions/0006-dataasset-canonical-type.md) | `DataAsset` is the canonical ontology type; `Asset` is prose only | Accepted — propagation, not amendment | Engineering Coordinator | 2026-08-29 | No (mandatory input to Freeze Point 2) |
 
 **Freeze Point 1 (ID format) is ratified — the first of 8 to lock.** Phase 1
 (`cric-core`) has started: packaging and CI are merged (WP-4 waves 1-2, see
