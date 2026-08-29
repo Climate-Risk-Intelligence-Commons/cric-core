@@ -86,6 +86,14 @@ Once locked, changing one **requires explicit migration and Ashley's sign-off**.
 work package may not silently alter a locked freeze point — that is an escalation, not
 an implementation detail.
 
+**A candidate is not ratifiable on accuracy alone.** Every closed set it proposes — an
+enum, a transition graph, a schema — needs a stated negative test: a concrete scenario
+the PRD itself documents, shown representable under the proposed closure. A closure
+nobody attempted to break with a real counter-example is not ready for sign-off. The
+candidate also states explicitly which object classes the closure applies to — a
+field's scope is part of its contract, not something left for the attacker or the
+sign-off to infer.
+
 ## 6. Constitutional rules that bite in code
 
 All 13 are in `CRIC-PRD-MASTER.md`. These four are the ones most often broken by
