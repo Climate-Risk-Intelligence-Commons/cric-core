@@ -247,9 +247,19 @@ Example operations:
 - bounded traversal;
 - shortest semantic path;
 - predicate-constrained traversal;
+- traversal-profile-selected retrieval;
 - temporal graph slice;
 - provenance traversal;
 - dependency impact traversal.
+
+Predicate-constrained traversal specifies allowed predicates directly. Traversal-profile-selected retrieval instead selects a named, versioned Traversal Profile and lets the profile define the permitted paths:
+
+```python
+cric.graph.traverse(
+    seed="CRIC-LAKE-001",
+    traversal_profile="glacial_lake_risk_assessment",
+)
+```
 
 Arbitrary unbounded graph traversal should be restricted.
 

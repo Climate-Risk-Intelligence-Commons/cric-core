@@ -30,8 +30,8 @@ This matrix connects CRIC's constitutional requirements to the PRD documents tha
 | R-022 | Agents can pause and resume durably | Responsible Autonomy | Software Architecture; Volunteer HITL | Pause/resume E2E test |
 | R-023 | Level 4 safety-significant outputs require human review | Responsible Autonomy | Security | Bypass test must fail |
 | R-024 | CRIC never assumes government warning authority | Responsible Autonomy | Security; Product Vision | Prohibited-action tests |
-| R-025 | Graph retrieval is deterministic and bounded | Search/Graph | API; Software Architecture | Bounded traversal tests |
-| R-026 | LLMs receive inspectable context packages | Search/Graph | Agent Commons | Retrieval reproducibility test |
+| R-025 | Graph retrieval is deterministic and bounded | Search/Graph | Deterministic Retrieval Engine; API; Software Architecture | Bounded traversal tests; ranking-reproducibility test (Testing/QA) |
+| R-026 | LLMs receive inspectable context packages | Search/Graph | Deterministic Retrieval Engine; Agent Commons | Retrieval reproducibility test; Context Package completeness/exclusions fields present |
 | R-027 | Evidence completeness is separate from hazard/risk | Data Quality | UI; GLOF Ontology | UI/schema distinction test |
 | R-028 | Materialised databases are rebuildable | Software Architecture | Search/Graph; Data Commons | Rebuild integration test |
 | R-029 | Local/offline/sovereign deployment is supported | Software Architecture | Deployment; Data Commons | Offline bundle test |
@@ -46,3 +46,4 @@ This matrix connects CRIC's constitutional requirements to the PRD documents tha
 | R-038 | Releases identify exact component versions | Deployment/Releases | Repository Architecture | Coordinated manifest |
 | R-039 | Candidate agent knowledge is visibly distinct | Human UI | Knowledge Lifecycle | UI acceptance test |
 | R-040 | External researchers can reproduce the v0.1 evidence-to-model chain | v0.1 Implementation | Testing; all core specifications | v0.1 Definition of Done |
+| R-041 *(PROPOSED — pending Ashley's decision, not yet ratified)* | LLMs may write to the knowledge store only via structured mutation → validation → human/policy check → atomic write | Agent Commons | Deterministic Retrieval Engine; Responsible Autonomy | Write-boundary bypass test must fail |

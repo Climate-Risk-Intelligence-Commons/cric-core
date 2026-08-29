@@ -59,6 +59,7 @@ Canonical core types include:
 - DataAsset
 - Licence
 - Workflow
+- TraversalProfile
 - Agent
 - AgentRun
 - Toolset
@@ -70,6 +71,8 @@ Canonical core types include:
 - Label
 - FeatureSet
 - Prediction
+- ContextSubgraph
+- ContextPack
 - ReviewRequest
 - ReviewDecision
 - OntologyProposal
@@ -89,6 +92,10 @@ Use:
 - `TrainingRun` for model training;
 - `EvaluationRun` for evaluation;
 - `ModelRun` only as the generic parent or non-training/non-evaluation execution record.
+
+### Retrieval Artefact Resolution
+
+`TraversalProfile`, `ContextSubgraph`, and `ContextPack` are canonical **ComputationalObject** types, introduced by the deterministic OKF multi-hop context-retrieval architecture. `TraversalProfile` defines the permitted traversal paths for a retrieval task and is analogous to `Workflow`. `ContextSubgraph` is the resolved node/edge subgraph the traversal engine returns, and `ContextPack` is the bounded, versioned context package built from it for LLM consumption; both are computed pipeline outputs, analogous to `Prediction`.
 
 ## 4. Knowledge State
 
@@ -179,6 +186,7 @@ Core scientific/evidential predicates include:
 
 ```text
 supports
+supported_by
 contradicts
 refines
 supersedes
@@ -196,6 +204,7 @@ Spatial/domain predicates may include:
 located_in
 part_of
 contains
+depends_on
 feeds
 fed_by
 drains_to
@@ -205,17 +214,30 @@ adjacent_to
 intersects
 overlaps
 within
-connected_to
 terminates_at
 terminates_in
-associated_with
 dammed_by
 exposed_to
+exposes
 experienced
 impacted
+threatens
 triggered_by
 observed_by
 ```
+
+Structural predicates may include:
+
+```text
+has_snapshot
+```
+
+### Deprecated Predicates
+
+- `connected_to` — removed; vague/semantically-empty, named as an anti-pattern predicate (alongside `linked_to`, `related_with`, `associated_with`, `impacts`, `affects`, `near`) by the deterministic OKF multi-hop context-retrieval architecture's "Use a Controlled Relationship Ontology" section.
+- `associated_with` — removed; same reason as `connected_to`.
+
+`caused_by` was considered as a new predicate and rejected: redundant with the existing `triggered_by` at CRIC's current level of ontological granularity.
 
 Predicates MUST be registered and versioned.
 

@@ -24,6 +24,7 @@
 10. Human oversight increases with uncertainty, irreversibility, authority and consequence.
 11. CRIC never silently assumes institutional warning authority.
 12. Core architecture remains climate-risk-wide rather than GLOF-specific.
+13. The LLM must not perform graph traversal; deterministic software assembles context first.
 
 ## Product Layers
 
@@ -122,6 +123,7 @@ CRIC-PRD-v0.1/
 ### Engineering
 
 - `engineering/Software-Architecture.md`
+- `engineering/Deterministic-Retrieval-Engine-Specification.md`
 - `engineering/Security-and-Responsible-AI.md`
 - `engineering/Testing-and-Quality-Assurance.md`
 - `engineering/Deployment-Versioning-and-Releases.md`

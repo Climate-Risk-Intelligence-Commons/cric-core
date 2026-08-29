@@ -86,7 +86,28 @@ Test:
 - bounded traversal;
 - contradiction retrieval;
 - dependency impact;
-- temporal graph slices.
+- temporal graph slices;
+- ranking reproducibility (see Deterministic Ranking Tests below).
+
+## Retrieval Failure Classification
+
+CRIC's retrieval path (compiled graph → traversal → context pack → LLM) can fail at more than one layer. Every retrieval-path test failure must be assigned to exactly one of five classes:
+
+- knowledge failure — the required fact does not exist in the vault, or exists but is wrong at the source; no improvement to retrieval, context construction or reasoning can fix it;
+- retrieval failure — the fact exists in the compiled graph but seed resolution, traversal profile selection or ranking failed to select it into the candidate set;
+- context-construction failure — the fact was selected but was lost, mis-ordered, truncated or dropped during deduplication, completeness checking or token budgeting before the context pack was assembled;
+- reasoning failure — the fact was present in the delivered context pack, but the model combined, weighted or interpreted it incorrectly;
+- generation failure — the model reasoned correctly, but the emitted output misstates, garbles or fails to faithfully render that reasoning.
+
+A wrong answer labelled only as "hallucination" hides which layer needs the fix: the knowledge base, the retrieval engine, the context builder or the model. Test harnesses for graph, provenance and agent tests must record which of these five classes a failing case belongs to; an unclassified retrieval-path failure is itself a test-infrastructure defect.
+
+## Deterministic Ranking Tests
+
+Test:
+
+- Ranking Reproducibility (test id: `retrieval-ranking-reproducibility`): the same query, vault state, traversal profile and retrieval-engine version must always produce an identical context package — the same node selection, the same edge selection and the same ordering — across repeated runs and across repeated deployments. Any divergence is a retrieval failure or a context-construction failure, never a knowledge or reasoning failure, and must be filed as such;
+- weight-coefficient regression (documented scoring weights change only through a reviewed, versioned update, never silently);
+- tie-break determinism (nodes with equal scores resolve to a stable, documented order rather than arbitrary iteration order).
 
 ## Geospatial Tests
 
