@@ -78,6 +78,38 @@ CRIC is designed for:
 
 ---
 
+# Funders and Resourcing Partners
+
+Primary Users, above, describes who operates CRIC. This section describes who resources it — a distinct relationship, and folding one into the other would misstate both.
+
+CRIC does not name any specific funder, partner or beneficiary institution in this document, or in any public-facing material derived from it, whether committed, prospective or aspirational, without that party's explicit consent.
+
+## Funder and Grantor Classes
+
+CRIC's own architecture and values, not marketing framing, are what make it creditable to at least four distinct classes:
+
+- public research and government science funders, who evaluate methodology, reproducibility and named institutional partnership rather than narrative alone;
+- philanthropic and mission-driven funders working in climate, disaster risk or open science, who evaluate a credible, evidenced pathway from source observation to populations exposed to downstream hazard;
+- open-source and digital-infrastructure sustainability funders, who evaluate shipped, maintained, openly governed software as the deliverable, not a roadmap;
+- multilateral and development-finance climate bodies, who evaluate whether a piece of infrastructure strengthens institutional decision-making without displacing institutional authority.
+
+Individual and community giving is deliberately out of scope for this section. CRIC intends a dedicated funding surface for that relationship later; until it exists, this document does not treat individual giving as a funder class to design for.
+
+## What Each Class Can Already Verify Against This PRD
+
+- Reproducibility and provenance discipline (Product Values: Evidence Before Interpretation, Provenance Before Convenience) is the primary claim for research and government funders.
+- Disaster-risk practitioners named as Primary Users, above, and downstream exposure named as a GLOF Product Objective, is the primary claim for philanthropic and mission-driven funders.
+- Open by Default, Replaceability and Modularity (Product Values), plus the open governance model in `community/Open-Source-Governance.md`, is the primary claim for open-source sustainability funders.
+- The Non-Goals of this document — CRIC does not replace government warning systems — and Constitutional Product Rule 11 (`CRIC-PRD-MASTER.md`: "CRIC never silently assumes institutional warning authority") is the primary claim for multilateral and development-finance bodies, who cannot resource anything that competes with the institutions they answer to.
+
+## What CRIC Owes Every Funding Relationship
+
+- No funding relationship may create a closed fork, exclusive licence, or private branch of otherwise-open material. AGPL-3.0 already makes this structural; this states it as a standing commitment, not only a licence default.
+- No funded output may be represented as an institutional warning, consistent with Constitutional Product Rule 11.
+- No funding relationship is represented as committed, prospective or under discussion in any public material until the funder named has agreed to that disclosure.
+
+---
+
 # Product Values
 
 ## Evidence Before Interpretation
