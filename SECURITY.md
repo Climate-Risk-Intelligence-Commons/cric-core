@@ -15,13 +15,8 @@ vulnerabilities should not require immediate public issue disclosure."*
 
 **Report via this repository's Security tab → "Report a vulnerability."** That
 opens a private draft security advisory visible only to you and the
-repository's admins.
-
-If you can't reach that form — no GitHub account, or an access problem on your
-end — contact a repository admin directly through the
-[Climate-Risk-Intelligence-Commons](https://github.com/Climate-Risk-Intelligence-Commons)
-GitHub organisation. Either way, don't fall back to a public issue, pull
-request, or discussion.
+repository's admins. Don't fall back to a public issue, pull request, or
+discussion.
 
 ## Scope
 
