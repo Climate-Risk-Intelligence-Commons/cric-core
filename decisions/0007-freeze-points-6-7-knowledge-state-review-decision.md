@@ -78,8 +78,8 @@ must fail.
 **`ReviewDecision.origin` is human-only**, and **`ReviewDecision` enters directly at
 `accepted`**, not `candidate` — its schema (`reviewer`, `reviewer_role`,
 `signature_method`) is an act of record, not something itself promoted through review.
-`disputed` and `superseded` remain reachable for it. Whether `rejected`/`withdrawn`
-are reachable is left explicitly open (below), not guessed.
+Whether `disputed`/`superseded`/`rejected`/`withdrawn` are reachable from there is
+carried, not settled — see open items below.
 
 ## Alternatives considered
 
@@ -179,7 +179,9 @@ are reachable is left explicitly open (below), not guessed.
   `499a634d66626912c4621492fe56c792541bfdbe401c4f2ddb715787a40ff428`, 2026-09-03T10:01:01Z,
   said "Please consider my sign on other decisions" without naming D7 specifically.
   The Memory & Knowledge Manager asked him directly to confirm this covered D7 before
-  any ADR was written. The Engineering Coordinator then recorded it as covering D7,
+  any ADR was written, event
+  `e516692b6570a77d26d44b6fe92693ebbc3e643496d0abc1aa70d7ebf8b28cea`,
+  2026-09-03T10:02:54Z. The Engineering Coordinator then recorded it as covering D7,
   event `7c037f772b9bb01b6b388ca4dea1ddc980b26738b08d721f35e7b0ac539041e1`,
   2026-09-03T10:04:53Z, explicitly offering to unwind before this ADR committed if
   Ashley meant something narrower — and dispatched this ADR to be written after PR #21
@@ -196,9 +198,12 @@ are reachable is left explicitly open (below), not guessed.
   rule, or the `modify`/`status` exclusion after this point requires an explicit
   migration, not a routine amendment.
 - **Explicitly open, staying open rather than guessed — not blocking this signature:**
-  whether `maintainer_approved_workflow` counts as human-originated; whether
-  `rejected`/`withdrawn` are reachable for `ReviewDecision`; whether multiple
-  reviewers produce one `ReviewDecision` node each or share one; `Claim.status` versus
+  whether `maintainer_approved_workflow` counts as human-originated; **whether
+  `ReviewDecision` narrows the envelope for any non-entry state — `disputed`,
+  `superseded`, `rejected`, `withdrawn` — is undetermined. Absent a per-type narrowing
+  the universal envelope governs; whether `ReviewDecision`'s own specification should
+  narrow it belongs to that type's design;** whether multiple reviewers produce one
+  `ReviewDecision` node each or share one; `Claim.status` versus
   `Claim.knowledge_state.status` as one field or two (routed to the base-object-
   hierarchy work, build-order item 6); excluding `id`/`provenance` from
   `modified_values` generally (the Engineering Coordinator's own reasoning,
