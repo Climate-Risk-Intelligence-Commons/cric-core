@@ -13,21 +13,15 @@ Report privately — do not open a public GitHub issue. Per
 section: *"Security vulnerabilities should have a private reporting route. Sensitive
 vulnerabilities should not require immediate public issue disclosure."*
 
-**Preferred channel: GitHub Private Vulnerability Reporting**, via this
-repository's Security tab → "Report a vulnerability."
+**Report via this repository's Security tab → "Report a vulnerability."** That
+opens a private draft security advisory visible only to you and the
+repository's admins.
 
-**Status as of this writing: not yet enabled on this repository** — verified via
-the GitHub API (`private-vulnerability-reporting` → `false`) at the time this
-policy was written. Enabling it is a one-time, reversible repository-admin
-setting (Settings → Security → Private vulnerability reporting); it is not a
-content change and isn't something this pull request can do on its own
-authority. Flagged as an action item for whoever holds repository admin.
-
-**Until it is enabled**, there is no confirmed private channel for this
-repository specifically. Do not route a report through a public issue, pull
-request, or discussion in the meantime — hold it and escalate the "channel not
-yet live" gap itself so it gets fixed, rather than defaulting to a public
-report.
+If you can't reach that form — no GitHub account, or an access problem on your
+end — contact a repository admin directly through the
+[Climate-Risk-Intelligence-Commons](https://github.com/Climate-Risk-Intelligence-Commons)
+GitHub organisation. Either way, don't fall back to a public issue, pull
+request, or discussion.
 
 ## Scope
 
