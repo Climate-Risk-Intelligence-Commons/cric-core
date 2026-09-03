@@ -212,3 +212,23 @@ yet ratified" in that file; tracked as an open item until Ashley rules on it.
     state the current substance directly rather than only "supersedes ADR-000N" — so
     the chain a reader must open stays at one. `decisions/0003` already does this; hold
     future superseding ADRs to the same bar.
+
+## Governance and community-health files
+
+Ashley asked for "proper decisions" on licence, README, contributing, code of conduct,
+security, governance, CI, branch protection and decision records in one pass (event
+`5e4d410b5988dbf69139e7b162262ef6bd4e38a4ce3a01a9c8d43949fd104b6b`,
+2026-09-03T10:29:19Z). Status of each, pointing at the authoritative record rather than
+restating it:
+
+| Area | File(s) | Status | Record |
+|---|---|---|---|
+| Licence | `LICENSE` | AGPL-3.0, decided, applied | D2, `docs/OPEN_QUESTIONS.md` |
+| README | `README.md` | Dual-audience rebuild dispatched (Fizz, WP-23a) | this thread |
+| Contributing / Governance | `CONTRIBUTING.md`, `GOVERNANCE.md` | Root pointer files to existing PRD specs (Honey, WP-19) | `docs/OPEN_QUESTIONS.md` |
+| Code of Conduct | `CODE_OF_CONDUCT.md` | Contributor Covenant v2.1 verbatim; **blocked on enforcement contact** | D8, `docs/OPEN_QUESTIONS.md` |
+| Security | `SECURITY.md` | Private Vulnerability Reporting, live, stated unconditionally (Honey, WP-19a) | `docs/OPEN_QUESTIONS.md` |
+| CI | `.github/workflows/ci.yml` | ruff → mypy → pytest → build; `test` required check; **no job added without an existing subject to examine** | ADR-0008 |
+| Branch protection | GitHub repo settings | Strict mode + `enforce_admins`, unchanged; stated exit condition if a batch stalls badly | D3, `docs/OPEN_QUESTIONS.md` |
+| Decision records | `decisions/`, `docs/DECISION_REGISTER.md` | Established convention, unchanged | `decisions/0001` |
+| Build status (README) | — | **CI-generated, not hand-typed** — mechanism dispatched to Honey (WP-24), after WP-18 | ADR-0008 |
