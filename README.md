@@ -94,10 +94,11 @@ today, and this paragraph is written to keep saying so for as long as that's tru
 <details>
 <summary>This paragraph is a snapshot, not a promise — the mechanism keeping it honest</summary>
 
-Every commit changes what's built. Rather than rely on someone remembering to update
-this section by hand, these figures are moving to a CI-generated status so a stale
-number becomes a build failure instead of a silent drift. Until that lands, treat the
-date above as this paragraph's expiry, not a formality.
+Every commit changes what's built. This paragraph is hand-maintained today. The
+stronger fix — a CI-generated status, so a stale number becomes a build failure
+instead of a silent drift — is a named, tracked work item that has not started yet,
+not work already in motion. Until it ships, treat the date above as this paragraph's
+real expiry, not a formality.
 
 </details>
 
