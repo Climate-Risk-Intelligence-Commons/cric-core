@@ -6,9 +6,9 @@ Source of truth: decisions/0007-freeze-points-6-7-knowledge-state-review-decisio
 import pytest
 
 from cric_core.knowledge_state import (
+    UNIVERSAL_TRANSITIONS,
     InvalidTransition,
     KnowledgeStateStatus,
-    UNIVERSAL_TRANSITIONS,
     narrow_transitions,
     validate_transition,
 )

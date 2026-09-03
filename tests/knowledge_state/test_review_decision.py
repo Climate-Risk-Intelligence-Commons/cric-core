@@ -5,12 +5,12 @@ and the open items this module must NOT silently close.
 import pytest
 
 from cric_core.knowledge_state import (
-    InvalidOrigin,
-    KnowledgeStateStatus,
-    Origin,
     REVIEW_DECISION_ALLOWED_ORIGINS,
     REVIEW_DECISION_ENTRY_STATUS,
     UNIVERSAL_TRANSITIONS,
+    InvalidOrigin,
+    KnowledgeStateStatus,
+    Origin,
     validate_review_decision_origin,
     validate_transition,
 )

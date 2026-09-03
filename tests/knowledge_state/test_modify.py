@@ -5,11 +5,11 @@
 import pytest
 
 from cric_core.knowledge_state import (
+    RESERVED_MODIFY_FIELDS,
     InvalidModifiedValues,
     InvalidTransition,
     KnowledgeStateStatus,
     ModifyResult,
-    RESERVED_MODIFY_FIELDS,
     apply_modify,
     validate_modified_values,
 )
