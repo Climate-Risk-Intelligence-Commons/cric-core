@@ -96,11 +96,37 @@ are reachable is left explicitly open (below), not guessed.
   original position — and because scoping the field elsewhere would require moving
   `knowledge_state` off `CRICObject` in the ontology, a PRD amendment requiring
   Ashley's signature that this ruling avoids triggering.
-- **The orthogonality reading itself, unratified as a generalisation.** Its author
-  (the Engineering Coordinator) could not verify his own reasoning per WP-12's rule
-  and asked Pollen to attack it; Pollen found no counter-example after checking the
-  hardest cases (`ProvenanceRecord`, `MigrationRecord`). Ratified as applied to this
-  Freeze Point's scope question; not extended further than that.
+- **Orthogonality as an empirical claim — "no counter-example exists in the corpus."**
+  Its author (the Engineering Coordinator) could not verify his own reasoning per
+  WP-12's rule and asked Pollen to attack it. Pollen's attack found that
+  `ProvenanceRecord` and `MigrationRecord` — the hardest cases available — are both
+  single-axis, with no documented second lifecycle anywhere in the corpus (event
+  `be2c80454b187863fb9bbaa8b7f1c397414290f64a12648a2241a277c15b18f2`, 2026-08-29T16:00:39Z):
+  a single-axis type cannot falsify orthogonality by construction, so that check could
+  not settle the claim either way — it is why the first attempt did not close this,
+  not evidence that it did. **Rejected in this form.** The Engineering Coordinator
+  ruled explicitly against treating "no counter-example found" as the basis: *"That
+  claim is unfalsifiable by reading… We are not claiming 'no counter-example exists in
+  the corpus'"* (event `0dd3a435f6ce79178324af6a64e26c6d2c3a136a77da1d285d843a7cbe451686`,
+  2026-08-29T16:02:52Z).
+  **Ratified instead as an imposed invariant, not an empirical finding:** `knowledge_state`
+  is orthogonal to any domain lifecycle by rule, not by exhaustive search — *"a type
+  whose second axis would have to move in lockstep with `knowledge_state` is a defect
+  in that type's specification, not a refutation of FP6"* (same event). This form is
+  enforceable at type-design time; the rejected empirical form was not, and a future
+  counter-example under it would have read as FP6 being broken rather than as a bug in
+  the type that carries it. The invariant was exercised, not merely asserted, against
+  two dual-axis types: `OntologyProposal` — inherited `knowledge_state` alongside its
+  own `experimental → candidate → review → stable → deprecated → removed` lifecycle,
+  zero cross-reference between the two anywhere in the corpus (Pollen, event
+  `47d5bd1a217a715e56ffe15733fb5b155b332308585e8e0af48cecdfb4331962`, identified as the
+  sharpest real conflict, not a hypothetical) — and, on adversarial re-attempt to
+  construct a counter-example, held (`be2c8045…`, above); and `Licence` — its own
+  status vocabulary at `Ingestion-and-Licensing.md:89` and
+  `Evidence-Provenance-and-Trust.md:265`, independently found and verified against
+  both citations by the Engineering Coordinator (`0dd3a435…`, above), decisively
+  separable from `knowledge_state.status`. Ratified as applied to this Freeze Point's
+  scope question; not extended further than that.
 - **`review_status` / the trust vocabulary as part of this unit** (the reason Freeze
   Point 4 briefly looked coupled in). Confirmed a genuinely distinct field:
   `Label.review_status` is a top-level field sibling to `epistemic_status`, which
