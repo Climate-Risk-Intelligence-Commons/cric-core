@@ -72,10 +72,20 @@ change but requires explicit migration after freeze." Ratification checkpoint: F
 assembles and cites the candidate → Pollen does blast-radius verification → Ashley
 signs off (`docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2).
 **Freeze Point 1 (ID format) is ratified and locked** — `decisions/0004-freeze-point-1-identifier-format.md`,
-approver Ashley, 2026-08-29. The remaining 7 are not yet ratified. WP-6 (build-order
-item 1, identifier types), against the locked grammar, is **merged** — `main` at
-`fda79b1` (PR #17): `src/cric_core/identifiers/`, 31 tests. Freeze Point 1 is now
-executable code, not only a locked grammar.
+approver Ashley, 2026-08-29. WP-6 (build-order item 1, identifier types), against the
+locked grammar, is **merged** — `main` at `fda79b1` (PR #17): `src/cric_core/identifiers/`,
+31 tests. Freeze Point 1 is now executable code, not only a locked grammar.
+
+**Freeze Points 6 and 7 (knowledge-state vocabulary; review decision schema) are
+ratified and locked as one unit** — `decisions/0007-freeze-points-6-7-knowledge-state-review-decision.md`,
+approver Ashley, 2026-09-03. Not yet implemented; Honey's WP-18 (build-order item 2,
+knowledge-state models) is the first code against them. Freeze Point 4 (provenance
+model) briefly looked coupled into this ratification and was found not to be — it
+remains separate and unratified.
+
+**5 of 8 Freeze Points remain unratified:** 2 (base OKF frontmatter), 3 (temporal
+model), 4 (provenance model), 5 (relationship representation), 8 (agent manifest
+schema).
 
 ## cric-core: package and CI (WP-4, waves 1–2)
 

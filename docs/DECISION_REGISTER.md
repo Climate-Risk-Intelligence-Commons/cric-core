@@ -13,15 +13,21 @@ applicable, otherwise `Proposed` / `Accepted` / `Superseded`.
 | [0004](../decisions/0004-freeze-point-1-identifier-format.md) | Freeze Point 1 — object identifier format, `CRIC:<namespace>:<type>:<ulid>` | **Accepted — locked** | Ashley | 2026-08-29 | **Yes — Freeze Point 1 of 8** |
 | [0005](../decisions/0005-fanout-default-with-stated-reason.md) | Parallelisation is the default; declining it needs a stated reason | Accepted | Ashley | 2026-08-29 | No |
 | [0006](../decisions/0006-dataasset-canonical-type.md) | `DataAsset` is the canonical ontology type; `Asset` is prose only | Accepted — propagation, not amendment | Engineering Coordinator | 2026-08-29 | No (mandatory input to Freeze Point 2) |
+| [0007](../decisions/0007-freeze-points-6-7-knowledge-state-review-decision.md) | Freeze Points 6 + 7 — knowledge-state vocabulary and review decision schema, ratified as one unit | **Accepted — locked** | Ashley | 2026-09-03 | **Yes — Freeze Points 6 and 7 of 8** |
 
-**Freeze Point 1 (ID format) is ratified — the first of 8 to lock.** Phase 1
+**Freeze Points 1, 6 and 7 are ratified — three of 8 locked.** Phase 1
 (`cric-core`) has started: packaging and CI are merged (WP-4 waves 1-2, see
 `docs/PROJECT_FACTS.md`), and WP-6 (build-order item 1, identifier types), against
 ADR-0004, is merged (PR #17, `main` at `fda79b1`) — Freeze Point 1 is now executable
-code. The remaining 7 Freeze Points are not yet ratified. Each of their
-ADRs, when written, links its **Freeze Point?** column entry to the specific freeze
-point (of the 8 listed in `docs/PROJECT_FACTS.md`), names Ashley as approver (not the
-Engineering Coordinator or Fizz), and its consequences section states explicitly that
-reversal requires a formal migration, not routine amendment — per the ratification
-checkpoint in `docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2, exercised
-for the first time in ADR-0004.
+code. Freeze Points 6 and 7 (ADR-0007) are ratified but not yet implemented — Honey's
+WP-18 (build-order item 2, knowledge-state models) is the first code against them.
+Freeze Point 4 (provenance model) briefly looked coupled into ADR-0007's unit and was
+found not to be — it remains unratified, on its own evidence, along with Freeze
+Points 2, 3, 5 and 8. Each remaining ADR, when written, links its **Freeze Point?**
+column entry to the specific freeze point (of the 8 listed in `docs/PROJECT_FACTS.md`),
+names Ashley as approver (not the Engineering Coordinator or Fizz), and its
+consequences section states explicitly that reversal requires a formal migration, not
+routine amendment — per the ratification checkpoint in
+`docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2, exercised first in
+ADR-0004 and, for the first time under real adversarial pressure across five rounds,
+in ADR-0007.
