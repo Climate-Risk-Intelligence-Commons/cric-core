@@ -244,9 +244,9 @@ restating it:
 | Area | File(s) | Status | Record |
 |---|---|---|---|
 | Licence | `LICENSE` | AGPL-3.0, decided, applied | D2, `docs/OPEN_QUESTIONS.md` |
-| README | `README.md` | Dual-audience rebuild dispatched (Fizz, WP-23a) | this thread |
+| README | `README.md` | Dual-audience rebuild dispatched (Fizz, WP-23a); contact placeholder filled 2026-09-04 (Fizz, PR #28 pushed to `5434410`) | this thread |
 | Contributing / Governance | `CONTRIBUTING.md`, `GOVERNANCE.md` | Root pointer files to existing PRD specs (Honey, WP-19) | `docs/OPEN_QUESTIONS.md` |
-| Code of Conduct | `CODE_OF_CONDUCT.md` | Contributor Covenant v2.1 verbatim; **blocked on enforcement contact** | D8, `docs/OPEN_QUESTIONS.md` |
+| Code of Conduct | `CODE_OF_CONDUCT.md` | Contributor Covenant v2.1 verbatim; enforcement contact resolved 2026-09-04 (D8) — both addresses, per the Coordinator's ruling; application to draft PR #25 not yet confirmed | D8, `docs/OPEN_QUESTIONS.md` |
 | Security | `SECURITY.md` | Private Vulnerability Reporting, live, stated unconditionally (Honey, WP-19a) | `docs/OPEN_QUESTIONS.md` |
 | CI | `.github/workflows/ci.yml` | ruff → mypy → pytest → build; `test` required check; **no job added without an existing subject to examine** | ADR-0008 |
 | Branch protection | GitHub repo settings | Strict mode + `enforce_admins`, unchanged; stated exit condition if a batch stalls badly | D3, `docs/OPEN_QUESTIONS.md` |
