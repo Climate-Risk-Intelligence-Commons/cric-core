@@ -14,6 +14,17 @@ applicable, otherwise `Proposed` / `Accepted` / `Superseded`.
 | [0005](../decisions/0005-fanout-default-with-stated-reason.md) | Parallelisation is the default; declining it needs a stated reason | Accepted | Ashley | 2026-08-29 | No |
 | [0006](../decisions/0006-dataasset-canonical-type.md) | `DataAsset` is the canonical ontology type; `Asset` is prose only | Accepted — propagation, not amendment | Engineering Coordinator | 2026-08-29 | No (mandatory input to Freeze Point 2) |
 | [0007](../decisions/0007-freeze-points-6-7-knowledge-state-review-decision.md) | Freeze Points 6 + 7 — knowledge-state vocabulary and review decision schema, ratified as one unit | **Accepted — locked** | Ashley | 2026-09-03 | **Yes — Freeze Points 6 and 7 of 8** |
+| [0008](../decisions/0008-ci-generated-build-status.md) | Build status is CI-generated, never hand-typed; no CI job without a subject | Accepted | Engineering Coordinator | 2026-09-03 | No |
+
+**Consolidation note, 2026-09-03:** Ashley asked for "proper decisions" on licence,
+README, contributing, code of conduct, security, governance, CI, branch protection and
+decision records in one message (event `5e4d410b5988dbf69139e7b162262ef6bd4e38a4ce3a01a9c8d43949fd104b6b`).
+Most of that set restates decisions already on this register — licence (D2, below),
+branch protection (D3, below), the `decisions/` location convention (0001), and
+today's community-health-file work (WP-19/WP-19a: `CODE_OF_CONDUCT.md`, `SECURITY.md`,
+root `CONTRIBUTING.md`/`GOVERNANCE.md` pointers) — those are not re-recorded as new
+ADRs. **ADR-0008 is the one genuinely new ruling from that pass**; see its own Context
+for why the rest don't get their own entries here.
 
 **Freeze Points 1, 6 and 7 are ratified — three of 8 locked.** Phase 1
 (`cric-core`) has started: packaging and CI are merged (WP-4 waves 1-2, see
