@@ -3,11 +3,12 @@
 ### Climate Risk Intelligence Commons — the contract root
 
 > Climate Risk Intelligence Commons (CRIC) is an open-source, provenance-preserving,
-> temporally aware knowledge, modelling and agentic infrastructure for climate-risk
+> temporally aware knowledge, data, modelling and agentic infrastructure for
+> representing, integrating, analysing and deriving intelligence from climate-risk
 > evidence. It is designed for human researchers, deterministic software and
 > autonomous agents to operate on the same inspectable evidence base.
 >
-> — [`CRIC-PRD-MASTER.md`](docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md), Product Thesis
+> — [`CRIC-PRD-MASTER.md`](docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md), Product Thesis (excerpted)
 
 In plain terms: most climate-risk tools give you an answer. CRIC is built to also give
 you the evidence behind the answer — what source produced it, what the system believed
@@ -26,11 +27,11 @@ repository.
 
 ---
 
-## What CRIC is built from
+## What CRIC is designed to do
 
 CRIC is layered infrastructure, not a single tool. Each layer has its own PRD chapter:
 
-| Layer | What it does | Specification |
+| Layer | What it's for | Specification |
 |---|---|---|
 | CRIC Core | Identifiers, base contracts, versioning rules every other layer builds on | *this repository* |
 | Climate Risk Ontology | Hazard-agnostic concepts shared across every domain (Hazard, Exposure, Consequence, Cascade…) | [`product/Product-Scope-and-Domain-Architecture.md`](docs/CRIC-PRD-v0.1/product/Product-Scope-and-Domain-Architecture.md) |
