@@ -72,10 +72,14 @@ appointed representative at an online or offline event.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement at
-**[INSERT CONTACT METHOD — not yet designated; open item, see the pull request
-that introduced this file]**. All complaints will be reviewed and investigated
-promptly and fairly.
+reported to the community leaders responsible for enforcement:
+
+- [ashley@eyekyam.com](mailto:ashley@eyekyam.com) (CTO)
+- [vidya@eyekyam.com](mailto:vidya@eyekyam.com) (CEO)
+
+If a report concerns the conduct of one of these contacts, report it to the
+other instead. All complaints will be reviewed and investigated promptly and
+fairly.
 
 All community leaders are obligated to respect the privacy and security of the
 reporter of any incident.
