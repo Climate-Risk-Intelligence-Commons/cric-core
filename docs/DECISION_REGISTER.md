@@ -42,6 +42,6 @@ requires a formal migration, not routine amendment — per the ratification chec
 in `docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2, exercised first in
 ADR-0004 and, for the first time under real adversarial pressure across five rounds,
 in ADR-0007. **ADR-0009 (2026-09-04) is a process/quality-gate ruling, not a Freeze
-Point** — same class as ADR-0008: it constrains what a generated planning artefact may
+Point** — same class as ADR-0008: it constrains what any artefact may
 claim about a Freeze Point, ratified or not, rather than ratifying product schema
 itself.

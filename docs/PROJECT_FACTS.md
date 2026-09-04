@@ -62,7 +62,7 @@ Implementation Authority rule and would silently resolve conflicts the wrong way
 left unpinned). Full reasoning: Engineering Coordinator's message, channel event
 `feb934eaaaf69b4a3eeeaf46974c9a0dfac043236e4aa33688e8a541d62a706e`, 2026-08-29T13:26:14Z.
 **A bootstrap run's output is not build-ready on its own** — `decisions/0009-fp-requirement-verification.md`
-requires every generated requirement naming a Freeze Point to resolve against shipped
+requires every requirement naming a Freeze Point to resolve against shipped
 code, a signed ADR, or be marked an unratified proposal, before anyone builds from it.
 Current status of the one run that's happened: `docs/OPEN_QUESTIONS.md` D6.
 
