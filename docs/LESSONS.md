@@ -161,3 +161,35 @@ this throughout, specifically to remove the failure mode rather than mitigate it
 Restating a citation you already verified is a fresh act of transcription with its own
 failure rate; "I checked this" about the underlying fact does not make "I copied this
 correctly" true about the shorthand.
+
+## A bundled open-question item let a partial answer read as a full resolution
+
+**What happened:** D6 in `docs/OPEN_QUESTIONS.md` carried two decisions in one row —
+running `/gsd-ingest-docs` with the precedence manifest, and separately, whether
+`.planning/config.json`'s `"mode": "yolo"` / `"auto_advance": true` posture (which
+removes GSD's human-gated phase-advance step, the same discipline this project's
+Freeze Point ratification runs on) should stand as-is. Both were raised in the same
+channel message and recorded as one item because they were *discovered* together, not
+because they were the same decision. The Engineering Coordinator's 2026-09-04 digest
+carried the bundle forward into a single blocking item, and flagged it himself before
+anyone acted on it: if Ashley had simply run the `/gsd-ingest-docs` command, the row
+would read as resolved — closed by the mechanical action — while the `yolo`/
+`auto_advance` governance question, never actually addressed, silently rode along to
+"resolved" with it.
+
+**Why it matters:** a register or digest item's job is to make one decision visible
+and trackable to closure. Bundling two independently-answerable questions into one row
+breaks that at the structural level, not the prose level — no amount of careful digest
+wording fixes it, because the underlying record itself conflates "this row is closed"
+with "every question raised alongside this row is closed." The failure is invisible
+until someone answers only the easier half, which is exactly the shape a human
+skimming a blocking-items list is likely to do.
+
+**Pattern to reuse:** one D/U item, one decision. When two questions are discovered in
+the same finding or the same channel message, that's a reason they were raised
+together — not a reason to record them together. Split at the source (the register
+row itself), not just in how a digest phrases it downstream; a digest built from an
+already-bundled item will re-bundle it every time, no matter how careful that day's
+phrasing is. Applied here: D6 (the ingest-docs re-run) and the new D9 (the
+`yolo`/`auto_advance` posture) were split into separate rows the same day this was
+caught, both still pointing at their shared origin event so the history isn't lost.

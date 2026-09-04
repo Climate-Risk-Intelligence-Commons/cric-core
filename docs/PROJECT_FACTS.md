@@ -156,7 +156,13 @@ yet ratified" in that file; tracked as an open item until Ashley rules on it.
   assumption he can overturn) / **Coverage window** stated explicitly (event range
   swept), so a silent gap is detectable rather than invisible. Each item: the question
   in one line, what it blocks, who's waiting, the recommendation and whose it is, and
-  the event id it was raised at.
+  the event id it was raised at. **One item, one decision** (Engineering Coordinator's
+  process finding, 2026-09-04, event `d63fc31601cc3570156db1d30b29d589fe01542dcb8f3ea2ea2a307083771f92`):
+  when a single `docs/OPEN_QUESTIONS.md` row bundles two independently-answerable
+  questions, answering one lets the row — and any digest built from it — read as fully
+  resolved while the other rides along unaddressed. Split at the source register row
+  when this is found, not just in how a given digest phrases it; see `docs/LESSONS.md`
+  ("A bundled open-question item let a partial answer read as a full resolution").
 - `docs/LESSONS.md` captures recurring defects and reusable patterns.
 - `docs/PHASE_EXIT_LOG.md` (created once Phase 0/1 produce exit evidence) will hold the
   durable record of each phase's exit criterion and the evidence that satisfied it.
