@@ -15,6 +15,7 @@ applicable, otherwise `Proposed` / `Accepted` / `Superseded`.
 | [0006](../decisions/0006-dataasset-canonical-type.md) | `DataAsset` is the canonical ontology type; `Asset` is prose only | Accepted — propagation, not amendment | Engineering Coordinator | 2026-08-29 | No (mandatory input to Freeze Point 2) |
 | [0007](../decisions/0007-freeze-points-6-7-knowledge-state-review-decision.md) | Freeze Points 6 + 7 — knowledge-state vocabulary and review decision schema, ratified as one unit | **Accepted — locked** | Ashley | 2026-09-03 | **Yes — Freeze Points 6 and 7 of 8** |
 | [0008](../decisions/0008-ci-generated-build-status.md) | Build status is CI-generated, never hand-typed; no CI job without a subject | Accepted | Engineering Coordinator | 2026-09-03 | No |
+| [0009](../decisions/0009-fp-requirement-verification.md) | Any generated requirement naming a Freeze Point resolves to exactly one of three verification states (shipped code / signed ADR / unratified proposal) | Accepted | Engineering Coordinator | 2026-09-04 | No |
 
 **Consolidation note, 2026-09-03:** Ashley asked for "proper decisions" on licence,
 README, contributing, code of conduct, security, governance, CI, branch protection and
@@ -26,19 +27,21 @@ root `CONTRIBUTING.md`/`GOVERNANCE.md` pointers) — those are not re-recorded a
 ADRs. **ADR-0008 is the one genuinely new ruling from that pass**; see its own Context
 for why the rest don't get their own entries here.
 
-**Freeze Points 1, 6 and 7 are ratified — three of 8 locked.** Phase 1
-(`cric-core`) has started: packaging and CI are merged (WP-4 waves 1-2, see
-`docs/PROJECT_FACTS.md`), and WP-6 (build-order item 1, identifier types), against
-ADR-0004, is merged (PR #17, `main` at `fda79b1`) — Freeze Point 1 is now executable
-code. Freeze Points 6 and 7 (ADR-0007) are ratified but not yet implemented — Honey's
-WP-18 (build-order item 2, knowledge-state models) is the first code against them.
-Freeze Point 4 (provenance model) briefly looked coupled into ADR-0007's unit and was
-found not to be — it remains unratified, on its own evidence, along with Freeze
-Points 2, 3, 5 and 8. Each remaining ADR, when written, links its **Freeze Point?**
-column entry to the specific freeze point (of the 8 listed in `docs/PROJECT_FACTS.md`),
-names Ashley as approver (not the Engineering Coordinator or Fizz), and its
-consequences section states explicitly that reversal requires a formal migration, not
-routine amendment — per the ratification checkpoint in
-`docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2, exercised first in
+**Freeze Points 1, 6 and 7 are ratified — three of 8 locked — and both are now
+implemented as tested code, not just locked grammar.** WP-6 (build-order item 1,
+identifier types), against ADR-0004, merged (PR #17, `main` at `fda79b1`):
+`src/cric_core/identifiers/`. Honey's WP-18 (build-order item 2, knowledge-state
+models), against ADR-0007, merged (PR #29, `main` at `f5d8a06`, 139 tests):
+`src/cric_core/knowledge_state/`. Freeze Point 4 (provenance model) briefly looked
+coupled into ADR-0007's unit and was found not to be — it remains unratified, on its
+own evidence, along with Freeze Points 2, 3, 5 and 8. Each remaining ADR, when
+written, links its **Freeze Point?** column entry to the specific freeze point (of the
+8 listed in `docs/PROJECT_FACTS.md`), names Ashley as approver (not the Engineering
+Coordinator or Fizz), and its consequences section states explicitly that reversal
+requires a formal migration, not routine amendment — per the ratification checkpoint
+in `docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2, exercised first in
 ADR-0004 and, for the first time under real adversarial pressure across five rounds,
-in ADR-0007.
+in ADR-0007. **ADR-0009 (2026-09-04) is a process/quality-gate ruling, not a Freeze
+Point** — same class as ADR-0008: it constrains what a generated planning artefact may
+claim about a Freeze Point, ratified or not, rather than ratifying product schema
+itself.

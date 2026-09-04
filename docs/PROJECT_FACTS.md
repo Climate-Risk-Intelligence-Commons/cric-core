@@ -61,6 +61,10 @@ primary implementer. Bootstrap entry point is `/gsd-ingest-docs docs/CRIC-PRD-v0
 Implementation Authority rule and would silently resolve conflicts the wrong way if
 left unpinned). Full reasoning: Engineering Coordinator's message, channel event
 `feb934eaaaf69b4a3eeeaf46974c9a0dfac043236e4aa33688e8a541d62a706e`, 2026-08-29T13:26:14Z.
+**A bootstrap run's output is not build-ready on its own** — `decisions/0009-fp-requirement-verification.md`
+requires every generated requirement naming a Freeze Point to resolve against shipped
+code, a signed ADR, or be marked an unratified proposal, before anyone builds from it.
+Current status of the one run that's happened: `docs/OPEN_QUESTIONS.md` D6.
 
 ## Architecture Freeze Points
 
@@ -93,14 +97,22 @@ schema).
 
 **FP2 has an unresolved internal disagreement, found 2026-09-04 (WP-28, Fizz/Pollen/Engineering
 Coordinator) and not yet a dispatched work package.** FP2's entire subject is "which
-fields every canonical object carries." Two documents both purport to declare that,
-and they disagree: `Core-Ontology-Specification.md`'s `# CRICObject` lists 13 fields;
+fields every canonical object carries." **Three** documents purport to declare that,
+and they disagree. `Core-Ontology-Specification.md`'s `# CRICObject` lists 13 fields;
 `OKF-Knowledge-Graph-Specification.md`'s `# Universal Frontmatter` YAML lists 16 keys.
 Arithmetic closes exactly (independently re-derived by both Pollen and the Coordinator,
 `main` `f5d8a06`): `CRICObject`'s `schema_version` splits into `cric_schema_version` +
 `okf_version` (net +1), and `spatial` + `epistemic` are wholly absent from `CRICObject`
 (net +2) — 13 − 1 + 2 = 16. Neither list is a miscount of the other; they are two
-genuinely different canonical declarations. Separately, the same WP-28 round settled
+genuinely different canonical declarations. **A third surfaced testing ADR-0009**
+(2026-09-04, found by the Coordinator, attacked and confirmed by Pollen same day):
+`.planning/REQUIREMENTS.md`'s `OKF-01` (rescue ref `74ac966`) lists 6 mandatory header
+fields, of which only 2 (`id`, `knowledge_state`) match the 12 the other two
+declarations agree on — `source_type` is invented outright (zero occurrences
+corpus-wide), `content_hash` is a real field (`content_sha256`, doubly attested,
+nested under `provenance:`) renamed and relocated, and the ten remaining shared
+fields are simply absent. Full mechanism and citations: `docs/OPEN_QUESTIONS.md` D10.
+Separately, the same WP-28 round settled
 where `Claim`'s epistemic field lives: `epistemic.status`, nested, populated from the
 unanimous eight-value vocabulary (citation-accuracy grounds — two of three flat
 `epistemic_status` instances misquote their own cited source; ADR-0007's `modified_values`
