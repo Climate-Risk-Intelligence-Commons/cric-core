@@ -118,6 +118,20 @@ documented in `CLAUDE.md` §7, not duplicated here. CI runs clean without the un
 confirmed by PR #14's own green run — the falsification test the Engineering
 Coordinator proposed for that exact assumption.
 
+**Test suite size — authoritative source, not a snapshot:** `env -u PYTHONHOME -u
+PYTHONPATH python3 -m pytest` at a named commit, with `git rev-parse HEAD` confirmed
+equal to that commit in the same shell. A count is ambiguous without its unit stated
+alongside it — `grep -c "^def test_"` counts test *functions*; `pytest`'s own summary
+line counts collected test *cases*, and the two diverge the moment any function
+carries `@pytest.mark.parametrize`. Both "32" and "21" were reported for this suite at
+`main` `e8b0b69`..`45141a4` (before PR #29/WP-18 merges) and both were correct, for
+different units: 21 test functions (20 in `tests/identifiers/test_identifier.py`, 1 in
+`tests/test_version.py`), one of the 20 parametrized, expanding to **32 collected
+cases** — the number `pytest` itself reports and CI's required check gates on. Expect
+**139** once PR #29 merges (Honey's WP-18, `src/cric_core/knowledge_state/` plus four
+test modules) — re-derive at that commit rather than trusting this figure past that
+merge.
+
 ## Requirements traceability
 
 `docs/CRIC-PRD-v0.1/CRIC-Requirements-Traceability-Matrix.md` is the canonical,
