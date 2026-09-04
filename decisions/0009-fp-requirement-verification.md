@@ -1,4 +1,4 @@
-# ADR-0009: Any generated requirement naming a Freeze Point resolves to exactly one of three verification states
+# ADR-0009: Any requirement naming a Freeze Point resolves to exactly one of three verification states
 
 - **Status:** Accepted
 - **Approver:** Engineering Coordinator (process/quality-gate ruling, not a Freeze
@@ -50,8 +50,8 @@ result of that test.
 
 ## Decision
 
-**Any requirement in a generated planning artefact that names a Freeze Point must be
-resolved into exactly one of three states before it can be treated as build-ready:**
+**Any requirement that names a Freeze Point must be resolved into exactly one of
+three states before it can be treated as build-ready:**
 
 1. **Shipped code exists for that Freeze Point.** The requirement must match the
    code. A mismatch is a **blocker**, not a note — the shipped code is the ratified
