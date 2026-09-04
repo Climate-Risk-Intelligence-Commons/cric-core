@@ -193,3 +193,73 @@ already-bundled item will re-bundle it every time, no matter how careful that da
 phrasing is. Applied here: D6 (the ingest-docs re-run) and the new D9 (the
 `yolo`/`auto_advance` posture) were split into separate rows the same day this was
 caught, both still pointing at their shared origin event so the history isn't lost.
+
+## A citation resolved, was correctly authored and timestamped, and still labelled the wrong content
+
+**What happened:** `docs/OPEN_QUESTIONS.md` D10 cited an event as "the Coordinator's
+ruling and FP2-routing withdrawal." The event was real, the author was right, the
+timestamp was right, and the quoted words genuinely appeared in it — but they appeared
+as a passing backward reference ("having already withdrawn one routing ruling today"),
+not as the ruling itself. The actual ruling lived in a different message, five and a
+half minutes earlier. Pollen's review had checked the citation and reported it clean —
+correctly, by the check he ran: the ID resolved, to the right author, at the right
+time, containing the quoted substring. That check answers "does this citation point at
+something real." It does not answer "does the citing sentence's description match what
+the event actually contains" — a different claim, about content rather than existence,
+and nobody had run it until the Coordinator re-read his own citation before amplifying
+it further and caught the mismatch himself.
+
+**Why it matters:** a citation that carries a label — "ruling," "withdrawal,"
+"finding," "the severe one" — is making two claims at once: that the pointer resolves,
+and that the described content lives there. A review that verifies only the first
+claim looks identical to one that verified both, right up until someone reads the
+cited passage for what it actually says. This is the third citation-integrity failure
+recorded in this file (hand-abbreviated event ids; a fabricated cross-project
+precedent), and it's the first where the pointer itself was flawless — the defect was
+entirely in the description wrapped around it.
+
+**Pattern to reuse:** when a citation carries a label describing what the cited event
+*is* or *contains* (not merely *where a fact appears*), verify the label against the
+body of the cited passage directly — read it for whether it is the labelled thing —
+rather than stopping once the ID resolves to the right author and timestamp. "Existence
+verified" and "content verified" are different claims; a review checklist that only
+runs the first will pass a citation that is wrong in exactly the way that matters.
+
+## A generator can be internally coherent and still be wrong — and coherence is what stops review
+
+**What happened:** a `/gsd-ingest-docs` bootstrap run produced `.planning/REQUIREMENTS.md`
+with `KS-01` defining a `KnowledgeState` enum (`confirmed, supported, contested,
+contradicted, unknown, unobserved, no_known_event`) with zero overlap against both the
+ratified Registry vocabulary and the `KnowledgeStateStatus` enum that had already
+shipped as tested code. The first check of the run's output (`ROADMAP.md` only) found
+two real but comparatively minor defects and stopped — not from carelessness, but
+because `ROADMAP.md` genuinely was clean past those two, and `REQUIREMENTS.md`, the
+file an implementer actually builds from, was never opened. Testing a proposed
+verification rule against the same artefact then surfaced a third, distinct failure
+mode in a different Freeze Point's block: a real field (`content_sha256`, doubly
+attested in the corpus) renamed and relocated as a differently-named top-level field
+(`content_hash`) — a defect that survives a concept-level grep, unlike an outright
+invention like `source_type`, which fails one immediately.
+
+**Why it matters:** the generator got the hard, genuinely constitutional part of KS-01
+right (`unknown ≠ false`) and built five mutually-consistent requirements around that
+correct principle before attaching the whole structure to the wrong field. Internal
+coherence is exactly what makes a reviewer stop checking — nothing about a
+self-consistent, plausible-sounding requirement block signals that it needs a check
+against source. Three distinct generator failure modes are now documented from one
+session's output: invent a value from nothing (fails a grep immediately); rename and
+relocate a real field (survives a concept-level grep — the most dangerous of the
+three, because it reads as familiar); lift real values from the wrong section onto the
+wrong field (internally coherent, which is what stops review). All three are checkable
+only by reading the artefact against its source, never by trusting internal
+consistency as a proxy for correctness.
+
+**Pattern to reuse:** a generated artefact's internal consistency is not evidence of
+its correctness — it is, if anything, weak evidence *against* someone having checked
+it, since coherence is exactly what makes a defect easy to miss. When checking
+generated content against a source of truth, read every file the downstream builder
+would actually read (not just the most prominent one), and check for all three failure
+shapes explicitly — invented values, renamed/relocated real values, and misattributed
+real values — rather than stopping at the first clean-looking pass. `decisions/0009-fp-requirement-verification.md`
+encodes the resulting standing check for this project's own generated planning
+artefacts.
