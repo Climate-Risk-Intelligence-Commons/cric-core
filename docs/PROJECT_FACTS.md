@@ -78,14 +78,44 @@ locked grammar, is **merged** — `main` at `fda79b1` (PR #17): `src/cric_core/i
 
 **Freeze Points 6 and 7 (knowledge-state vocabulary; review decision schema) are
 ratified and locked as one unit** — `decisions/0007-freeze-points-6-7-knowledge-state-review-decision.md`,
-approver Ashley, 2026-09-03. Not yet implemented; Honey's WP-18 (build-order item 2,
-knowledge-state models) is the first code against them. Freeze Point 4 (provenance
-model) briefly looked coupled into this ratification and was found not to be — it
-remains separate and unratified.
+approver Ashley, 2026-09-03. **Implemented** — Honey's WP-18 (build-order item 2,
+knowledge-state models), PR #29, merged to `main` `f5d8a06` (2026-09-04):
+`src/cric_core/knowledge_state/`, verified against the ADR decision-by-decision and
+attacked by planted violation on all four highest-risk criteria (Pollen), full suite
+re-verified 139 passed. Freeze Point 1 and Freeze Points 6+7 are now both executable,
+tested code — two of three ratified Freeze Points implemented. Freeze Point 4
+(provenance model) briefly looked coupled into the FP6+7 ratification and was found
+not to be — it remains separate and unratified.
 
 **5 of 8 Freeze Points remain unratified:** 2 (base OKF frontmatter), 3 (temporal
 model), 4 (provenance model), 5 (relationship representation), 8 (agent manifest
 schema).
+
+**FP2 has an unresolved internal disagreement, found 2026-09-04 (WP-28, Fizz/Pollen/Engineering
+Coordinator) and not yet a dispatched work package.** FP2's entire subject is "which
+fields every canonical object carries." Two documents both purport to declare that,
+and they disagree: `Core-Ontology-Specification.md`'s `# CRICObject` lists 13 fields;
+`OKF-Knowledge-Graph-Specification.md`'s `# Universal Frontmatter` YAML lists 16 keys.
+Arithmetic closes exactly (independently re-derived by both Pollen and the Coordinator,
+`main` `f5d8a06`): `CRICObject`'s `schema_version` splits into `cric_schema_version` +
+`okf_version` (net +1), and `spatial` + `epistemic` are wholly absent from `CRICObject`
+(net +2) — 13 − 1 + 2 = 16. Neither list is a miscount of the other; they are two
+genuinely different canonical declarations. Separately, the same WP-28 round settled
+where `Claim`'s epistemic field lives: `epistemic.status`, nested, populated from the
+unanimous eight-value vocabulary (citation-accuracy grounds — two of three flat
+`epistemic_status` instances misquote their own cited source; ADR-0007's `modified_values`
+exclusion does not reach it, checked directly against `decisions/0007:63`'s stated
+scope, so **FP6 stays locked, untouched**). `epistemic`'s *content* (its vocabulary,
+its relationship to `knowledge_state`) is named by no freeze point in the current
+8-item list — not FP2 (structure ≠ content, same reasoning that made `knowledge_state`
+need its own FP6 despite living in FP2's frontmatter block), not FP3 (`Sequence.md`'s
+own FP3 line is three words, "temporal model," no "epistemic"). Blocks build-order item
+6 (`CRICObject` base hierarchy) once picked up — not yet dispatched as a work package;
+the Coordinator is deliberately taking time on the routing rather than ruling quickly,
+having withdrawn one same-day routing ruling already (FP2, in favour of Pollen's "gap,
+not a choice" finding). New open item, not ratified, not attacked: whether
+`modified_values` should also exclude `epistemic.status` on policy grounds separate
+from ADR-0007's own stated scope.
 
 ## cric-core: package and CI (WP-4, waves 1–2)
 
@@ -110,6 +140,18 @@ checks on `main` are **enabled** (`contexts: ["test"]`, `strict: true`) — conf
 live via `gh api repos/.../branches/main/protection`, not narrated from the
 Engineering Coordinator's own report of taking the action.
 
+`[project.optional-dependencies] dev` (PR #31, WP-26/27, Honey): `ruff` and `mypy` are
+**pinned exact** (`ruff==0.16.6`, `mypy==2.3.1`, read from a green CI log, not off
+PATH) so the required check can't go red from an unrelated upstream release; `pytest`
+and `build` stay unpinned deliberately (the Coordinator's reasoning, not re-litigated
+here). The risk this closes was live, not hypothetical: `main`'s last CI before the
+pin resolved `ruff-0.16.5`; a fresh unpinned venv nine hours later resolved
+`ruff-0.16.6` — a second PyPI release inside the same window the fix was being built
+in. Local dev environment: `.venv/` (gitignored), `python3 -m venv .venv && .venv/bin/pip
+install -e ".[dev]"` documented in `CLAUDE.md` §7. A pre-existing `uv`-created `.venv/`
+with no `pip`/`ruff`/`mypy` installed was found and is not the one to use if it
+resurfaces — self-ignores via its own `.venv/.gitignore`, invisible to `git status`.
+
 Host-only note, not a project requirement: this machine's harness leaks
 `PYTHONHOME`/`PYTHONPATH` into child processes, which breaks bare
 `python3`/`pip`/`pytest`/`build` invocations locally (`ModuleNotFoundError: No module
@@ -126,11 +168,13 @@ line counts collected test *cases*, and the two diverge the moment any function
 carries `@pytest.mark.parametrize`. Both "32" and "21" were reported for this suite at
 `main` `e8b0b69`..`45141a4` (before PR #29/WP-18 merges) and both were correct, for
 different units: 21 test functions (20 in `tests/identifiers/test_identifier.py`, 1 in
-`tests/test_version.py`), one of the 20 parametrized, expanding to **32 collected
-cases** — the number `pytest` itself reports and CI's required check gates on. Expect
-**139** once PR #29 merges (Honey's WP-18, `src/cric_core/knowledge_state/` plus four
-test modules) — re-derive at that commit rather than trusting this figure past that
-merge.
+`tests/test_version.py`), one of the 20 parametrized, expanding to 32 collected cases —
+the number `pytest` itself reports and CI's required check gates on. **139 as of
+2026-09-04, `main` `a3e88a1`** (PR #29/WP-18 merged — `src/cric_core/knowledge_state/`
+plus four test modules — followed by four more merges the same session that added no
+tests: #31 linter pinning, #32 docs, #28 README, #25 CoC), re-verified directly in this
+pass, `rev-parse` confirmed. Re-derive at whatever commit is current rather than
+trusting this figure forward past the next test-affecting merge.
 
 ## Requirements traceability
 
@@ -244,9 +288,9 @@ restating it:
 | Area | File(s) | Status | Record |
 |---|---|---|---|
 | Licence | `LICENSE` | AGPL-3.0, decided, applied | D2, `docs/OPEN_QUESTIONS.md` |
-| README | `README.md` | Dual-audience rebuild dispatched (Fizz, WP-23a); contact placeholder filled 2026-09-04 (Fizz, PR #28 pushed to `5434410`) | this thread |
+| README | `README.md` | Dual-audience rebuild (Fizz, WP-23a), contact filled (D8) — merged to `main`, PR #28 | this thread |
 | Contributing / Governance | `CONTRIBUTING.md`, `GOVERNANCE.md` | Root pointer files to existing PRD specs (Honey, WP-19) | `docs/OPEN_QUESTIONS.md` |
-| Code of Conduct | `CODE_OF_CONDUCT.md` | Contributor Covenant v2.1 verbatim; enforcement contact resolved 2026-09-04 (D8) — both addresses, per the Coordinator's ruling; application to draft PR #25 not yet confirmed | D8, `docs/OPEN_QUESTIONS.md` |
+| Code of Conduct | `CODE_OF_CONDUCT.md` | Contributor Covenant v2.1 verbatim; enforcement contact resolved 2026-09-04 (D8) — both addresses, per the Coordinator's ruling — merged to `main`, PR #25 (Honey, WP-19c) | D8, `docs/OPEN_QUESTIONS.md` |
 | Security | `SECURITY.md` | Private Vulnerability Reporting, live, stated unconditionally (Honey, WP-19a) | `docs/OPEN_QUESTIONS.md` |
 | CI | `.github/workflows/ci.yml` | ruff → mypy → pytest → build; `test` required check; **no job added without an existing subject to examine** | ADR-0008 |
 | Branch protection | GitHub repo settings | Strict mode + `enforce_admins`, unchanged; stated exit condition if a batch stalls badly | D3, `docs/OPEN_QUESTIONS.md` |
