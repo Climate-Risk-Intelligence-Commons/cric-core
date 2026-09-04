@@ -118,6 +118,20 @@ documented in `CLAUDE.md` §7, not duplicated here. CI runs clean without the un
 confirmed by PR #14's own green run — the falsification test the Engineering
 Coordinator proposed for that exact assumption.
 
+**Test suite size — authoritative source, not a snapshot:** `env -u PYTHONHOME -u
+PYTHONPATH python3 -m pytest` at a named commit, with `git rev-parse HEAD` confirmed
+equal to that commit in the same shell. A count is ambiguous without its unit stated
+alongside it — `grep -c "^def test_"` counts test *functions*; `pytest`'s own summary
+line counts collected test *cases*, and the two diverge the moment any function
+carries `@pytest.mark.parametrize`. Both "32" and "21" were reported for this suite at
+`main` `e8b0b69`..`45141a4` (before PR #29/WP-18 merges) and both were correct, for
+different units: 21 test functions (20 in `tests/identifiers/test_identifier.py`, 1 in
+`tests/test_version.py`), one of the 20 parametrized, expanding to **32 collected
+cases** — the number `pytest` itself reports and CI's required check gates on. Expect
+**139** once PR #29 merges (Honey's WP-18, `src/cric_core/knowledge_state/` plus four
+test modules) — re-derive at that commit rather than trusting this figure past that
+merge.
+
 ## Requirements traceability
 
 `docs/CRIC-PRD-v0.1/CRIC-Requirements-Traceability-Matrix.md` is the canonical,
@@ -142,7 +156,13 @@ yet ratified" in that file; tracked as an open item until Ashley rules on it.
   assumption he can overturn) / **Coverage window** stated explicitly (event range
   swept), so a silent gap is detectable rather than invisible. Each item: the question
   in one line, what it blocks, who's waiting, the recommendation and whose it is, and
-  the event id it was raised at.
+  the event id it was raised at. **One item, one decision** (Engineering Coordinator's
+  process finding, 2026-09-04, event `d63fc31601cc3570156db1d30b29d589fe01542dcb8f3ea2ea2a307083771f92`):
+  when a single `docs/OPEN_QUESTIONS.md` row bundles two independently-answerable
+  questions, answering one lets the row — and any digest built from it — read as fully
+  resolved while the other rides along unaddressed. Split at the source register row
+  when this is found, not just in how a given digest phrases it; see `docs/LESSONS.md`
+  ("A bundled open-question item let a partial answer read as a full resolution").
 - `docs/LESSONS.md` captures recurring defects and reusable patterns.
 - `docs/PHASE_EXIT_LOG.md` (created once Phase 0/1 produce exit evidence) will hold the
   durable record of each phase's exit criterion and the evidence that satisfied it.
@@ -224,9 +244,9 @@ restating it:
 | Area | File(s) | Status | Record |
 |---|---|---|---|
 | Licence | `LICENSE` | AGPL-3.0, decided, applied | D2, `docs/OPEN_QUESTIONS.md` |
-| README | `README.md` | Dual-audience rebuild dispatched (Fizz, WP-23a) | this thread |
+| README | `README.md` | Dual-audience rebuild dispatched (Fizz, WP-23a); contact placeholder filled 2026-09-04 (Fizz, PR #28 pushed to `5434410`) | this thread |
 | Contributing / Governance | `CONTRIBUTING.md`, `GOVERNANCE.md` | Root pointer files to existing PRD specs (Honey, WP-19) | `docs/OPEN_QUESTIONS.md` |
-| Code of Conduct | `CODE_OF_CONDUCT.md` | Contributor Covenant v2.1 verbatim; **blocked on enforcement contact** | D8, `docs/OPEN_QUESTIONS.md` |
+| Code of Conduct | `CODE_OF_CONDUCT.md` | Contributor Covenant v2.1 verbatim; enforcement contact resolved 2026-09-04 (D8) — both addresses, per the Coordinator's ruling; application to draft PR #25 not yet confirmed | D8, `docs/OPEN_QUESTIONS.md` |
 | Security | `SECURITY.md` | Private Vulnerability Reporting, live, stated unconditionally (Honey, WP-19a) | `docs/OPEN_QUESTIONS.md` |
 | CI | `.github/workflows/ci.yml` | ruff → mypy → pytest → build; `test` required check; **no job added without an existing subject to examine** | ADR-0008 |
 | Branch protection | GitHub repo settings | Strict mode + `enforce_admins`, unchanged; stated exit condition if a batch stalls badly | D3, `docs/OPEN_QUESTIONS.md` |
