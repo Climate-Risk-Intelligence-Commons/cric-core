@@ -133,6 +133,29 @@ meaning of a stable core type.
   unset `python3` fails with `ModuleNotFoundError: No module named 'encodings'`. This
   is an artefact of this machine, not a project requirement — it does not apply to
   the GitHub Actions CI workflow, which runs on a clean image.
+- **Local dev environment, for CI parity:** `.venv/` at the repo root, populated
+  from the same declaration CI installs from —
+  `env -u PYTHONHOME -u PYTHONPATH python3 -m venv .venv && env -u PYTHONHOME -u
+  PYTHONPATH .venv/bin/pip install -e ".[dev]"` (a plain `python3 -m venv` + `pip`
+  works; `uv venv` also works but only if you then `uv pip install`, since a `uv`
+  shell alone has no `pip` in it — see the paragraph below). This gives a working
+  `ruff`/`mypy`/`pytest`/`build` on PATH inside the venv without depending on
+  whatever a given host happens to have installed globally. `.venv/` is gitignored;
+  never commit it.
+- **A `uv`-created venv with nothing installed into it is a trap, not a dev
+  environment.** It has a working `python3` and passes a casual glance (`git
+  status` stays clean — a bare `uv venv` self-ignores via its own
+  `.venv/.gitignore`), but carries no `pip`, `ruff`, or `mypy`. If you find a
+  `.venv/` that doesn't run `ruff --version`, don't assume it's broken — assume
+  it was never populated, and populate it as above.
+- **`ruff` and `mypy` are pinned in `pyproject.toml`** (`[project.optional-dependencies]
+  dev`) to the exact versions CI last passed with. Both are unversioned upstream and
+  PyPI releases land without warning — `ruff` moved 0.16.5 → 0.16.6 between two CI
+  runs eighteen hours apart during this project's first week, with `test` a required,
+  `strict` status check. An unpinned linter release can turn `main` red with zero
+  change to our code. Bump the pin deliberately, in its own commit, after confirming
+  the new version is clean against this codebase — not as a side effect of some other
+  PR happening to reinstall `dev` extras.
 
 ## 8. Test discipline
 
