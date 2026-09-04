@@ -164,7 +164,12 @@ project happens somewhere a contributor can't read it.
 ## Talk to us
 
 For research collaboration, institutional partnership, or funding discussions:
-**`[PENDING — contact address awaiting confirmation, see WP-23a]`**.
+
+**Eyekyam Risk Resolutions**
+507, 5th Floor, Nirvana Courtyard, Sector 50, Gurgaon, Haryana – 122018
+
+- [ashley@eyekyam.com](mailto:ashley@eyekyam.com) (CTO)
+- [vidya@eyekyam.com](mailto:vidya@eyekyam.com) (CEO)
 
 ## Licence
 
