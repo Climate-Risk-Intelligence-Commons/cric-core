@@ -9,6 +9,18 @@ description = "Contract root of the Climate Risk Intelligence Commons (CRIC)"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.12"
+# cric-core's first runtime dependency. Registry §1:14: "Runtime schema
+# authority: Pydantic" -- rank 1, so adopting it is transcription, not a new
+# architecture choice (ADR-0011/WP-40). Floor at the version actually
+# tested, capped below the next major where breakage is expected --
+# NOT pinned exact like the linters. The linter pin is about
+# reproducibility of a tool WE run in CI; this is [project.dependencies],
+# which every downstream repo in the family inherits. An exact pin here
+# would force every consumer to that one version and make cric-core
+# uninstallable alongside any dependency that needs a different Pydantic
+# 2.x. Applications pin; libraries constrain (Coordinator's ruling,
+# WP-40 review).
+dependencies = ["pydantic>=2.13.5,<3"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "build", "ruff==0.16.6", "mypy==2.3.1"]
