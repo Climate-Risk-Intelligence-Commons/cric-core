@@ -129,6 +129,33 @@ not a choice" finding). New open item, not ratified, not attacked: whether
 `modified_values` should also exclude `epistemic.status` on policy grounds separate
 from ADR-0007's own stated scope.
 
+## Phase 1 build-order position
+
+Per `docs/CRIC-PRD-v0.1/CRIC-Repository-Dependency-and-Implementation-Sequence.md:49`,
+Phase 1 (`cric-core`)'s exit criterion is, verbatim: "Exit criterion: canonical example
+OKF nodes validate." The same file's build order (`:37`–`:47`) lists exactly **11**
+items: 1 identifier types; 2 knowledge-state models; 3 temporal models; 4 spatial
+models; 5 provenance; 6 base object hierarchy; 7 relationship model; 8 ontology
+registry; 9 review contracts; 10 validation framework; 11 JSON Schema export.
+
+Items 1–2 are shipped: `src/cric_core/identifiers/` (WP-6, PR #17, `main` `fda79b1`)
+and `src/cric_core/knowledge_state/` (WP-18, PR #29, `main` `f5d8a06`) — both already
+covered in Architecture Freeze Points above. Confirmed live in this worktree: `ls
+src/cric_core/` shows both directories present with real content, not stubs —
+`identifiers/__init__.py` (3737 bytes) and `knowledge_state/__init__.py` (12794 bytes).
+**Items 3–11 are open** — no package code exists yet for temporal models, spatial
+models, provenance, base object hierarchy, relationship model, ontology registry,
+review contracts, validation framework, or JSON Schema export.
+
+**Test suite, re-verified live for this fact, 2026-09-05:** `git rev-parse HEAD`
+before and after the run both returned `fa22597c24ccf96a2b5c644669239e1c651050d5`
+(nothing moved under it mid-run). `env -u PYTHONHOME -u PYTHONPATH python3 -m pytest`
+at that commit reports, in pytest's own summary line, "139 passed in 0.31s" — the
+collected-*case* unit this file's own "Test suite size" note above documents (not the
+`grep -c "^def test_"` test-*function* count, a different unit). This matches the
+"139" already on record at `main` `a3e88a1` (2026-09-04): no test-affecting merge
+landed between `a3e88a1` and `fa22597`.
+
 ## cric-core: package and CI (WP-4, waves 1–2)
 
 `cric-core` is a real, installable, versioned Python package as of 2026-08-29 (PR #13,
@@ -141,6 +168,23 @@ because `[tool.pytest.ini_options]` sets `pythonpath = ["src"]` explicitly — n
 because of `-m`'s cwd-insertion behaviour, which was this file's sibling `CLAUDE.md`'s
 original (now corrected) reasoning. Zero runtime dependencies beyond the package
 itself, confirmed via `pip list` in a clean venv.
+
+**Pydantic mandate vs. current implementation (verified 2026-09-05):**
+`docs/CRIC-PRD-v0.1/CRIC-Schema-and-Vocabulary-Registry.md:14` states, verbatim under
+§1 Canonical Naming Rules: "Runtime schema authority: **Pydantic**." Corpus-wide, **18**
+documents under `docs/CRIC-PRD-v0.1/` mention Pydantic (`grep -ril pydantic
+docs/CRIC-PRD-v0.1/ | wc -l` → 18, this pass). `pyproject.toml` currently has no
+`[project.dependencies]` table at all — not merely an empty one, the runtime-dependency
+section doesn't exist yet — only `[project.optional-dependencies] dev`. Both shipped
+build-order items are stdlib-only, confirmed by reading their imports:
+`identifiers/__init__.py` imports only `re` and `dataclasses` (plus
+`__future__.annotations`); `knowledge_state/__init__.py` imports only
+`collections.abc`, `dataclasses`, `enum`, and `typing`. **Build-order item 6 (base
+object hierarchy, `CRICObject`) is where this changes** — that is the first build-order
+item that needs a schema runtime under the Registry's own naming rule. This is
+propagation of a rank-1 registry instruction already made (Registry > MASTER >
+specialised docs — this file's own precedence note, top), not a new architecture
+choice up for debate.
 
 CI (PR #14, merged to `main` at `e2867de`) runs on every push and pull request via
 GitHub Actions: lint (`ruff`), type check (`mypy`), `python -m pytest`, `python -m
@@ -307,4 +351,4 @@ restating it:
 | CI | `.github/workflows/ci.yml` | ruff → mypy → pytest → build; `test` required check; **no job added without an existing subject to examine** | ADR-0008 |
 | Branch protection | GitHub repo settings | Strict mode + `enforce_admins`, unchanged; stated exit condition if a batch stalls badly | D3, `docs/OPEN_QUESTIONS.md` |
 | Decision records | `decisions/`, `docs/DECISION_REGISTER.md` | Established convention, unchanged | `decisions/0001` |
-| Build status (README) | — | **CI-generated, not hand-typed** — mechanism dispatched to Honey (WP-24), after WP-18 | ADR-0008 |
+| Build status (README) | — | **CI-generated, not hand-typed** — ruled 2026-09-03 (`decisions/0008-ci-generated-build-status.md`), mechanism still unimplemented. Originally recorded here as dispatched to Honey as WP-24, after WP-18 (per ADR-0008's own Consequences section). The Engineering Coordinator's 2026-09-05T10:00:45Z dispatch (channel CRIC-Dev, event `90016f7651e2805312d1c51586551287edebf4d2f71b70a1dee939ed2d398955`) describes ADR-0008 as "a ruling with no mechanism since 2026-09-03" and dispatches the implementation fresh as **WP-33** to Honey. **Current dispatch: WP-33.** The WP-24/WP-33 numbering discrepancy for what appears to be the same undone work is unresolved — flagged, not silently reconciled; see this WP's report to the Memory & Knowledge Manager. | ADR-0008 |
