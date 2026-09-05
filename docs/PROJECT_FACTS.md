@@ -140,12 +140,17 @@ registry; 9 review contracts; 10 validation framework; 11 JSON Schema export.
 
 Items 1–2 are shipped: `src/cric_core/identifiers/` (WP-6, PR #17, `main` `fda79b1`)
 and `src/cric_core/knowledge_state/` (WP-18, PR #29, `main` `f5d8a06`) — both already
-covered in Architecture Freeze Points above. Confirmed live in this worktree: `ls
-src/cric_core/` shows both directories present with real content, not stubs —
-`identifiers/__init__.py` (3737 bytes) and `knowledge_state/__init__.py` (12794 bytes).
-**Items 3–11 are open** — no package code exists yet for temporal models, spatial
+covered in Architecture Freeze Points above. Confirmed live in this worktree at its
+citation pin, `fa22597`: `ls src/cric_core/` shows both directories present with real
+content, not stubs — `identifiers/__init__.py` (3737 bytes) and
+`knowledge_state/__init__.py` (12794 bytes). **Item 9 has since shipped too — caught
+stale by Honey's PR #39 review, not by this pass:** this branch was rebased onto
+`origin/main` `72f3fb7` after this prose was drafted (to avoid conflicts) without the
+prose being updated to match, and `72f3fb7` includes PR #38 (WP-32,
+`src/cric_core/review/`, review contracts) merged before that rebase point. **Items
+3–8 and 10–11 are open** — no package code exists yet for temporal models, spatial
 models, provenance, base object hierarchy, relationship model, ontology registry,
-review contracts, validation framework, or JSON Schema export.
+validation framework, or JSON Schema export.
 
 **Test suite, re-verified live for this fact, 2026-09-05:** `git rev-parse HEAD`
 before and after the run both returned `fa22597c24ccf96a2b5c644669239e1c651050d5`

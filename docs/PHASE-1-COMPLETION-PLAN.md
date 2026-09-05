@@ -35,7 +35,15 @@ exists, (2) a signed ADR exists with no code yet, or (3) neither exists, in whic
 it is an **unratified proposal**, stated as such, never as a settled requirement. The
 table below applies that test to every Freeze-Point-bearing item, verified directly
 against `decisions/` (currently `0001`–`0009`, no entry for FP2/3/4/5/8) and
-`src/cric_core/` (currently only `identifiers/` and `knowledge_state/`).
+`src/cric_core/` at this document's citation pin, `fa22597` (`identifiers/` and
+`knowledge_state/` only). **Stale-on-arrival correction, caught by Honey's non-author
+review of PR #39 (this branch was rebased onto `origin/main` `72f3fb7` after this
+prose was drafted, to avoid conflicts, without updating the prose to match):** this
+branch's actual tip also carries `src/cric_core/review/` — WP-32, PR #38, merged
+before the rebase point — so build-order item 9 (row below) is shipped code on the
+tree this document ships in, not the unratified proposal the table row said at
+drafting time. See row 9 and `docs/PROJECT_FACTS.md`'s Phase 1 build-order position
+section, both corrected the same way.
 
 | # | Build-order item | Freeze Point (of the 8) | ADR-0009 state | What it needs |
 |---|---|---|---|---|
@@ -91,11 +99,16 @@ Detail per Freeze-Point-bearing item, each independently verified:
   `validate_review_decision_origin` all exist in
   `src/cric_core/knowledge_state/__init__.py:294-308`, and its docstring's Decision 8
   (`src/cric_core/knowledge_state/__init__.py:36-39`) names this explicitly as
-  ratified FP7 content. But build-order item 9 itself — "review contracts" as its own
-  deliverable (the fuller `ReviewDecision` schema/dataclass) — has not shipped as a
-  distinct module; that is WP-32's current work (see Wave 1). Framed precisely: FP7 is
-  ratified (ADR-0009 branch 2 satisfied) with a partial down payment already in branch-1
-  territory, and WP-32 completes branch 1 for the item as a whole.
+  ratified FP7 content. Build-order item 9 itself — "review contracts" as its own
+  deliverable (`ReviewQueueState`/`ReviewDecisionValue`) — **has since shipped as a
+  distinct module: WP-32, PR #38, merged to `main` before this branch's rebase point
+  (`72f3fb7`)**, `src/cric_core/review/__init__.py`. At this document's own citation
+  pin (`fa22597`) it was still WP-32's current work, not yet merged; corrected here
+  because the branch that ships this prose sits past that point in history (caught by
+  Honey's PR #39 review). Framed precisely: FP7 is ratified (ADR-0009 branch 2
+  satisfied) with a partial down payment in branch-1 territory from WP-18, and WP-32
+  now completes branch 1 for the item as a whole — item 9 is fully shipped code, not
+  partial.
 - **Items 4, 8, 10, 11.** None of these four build-order items corresponds to any of
   the 8 Freeze Points listed in the Sequence document
   (`docs/CRIC-PRD-v0.1/CRIC-Repository-Dependency-and-Implementation-Sequence.md:262-275`)
