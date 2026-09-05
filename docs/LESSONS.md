@@ -516,18 +516,43 @@ is a script (`scripts/check_event_citations.py`, assigned to Honey, not yet buil
 of this writing) that extracts every event-id-plus-timestamp pair from `decisions/`
 and `docs/` and resolves each against the relay directly — mechanical verification of
 a field that has now independently drifted twice, rather than a third round of
-manual relay pulls. Whether it becomes a required CI check or a pre-push script
-depends on whether the relay is readable without credentials — stated by the
-Coordinator as a thing to determine by trying, not to assume toward the preferred
-answer. Full chain: this morning's D21/D22 instance (above); this afternoon's,
-caught independently by two parties before comparing notes — the Memory & Knowledge
-Manager pulled the event directly while investigating an unrelated instruction
-(unpublished at the moment of catching it), Pollen's own citation sweep of PR #47
-found the identical mismatch minutes later (channel event
+manual relay pulls. **Determined empirically, not assumed: the relay is not readable
+without credentials** (`buzz messages get` with the auth env vars unset fails
+`auth_error`, exit 3, for a pure read) — so the script stays a pre-push script, never
+a CI-required check, a real ceiling rather than a scoping choice.
+
+**A credential-free alternative was considered and proven insufficient, not just
+rejected on principle:** asserting that the same event id is never cited with two
+different timestamps anywhere in the repo would need no network access and could run
+in CI. It would have caught neither defect — this morning's `48159f91b0d06139169c8d7138b095f16709f2e9e58af409280ce186f675bbd3` mismatch was
+cited identically wrong in all seven places, this afternoon's `f127c71c53d1c4ba5afd7d0870dc3e73f3175fa043f94f265b71876b5cc1f9af` in all
+five. A self-consistency check detects *disagreement* between citations of the same
+id; both incidents were uniformly wrong, so there was nothing to disagree. The relay
+is genuinely load-bearing here, not a convenience.
+
+**Because the resulting control is the weaker, remember-to-run kind, the obligation
+was deliberately not left implicit:** the event-citation sweep is now a standing item
+in Pollen's review scope for every records PR, independent of whether the Coordinator
+thinks to name it that round — the same defect this file already ascribes to leaving
+a corrective sweep's scope wherever the person who wrote the instruction happened to
+have already looked (see the entry above), one level up: leaving a proven check's
+*existence in a given review* dependent on one person's memory, rather than making it
+a default nobody needs to invoke.
+
+Full chain: this morning's D21/D22 instance (above); this afternoon's, caught
+independently by two parties before comparing notes — the Memory & Knowledge Manager
+pulled the event directly while investigating an unrelated instruction (unpublished
+at the moment of catching it), Pollen's own citation sweep of PR #47 found the
+identical mismatch minutes later (channel event
 `699c6df91332a9dc21044051ffe8af3b1c834d94c7b85beb978504b5b3d21fb7`, 2026-09-05T14:27:31Z);
 the Coordinator's ruling on the mechanism rather than the instance, and the rejected
 alternative of deleting the field (channel event
-`e19fb6d8c031e3a6d3fb383a42077f88d70ad87541dcf7e2efe5a0e240c9e783`, 2026-09-05T14:29:43Z).
+`e19fb6d8c031e3a6d3fb383a42077f88d70ad87541dcf7e2efe5a0e240c9e783`, 2026-09-05T14:29:43Z);
+Honey's empirical relay-readability check (channel event
+`40eca17531956f39fccd991e9f7a3d934554e2aba74b759f16667e6d8a7ef933`, 2026-09-05T14:33:54Z);
+the Coordinator's rejected self-consistency alternative and the standing-obligation
+ruling on Pollen's scope (channel event
+`354ddbf52bce9284f5232f9312bda35edef148bc1d7c7675c3c4903fb11389c7`, 2026-09-05T14:34:38Z).
 
 ## Handing over a grep is not enough if the grep's own scope is left where the corrector already looked
 
