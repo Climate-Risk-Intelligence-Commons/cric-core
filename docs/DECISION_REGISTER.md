@@ -22,6 +22,7 @@ applicable, otherwise `Proposed` / `Accepted` / `Superseded`.
 | [0013](../decisions/0013-fp4-interface-retrieved-at-vs-acquisition-time.md) | FP4 interface — `acquisition.retrieved_at` vs. `observation_time.acquisition_time`: distinct concepts, no required equality (D24) | Accepted | Engineering Coordinator | 2026-09-05 | No (closes a carve-out beneath Freeze Point 4) |
 | [0014](../decisions/0014-fp4-provenancerecord-field-requiredness.md) | FP4 interface — `ProvenanceRecord` field requiredness, three tiers (D29) | Accepted | Engineering Coordinator | 2026-09-05 | No (closes a carve-out beneath Freeze Point 4) |
 | [0015](../decisions/0015-spatial-closure-geometry-encoding-and-crs.md) | Spatial closure — geometry encoding by data shape, canonical CRS EPSG:4326 with per-asset override (D14, WP-37) | Ruled by the Engineering Coordinator under Ashley's blanket approval — not signed by him | Engineering Coordinator | 2026-09-05 | No — reversible on one word from Ashley |
+| [0016](../decisions/0016-fp3-temporal-field-exclusions.md) | FP3 interface — `valid_time.open_ended` and `observation_time.precision` excluded, `event_time.uncertainty` concept cleared / shape open (D34) | Accepted | Engineering Coordinator | 2026-09-05 | No (closes an interface gap beneath Freeze Point 3) |
 
 **Consolidation note, 2026-09-03:** Ashley asked for "proper decisions" on licence,
 README, contributing, code of conduct, security, governance, CI, branch protection and
