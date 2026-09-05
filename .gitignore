@@ -6,3 +6,5 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .venv/
+gsd-ingest-manifest.yaml
+.planning/config.json
