@@ -4,6 +4,17 @@ Failures, the fixes that worked, recurring defects, and patterns worth reusing. 
 lesson earns an entry when it would cost someone an hour to rediscover — not every
 correction.
 
+**Admission test:** an entry also needs a near-miss — a wrong claim that was
+actually made, read, or acted on, not merely a mechanism that is distinct from
+every other entry's. A sweep that would have missed real occurrences, or a figure
+about to be published as a regression, qualifies. A report that stated its own
+basis correctly and was independently re-verified downstream by a rule that
+already binds does not — even when the mechanism it illustrates is genuinely new.
+Distinctness of mechanism is necessary for an entry to earn its own section; it is
+not sufficient. Ruled by the Engineering Coordinator after cutting an entry that
+passed the distinctness test and failed this one — channel event
+`4786895e22a3f6f4a46844f9ea4af8175276bb0a6ea5abb819c15ee93e4db4ff`, 2026-09-05T16:28:09Z.
+
 ## Stale "not yet a git repository" fact carried by two independent agents
 
 **What happened:** Both Fizz and the Memory & Knowledge Manager independently carried
@@ -590,6 +601,18 @@ whoever pointed it. Channel event
 `4177fb4179c07baeb8edfcbccfe2e00733ce901647dcd2c3be6f4904017631e0`, 2026-09-05T14:33:36Z
 (Engineering Coordinator, naming the pattern against himself, unprompted).
 
+**Superseded as a standing method, not as an account of what happened:**
+`scripts/check_event_citations.py` has since shipped (PR #51) and is the standing
+sweep mechanism — see "A 'prove zero' grep on a corrected literal…" below for why
+a repo-wide grep, even scoped correctly per this entry's own rule, stops being
+sufficient once a corrected string can legitimately reappear. This entry's scoping
+rule still applies to the checker itself (it must default to repo-wide) and to any
+other one-off literal sweep; it is not a live instruction to grep for a timestamp
+correction anymore. Channel event
+`a883b210382693bba0f16dae2900710a4bf21e9c621b0355556a6928ad303fb2`, 2026-09-05T16:03:23Z
+(Engineering Coordinator, retiring the grep-as-deliverable half of this entry while
+re-reviewing PR #47 against `main`).
+
 ## A hardcoded assertion against live repository state is not a guard — it is a snapshot that expires on the next correct change
 
 **What happened:** a real-repo test (`test_ratified_and_total_freeze_points_against_real_repo`,
@@ -705,3 +728,12 @@ Full chain, channel CRIC-Dev, all 2026-09-05: Honey's PR #51, the 44-then-3-true
 `6f7e4b195849bf5fc25792cc230b39df58994747e22c81f01055defc4e6d3d9c`, 14:53:28Z; the Coordinator's first report treating 101 events spanning the full day as evidence of completeness — the claim later withdrawn, not separately re-cited here since its correction supersedes it; the Memory & Knowledge Manager's independent `--limit 300` fetch returning 139, prompting the discrepancy check, event
 `d72d8b78d1f2a9762dd74cd4b1601dc8c96d3e012f11aec25bb91c020da7de6b`, 14:56:07Z; the Coordinator's self-correction — the root+tail mechanism identified, the 39 missing events named, the "span is not coverage" rule stated — event
 `30f1cd6291fb0b5204f1741b10155aa1476f57fdb8819fca05b10ed2c140a840`, 14:57:20Z.
+
+## A "prove zero" grep on a corrected literal stops proving zero the moment the literal is legitimately reused
+
+**What happened:** fixing the `14:04:04Z` timestamp defect on PR #47, the Memory & Knowledge Manager verified the fix by `grep -rn '14:04:04' docs/ decisions/` returning no matches, and reported that zero-hit grep as evidence the defect was closed. It was, at that moment. Two commits later (PR #48, adding LESSONS.md entries that document the same defect by quoting the wrong timestamp as part of the narrative), the identical grep against `main` returns **four** hits, not zero — three of them are the defect being correctly *described*, and the fourth is a **genuine, correct citation**: a different event, `8d5aeef702d6…`, whose real `created_at` actually is `14:04:04Z`. Re-verified directly against `origin/main` @ `39d8460` before writing this entry: `grep -rn '14:04:04' docs/ decisions/` → 4 hits, all at `docs/LESSONS.md:493,494,560,644`, none a live regression.
+
+**Why it matters:** a "prove zero" grep only proves zero at the commit it ran on. It has no way to tell three fundamentally different things apart once more content lands: a surviving instance of the fixed defect, a document *describing* the fixed defect (and therefore correctly containing the bad string as a quotation), and an unrelated event that coincidentally shares the corrected value. A string match cannot distinguish "wrong" from "quoted as an example of wrong" from "coincidentally correct" — only resolving the adjacent event id against the relay and comparing its real timestamp can. Anyone re-running the original zero-hit grep today would read four hits as a four-instance regression and could `sed` a correct citation into a wrong one trying to "fix" it.
+
+**Pattern to reuse:** a literal-string sweep is evidence for "clean at this commit," never for "stays clean." `scripts/check_event_citations.py` (PR #51) is the only tool that can re-answer this question later, because it resolves each id and compares timestamps rather than matching text — a grep cannot be handed over as the standing verification method for a timestamp correction, only as the one-time discovery method. Hand over a zero-*mismatch* run of the checker, not a zero-*hit* grep, when closing out a citation sweep. Channel event
+`a883b210382693bba0f16dae2900710a4bf21e9c621b0355556a6928ad303fb2`, 2026-09-05T16:03:23Z (Engineering Coordinator, catching this against his own team's earlier grep while re-verifying PR #47 against `main`).
