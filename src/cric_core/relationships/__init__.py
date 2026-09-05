@@ -36,18 +36,34 @@ requires an explicit migration):
    that mechanism, not a requirement of it -- most predicates have no
    registered inverse name at all, and the mechanism does not need one to
    work.
-5. `KNOWN_INVERSE_PAIRS` names only the pairs the corpus actually states as
-   pairs, nowhere more: `supports`/`supported_by` and `supersedes`/
-   `superseded_by` (ADR-0010's own count -- "only 2 of the 11 core
-   predicates have a registered paired inverse name"), plus `feeds`/
-   `fed_by` (the OKF spec's own worked example of the mechanism, alongside
-   `supports`/`supported_by`, at `OKF-Knowledge-Graph-Specification.md:243`).
-   This is deliberately not a claim that no other predicate in the 35 has an
-   inverse -- several read as plausible semantic opposites (e.g.
-   `upstream_of`/`downstream_of`, `exposed_to`/`exposes`) -- only that
-   nothing in the ratified sources registers them as a named pair, and
-   inventing that mapping here would be closing a question FP5's signature
-   does not cover.
+5. `KNOWN_INVERSE_PAIRS` names three pairs from two different kinds of
+   source, and they must not be conflated under one "ADR-0010 says so"
+   label (a defect an earlier version of this docstring had -- caught in
+   review of this PR, Engineering Coordinator, 2026-09-05). Precisely:
+   - `supports`/`supported_by` and `supersedes`/`superseded_by` are
+     **ratified** -- `decisions/0010:59-62`'s own count, "only 2 of the 11
+     core predicates have a registered paired inverse name at all," names
+     exactly these two.
+   - `feeds`/`fed_by` is **attested, not ratified** --
+     `OKF-Knowledge-Graph-Specification.md:241`'s worked example of the
+     Adjacency Derivation mechanism, alongside `supports`/`supported_by`.
+     ADR-0010's "only 2 of 11" sentence is scoped to the 11 **core**
+     predicates by its own wording ("the other 9" only parses against that
+     group); `feeds`/`fed_by` are **spatial/domain**, not core, so that
+     sentence makes no claim about them at all -- neither for nor against.
+     ADR-0010 is simply silent on inverse pairs outside the core 11 (new
+     open item, tracked in `docs/OPEN_QUESTIONS.md`).
+   Kept `feeds`/`fed_by` in the table rather than dropping it: this project's
+   smaller-set principle exists because enum *values* get minted into
+   immutable records, and doesn't fire here because `KNOWN_INVERSE_PAIRS` is
+   a detection table, not a value set -- nothing is minted from it, and
+   removing a real, attested pair would only make a genuine duplicate
+   declaration go undetected. This is deliberately not a claim that no
+   other predicate in the 35 has an inverse -- several read as plausible
+   semantic opposites (e.g. `upstream_of`/`downstream_of`, `exposed_to`/
+   `exposes`) -- only that nothing in the ratified or attested sources
+   registers them as a named pair, and inventing that mapping here would be
+   closing a question FP5's signature does not cover.
 6. `detect_duplicate_inverse_declarations` implements ADR-0010's testable
    requirement: "If both directions of what is semantically the same
    relationship are ever declared independently, the compiler must treat
