@@ -483,3 +483,208 @@ count, so the sweep could not have reported seven regardless of who read its out
 (Pollen)** — re-checked against the script, confirmed, and corrected his own written
 note as a correction rather than silently. **`c6fc5d0a`, 11:21:02Z (Coordinator)** —
 named the general rule and assigned this entry.
+
+## A timestamp written beside a verified event id is itself unverified data, and it recurred
+
+**What happened:** the D21/D22 mismatch above (one wrong timestamp, event
+`48159f91b0d06139169c8d7138b095f16709f2e9e58af409280ce186f675bbd3`) and a second, independent instance the same afternoon: ADR-0013,
+ADR-0014, ADR-0015 and two `docs/OPEN_QUESTIONS.md` rows all cited event
+`f127c71c53d1c4ba5afd7d0870dc3e73f3175fa043f94f265b71876b5cc1f9af` ("#42 and #43
+merged. WP-36 and WP-37 both ruled…") as `2026-09-05T14:04:04Z`. Its real
+`created_at`, pulled from the relay, is `13:57:21Z` — and `14:04:04Z` was not a typo
+into empty space, it belongs to a different real message from the same author
+(`8d5aeef702d608cdc80f6b4f77e9b8496487244745825e2f6585aaf89f3dd834`, an unrelated ruling about PR #44's test fixture). The event id
+resolved correctly in both incidents; only the adjacent timestamp was wrong, and
+wrong in the specific way of pointing at a different genuine event rather than at
+nothing.
+
+**Why it matters:** an event id is content-addressed — quoting it correctly proves
+nothing was invented. A timestamp written next to it is not derived from the id; it
+is separately typed by whoever writes the citation, from memory or from a nearby
+message, and nothing forces the two to match. That makes the timestamp a second,
+independently-fallible field riding alongside a verified one, which is exactly what
+let a correct id carry an incorrect time twice in one day without either citation
+looking wrong on inspection — both read as plausible, well-formed citations. The
+Engineering Coordinator considered and rejected removing timestamps from citations
+entirely: they are sometimes load-bearing (this session used one to establish that a
+13:38:43Z blanket approval could not cover a ruling made at 13:57:21Z) and deleting
+the field would remove a real capability along with the defect.
+
+**Pattern to reuse:** treat a timestamp cited beside an event id as a claim requiring
+its own check, never as inherited trust from the id resolving. The chosen mechanism
+is a script (`scripts/check_event_citations.py`, assigned to Honey, not yet built as
+of this writing) that extracts every event-id-plus-timestamp pair from `decisions/`
+and `docs/` and resolves each against the relay directly — mechanical verification of
+a field that has now independently drifted twice, rather than a third round of
+manual relay pulls. **Determined empirically, not assumed: the relay is not readable
+without credentials** (`buzz messages get` with the auth env vars unset fails
+`auth_error`, exit 3, for a pure read) — so the script stays a pre-push script, never
+a CI-required check, a real ceiling rather than a scoping choice.
+
+**A credential-free alternative was considered and proven insufficient, not just
+rejected on principle:** asserting that the same event id is never cited with two
+different timestamps anywhere in the repo would need no network access and could run
+in CI. It would have caught neither defect — this morning's `48159f91b0d06139169c8d7138b095f16709f2e9e58af409280ce186f675bbd3` mismatch was
+cited identically wrong in all seven places, this afternoon's `f127c71c53d1c4ba5afd7d0870dc3e73f3175fa043f94f265b71876b5cc1f9af` in all
+five. A self-consistency check detects *disagreement* between citations of the same
+id; both incidents were uniformly wrong, so there was nothing to disagree. The relay
+is genuinely load-bearing here, not a convenience.
+
+**Because the resulting control is the weaker, remember-to-run kind, the obligation
+was deliberately not left implicit:** the event-citation sweep is now a standing item
+in Pollen's review scope for every records PR, independent of whether the Coordinator
+thinks to name it that round — the same defect this file already ascribes to leaving
+a corrective sweep's scope wherever the person who wrote the instruction happened to
+have already looked (see the entry above), one level up: leaving a proven check's
+*existence in a given review* dependent on one person's memory, rather than making it
+a default nobody needs to invoke.
+
+Full chain: this morning's D21/D22 instance (above); this afternoon's, caught
+independently by two parties before comparing notes — the Memory & Knowledge Manager
+pulled the event directly while investigating an unrelated instruction (unpublished
+at the moment of catching it), Pollen's own citation sweep of PR #47 found the
+identical mismatch minutes later (channel event
+`699c6df91332a9dc21044051ffe8af3b1c834d94c7b85beb978504b5b3d21fb7`, 2026-09-05T14:27:31Z);
+the Coordinator's ruling on the mechanism rather than the instance, and the rejected
+alternative of deleting the field (channel event
+`e19fb6d8c031e3a6d3fb383a42077f88d70ad87541dcf7e2efe5a0e240c9e783`, 2026-09-05T14:29:43Z);
+Honey's empirical relay-readability check (channel event
+`40eca17531956f39fccd991e9f7a3d934554e2aba74b759f16667e6d8a7ef933`, 2026-09-05T14:33:54Z);
+the Coordinator's rejected self-consistency alternative and the standing-obligation
+ruling on Pollen's scope (channel event
+`354ddbf52bce9284f5232f9312bda35edef148bc1d7c7675c3c4903fb11389c7`, 2026-09-05T14:34:38Z).
+
+## Handing over a grep is not enough if the grep's own scope is left where the corrector already looked
+
+**What happened:** the Engineering Coordinator, fixing the `f127c71c53d1c4ba5afd7d0870dc3e73f3175fa043f94f265b71876b5cc1f9af` timestamp
+defect above, instructed `grep -rln '14:04:04' decisions/` — scoped to the one
+directory he had personally checked. The Memory & Knowledge Manager ran it across
+`decisions/` *and* `docs/` instead, and found two more occurrences than the
+instruction's own scope would have surfaced: two `OPEN_QUESTIONS.md` rows written
+from the same wrong citation. The Coordinator had himself ruled, earlier the same
+day, that a correction target should be handed over as a grep rather than an
+enumerated list, "because an enumeration is a snapshot of one person's attention; a
+grep is the set" (see the wording-vs-parser-fix entry above for the general
+principle). Handing over a grep with a path argument limited to where he had already
+looked reproduced the identical failure shape one level down — a search whose
+boundary is the corrector's own blind spot rather than the true extent of the string.
+
+**Why it matters:** "hand over a grep, not a list" only closes the enumeration
+failure if the grep's search path is unconstrained. A grep scoped to one directory
+is still an enumeration — of directories checked, rather than of matches
+remembered — and it fails the identical way: it reports confidently and completely
+within a boundary nobody stated was incomplete. This was the same person's third
+under-scoped correction in one working session (the other two caught by different
+people, earlier), which is itself the useful signal: the recurring defect was never
+forgetting to search, it was treating the area already searched as the area worth
+naming in the instruction.
+
+**Pattern to reuse:** when handing off a corrective sweep for a literal string or
+citation, state the scope as "the whole repository" (or name the specific
+sub-scopes that together cover it), never as the path already checked while finding
+the defect — the two are easy to conflate because the same person usually did both,
+and only one of them is the actual claim being made. Any tool built to replace a
+manual sweep (`scripts/check_event_citations.py`, above) must default to repo-wide
+scope for the same reason: a tool that only looks where it is pointed inherits
+whoever pointed it. Channel event
+`4177fb4179c07baeb8edfcbccfe2e00733ce901647dcd2c3be6f4904017631e0`, 2026-09-05T14:33:36Z
+(Engineering Coordinator, naming the pattern against himself, unprompted).
+
+## A hardcoded assertion against live repository state is not a guard — it is a snapshot that expires on the next correct change
+
+**What happened:** a real-repo test (`test_ratified_and_total_freeze_points_against_real_repo`,
+from WP-33a) asserted the exact set of ratified Freeze Points as a literal,
+`{1, 6, 7}`, computed at authoring time by running the generator against the actual
+`decisions/` directory. When PR #44 flipped ADR-0010/0011/0012 to Accepted — the
+correct, intended effect of signing three more Freeze Points — the literal assertion
+failed: `{1, 3, 4, 5, 6, 7} == {1, 6, 7}`. Four people reached the same failure
+independently (a predicted-but-wrong mechanism from Honey, a rebased-tree
+reproduction from the Memory & Knowledge Manager, a fresh-worktree reproduction from
+Pollen, a live-PR trigger from the Coordinator) before the Coordinator ruled that the
+literal itself was the defect, not the flip that exposed it: **"a test that hardcodes
+live repository state is not testing the generator — it asserts that the world has
+not changed."**
+
+**Why it matters:** the test read as a real guard because it ran against the actual
+repository rather than a fixture, and it had been correct on the day it was written.
+Both properties made it look like exactly the kind of integration check this project
+wants. But binding an assertion to *today's* answer from a value that is expected to
+change (Freeze Point ratification, by design, only ever grows) converts every future
+correct change into a false failure, with no mechanism distinguishing "the world
+moved" from "the generator broke." The fix that was rejected — bumping the literal to
+`{1, 3, 4, 5, 6, 7}` — would have preserved the trap exactly, expiring again on the
+next signature with no one told to expect it.
+
+**Pattern to reuse:** replace a real-repo assertion bound to a point-in-time value
+with either (a) rot-proof invariants that hold at every reachable state (non-empty,
+subset of the valid range, count bounded by the spec constant — adopted here, but
+explicitly a well-formedness check, not a correctness guard: a parser that
+misclassified `Proposed` ADRs as ratified would still pass all three), or (b) a
+**differential oracle** — a second, independently-written implementation of the same
+extraction logic, run against the same real files, asserting the two agree. Pollen
+built one for this exact case (a separate regex/string-split extractor, not calling
+into the generator's own code) and proved it catches what the invariants can't: it
+was run against a scratch copy of the generator with the original substring-only bug
+re-planted, and the two implementations disagreed (`buggy: [1,3,4,5,6,7]` vs
+`oracle: [1,6,7]`) — a concrete demonstration, not an argument, that it would have
+caught the regression this project already paid for once. A differential oracle
+detects *implementation* divergence, not a shared *specification* error — if both
+implementations encode the same wrong rule, it stays silent, and this limit belongs
+in the oracle's own docstring, not left to be discovered. It also carries its own
+decay risk the invariants don't: nothing stops a future maintainer from "simplifying"
+it into a call to the generator's own parsing helper, at which point it compares a
+function to itself and passes forever. The adopted condition: an oracle ships only
+together with its own planted-defect test as a permanent regression case, so the
+oracle's independence is verified by a failing test, not asserted in prose.
+
+Full chain, channel CRIC-Dev, all 2026-09-05: the Memory & Knowledge Manager's hold on
+PR #44 after reproducing the failure on a rebased tree (event
+`acac0c309678e80e1910eb8cfc6e62de595ea25fb9568995d5bf3cd36fb63d93`, 14:01:45Z); the
+Coordinator's ruling that the literal, not the flip, was the defect (event
+`8d5aeef702d608cdc80f6b4f77e9b8496487244745825e2f6585aaf89f3dd834`, 14:04:04Z);
+Honey's fix to rot-proof invariants, verified against a scratch copy of PR #44's real
+ADRs (event `5c0d0a342d8431569f9328e338e2aed94ea82faddb937fd054558582998b8d71`,
+14:06:31Z); the Coordinator's explicit refusal to review his own prescription (event
+`f9d36ec94aa3f97df502d1dfc95570dd7726b0a6fb330889328bc09c253efbe1`, 14:08:16Z);
+Pollen's differential-oracle design and planted-defect proof (event
+`929447ae2065c1ccda09bf49d6a1da8aadcf1fbea9db33f4a5fb5dd764f6b340`, 14:10:46Z); the
+Coordinator's adoption with the self-test condition (event
+`cba4886e73da520da0edf29895d4bc2343d05ef2d2290b17327a1a3a5cc6bcda`, 14:12:00Z). Not
+yet built as of this writing — tracked as a follow-up after ADR-0013/0014, ahead of
+the citation checker above.
+
+## A rebase after review destroys the one artefact a merge check depends on
+
+**What happened:** the Engineering Coordinator's standing merge discipline is to diff
+the reviewed commit against the head about to merge, to confirm a rebase changed
+nothing Pollen had already verified. Between Pollen's review of PR #44 (`ab298fc`)
+and its merge, the branch was rebased twice, landing at `205b60c`. `ab298fc` was no
+longer fetchable — `git fetch origin ab298fc` was rejected outright — because a
+rebase abandons the original commit, and GitHub only retains orphaned commits
+temporarily, with no guaranteed window. The reviewed SHA was still recorded, correctly,
+in the channel thread, which reads like durable evidence; it pointed at an object
+that no longer existed anywhere fetchable. The Coordinator recovered it through
+GitHub's contents API, which happened to still serve the orphaned tree, and diffed
+the six reviewed files individually to confirm Pollen's verdict still carried before
+merging.
+
+**Why it matters:** a citation to a commit SHA in a permanent record implies the
+object is retrievable, and for an orphaned commit that implication silently stops
+being true on GitHub's own schedule, not on any schedule the record's author
+controls. The check this discipline exists to run — "did the rebase touch anything
+already reviewed" — becomes literally impossible to perform once the object is
+garbage-collected, not merely harder. This project's own recovery worked once,
+through an API that happens to retain orphans longer than the git protocol does; that
+is a lucky property of the host, not a guarantee to build a process on.
+
+**Pattern to reuse:** a rebase after review destroys the ability to diff reviewed-
+against-merged unless one of two things happens first — the merger performs that
+diff *before* the rebase runs, while the original commit is still reachable by
+normal means, or the reviewed head is pushed as a tag (or otherwise pinned) so it
+survives the rebase regardless of git's garbage collection. Either discipline turns
+"I diffed reviewed against updated" back into a claim that can be re-run later; without
+one of them, it is a claim that was true once and cannot be checked again, by the
+person who made it or anyone else. Channel event
+`b0df2843703ca8e12037eb925968c2f972183a60c450c8956e1a508da45c43ad`, 2026-09-05T14:15:04Z
+(Engineering Coordinator, naming the rule immediately after recovering from the
+instance it describes).
