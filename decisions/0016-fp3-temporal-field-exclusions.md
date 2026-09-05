@@ -73,7 +73,14 @@ ADR, and not to be inherited as settled.
    (OKF vs. TEO), is declined rather than closed — see `docs/OPEN_QUESTIONS.md` D33/D34's sibling
    entry, not resolved by this ADR.
 3. **`event_time.uncertainty`'s scalar shape stays open** — a separate, future decision. Whoever
-   builds against this field must not read this ADR as having ratified a shape for it.
+   builds against this field must not read this ADR as having ratified a shape for it. **Standing
+   caveat, added after WP-39 found it live:** `Temporal-and-Epistemic-Ontology.md` (rank 3) models
+   `event_time` with two separate leaf fields, `precision:` and `uncertainty:` — but registry §7
+   (rank 1) has no `uncertainty` field at all, and no ADR ratifies one. That two-field split reads
+   as settled schema evidence because the YAML is genuinely there to see; it is not canonical.
+   Anyone citing TEO's `uncertainty` field as an existing structure, here or elsewhere, must state
+   its rank-3, unratified standing — the citation's content is accurate, its standing is not what
+   an argument built on it needs.
 4. Closes `docs/OPEN_QUESTIONS.md` D34 (the structural three-field question, recorded and closed
    in the same session per this project's own acceptance criterion).
 
