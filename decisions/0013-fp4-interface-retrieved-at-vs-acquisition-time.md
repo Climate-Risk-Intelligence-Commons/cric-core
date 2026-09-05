@@ -1,9 +1,14 @@
 # ADR-0013: FP4 Interface — `acquisition.retrieved_at` vs. `observation_time.acquisition_time` (D24)
 
 - **Status:** Accepted — not a Freeze Point, reversible by ordinary amendment
-- **Approver:** Engineering Coordinator (within his own delegated scoping authority — this
-  closes a carve-out from an already-ratified Freeze Point, ADR-0011, not one of the 8
-  Architecture Freeze Points itself; no Ashley signature required)
+- **Approver:** Engineering Coordinator, ruling this explicitly as his own scoping authority
+  rather than leaving it inferred (event
+  `a420e3f2b381803f2dc9cd53ebbc760920c0e47d19ba8d4ffc9661e16f2d830c`, 2026-09-05T14:25:23Z) —
+  this closes a carve-out beneath ADR-0011's already-ratified shape, not one of the 8
+  Architecture Freeze Points itself. Ashley's 13:38:43Z blanket approval cannot cover this
+  ruling — it was made at 13:57:21Z, after the blanket named nothing on this subject — so the
+  basis is the Coordinator's own scoping authority, not an inherited signature. No Ashley
+  signature required.
 - **Date:** 2026-09-05
 - **Evidence:** see Ratification chain below — every step cites its channel event id.
 
@@ -84,4 +89,4 @@ domain convention rather than a corpus citation.
   labelled as such, event `c7ab1e323b1c34f4ea03a3ee7ad151d89bf6dc8cd4b0d7bc060d1cbad6e21866`,
   2026-09-05T13:54:29Z.
 - Ruling — Option C ratified as stated (Engineering Coordinator), event
-  `f127c71c53d1c4ba5afd7d0870dc3e73f3175fa043f94f265b71876b5cc1f9af`, 2026-09-05T14:04:04Z.
+  `f127c71c53d1c4ba5afd7d0870dc3e73f3175fa043f94f265b71876b5cc1f9af`, 2026-09-05T13:57:21Z.

@@ -1,9 +1,14 @@
 # ADR-0015: Spatial Closure — Geometry Encoding, Canonical CRS, Per-Asset Override (D14, WP-37)
 
 - **Status:** Ruled by the Engineering Coordinator under Ashley's blanket approval — **not
-  signed by Ashley**, and not to be read as his content. Not a Freeze Point. Reversible on one
-  word from Ashley; the Wave 2 spatial package is required to verify this ruling against the
-  corpus directly rather than inherit it from this ADR as already-settled truth.
+  signed by Ashley**, and not to be read as his content. Not a Freeze Point, reversible on one
+  word from Ashley. **WP-37 already discharged the independent verification this ruling rests
+  on — not a forward obligation on some future package.** Per this ADR's own two-phase framing,
+  37b derived a CRS position independently before comparing it against the Coordinator's first
+  ruling, partially agreed (*a* global geographic CRS, not WGS84 specifically — the corpus names
+  none), and found the first ruling's justification wrong; the corrected two-format
+  justification and the geodesic-reprojection requirement below are that redo's own substantive
+  product, not a restatement of the Coordinator's first pass.
 - **Approver:** Engineering Coordinator, ruling made under Ashley's 2026-09-05 blanket
   ("Please consider all my signatures and all of the decisions as done. Go ahead") — that
   blanket named no CRS and no geometry closure, so there was nothing in it to ratify on this
@@ -139,4 +144,4 @@ that shape either.
 - Ruling — geometry closure adopted, CRS justification corrected, mandatory-reprojection
   requirement for the five named calculation types adopted, per-asset override confirmed as the
   Coordinator's own addition (Engineering Coordinator), event
-  `f127c71c53d1c4ba5afd7d0870dc3e73f3175fa043f94f265b71876b5cc1f9af`, 2026-09-05T14:04:04Z.
+  `f127c71c53d1c4ba5afd7d0870dc3e73f3175fa043f94f265b71876b5cc1f9af`, 2026-09-05T13:57:21Z.
