@@ -19,6 +19,9 @@ applicable, otherwise `Proposed` / `Accepted` / `Superseded`.
 | [0010](../decisions/0010-freeze-point-5-relationship-representation.md) | Freeze Point 5 — relationship representation: predicate vocabulary closed at 35, direction representation ratified | **Accepted — locked** | Ashley | 2026-09-05 | **Yes — Freeze Point 5 of 8** |
 | [0011](../decisions/0011-freeze-point-4-provenance-model.md) | Freeze Point 4 — provenance model: promotion rule, `ProvenanceRecord` shape, conditional source-hash rule | **Accepted — locked** | Ashley | 2026-09-05 | **Yes — Freeze Point 4 of 8** |
 | [0012](../decisions/0012-freeze-point-3-temporal-model.md) | Freeze Point 3 — temporal model: negative-value exclusion, scope precedence over Training-Data's narrower restatement | **Accepted — locked** | Ashley | 2026-09-05 | **Yes — Freeze Point 3 of 8** |
+| [0013](../decisions/0013-fp4-interface-retrieved-at-vs-acquisition-time.md) | FP4 interface — `acquisition.retrieved_at` vs. `observation_time.acquisition_time`: distinct concepts, no required equality (D24) | Accepted | Engineering Coordinator | 2026-09-05 | No (closes a carve-out beneath Freeze Point 4) |
+| [0014](../decisions/0014-fp4-provenancerecord-field-requiredness.md) | FP4 interface — `ProvenanceRecord` field requiredness, three tiers (D29) | Accepted | Engineering Coordinator | 2026-09-05 | No (closes a carve-out beneath Freeze Point 4) |
+| [0015](../decisions/0015-spatial-closure-geometry-encoding-and-crs.md) | Spatial closure — geometry encoding by data shape, canonical CRS EPSG:4326 with per-asset override (D14, WP-37) | Ruled by the Engineering Coordinator under Ashley's blanket approval — not signed by him | Engineering Coordinator | 2026-09-05 | No — reversible on one word from Ashley |
 
 **Consolidation note, 2026-09-03:** Ashley asked for "proper decisions" on licence,
 README, contributing, code of conduct, security, governance, CI, branch protection and
