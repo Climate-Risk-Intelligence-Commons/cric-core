@@ -59,6 +59,30 @@ Ratified decisions encoded below:
    -- callers write `LicenceStatus.UNKNOWN` themselves rather than the
    model silently assuming it, matching this project's standing "unknown
    is not negative, and never a silent default" discipline.
+7. **Every model in this module is frozen (D28).**
+   `Evidence-Provenance-and-Trust.md:107` is a MUST-NOT: "Lineage records
+   must not be rewritten to make a later workflow appear cleaner."
+   `model_config = ConfigDict(frozen=True)` is transcription of that
+   prohibition, not a new decision -- rule 11 in its "enforce at
+   construction" form, since immutability is a property of the object.
+   It is applied to `ProvenanceRecord` and to every nested block
+   (`Source`, `Acquisition`, `Transformation`, `AgentInfo`, `Integrity`,
+   `Licensing`), not only the outer record -- freezing only the outer
+   model would still let `record.source.provider = ...` rewrite content
+   reachable from an unchanged top-level reference.
+
+   **What this does NOT close, stated so D28 is not recorded as settled:**
+   - The *store* half of D28 -- append-only, WORM, hash-chaining so a
+     *new* record cannot silently replace an old one -- is untouched.
+     `frozen=True` constrains one in-memory object; it says nothing about
+     what a caller does with the next `ProvenanceRecord` it constructs.
+   - `frozen=True` blocks attribute *reassignment*. It does not make the
+     mutable container fields (`parents`, `human_reviews`, `Source.
+     node_ids`, `Source.uris`, `Integrity.parent_hashes`) immutable --
+     `record.parents.append(...)` still mutates the same list object in
+     place, because the frozen check only fires on `setattr`, never on a
+     method called on an already-assigned value. See
+     `test_frozen_blocks_reassignment_not_in_place_list_mutation`.
 
 Explicitly OPEN -- not decided anywhere in this module, on purpose:
 
@@ -84,7 +108,7 @@ from datetime import datetime
 from enum import StrEnum
 from typing import Literal
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from cric_core.identifiers import CricId, InvalidCricId
 
@@ -110,6 +134,8 @@ class Source(BaseModel):
     requirement, and an entirely empty `Source` describes nothing.
     """
 
+    model_config = ConfigDict(frozen=True)
+
     node_ids: list[str] = Field(default_factory=list)
     uris: list[str] = Field(default_factory=list)
     provider: str | None = None
@@ -132,6 +158,8 @@ class Acquisition(BaseModel):
     no relationship to registry §7's `observation_time.acquisition_time`
     (ADR-0013/D24) -- see this module's docstring, Decision 5."""
 
+    model_config = ConfigDict(frozen=True)
+
     retrieved_at: datetime
     method: str | None = None
     actor: str | None = None
@@ -140,6 +168,8 @@ class Acquisition(BaseModel):
 class Transformation(BaseModel):
     """`transformation:` block -- conditional on a transformation event
     having actually occurred (ADR-0014 tier 3)."""
+
+    model_config = ConfigDict(frozen=True)
 
     workflow_id: str | None = None
     step_id: str | None = None
@@ -153,6 +183,8 @@ class AgentInfo(BaseModel):
     """`agent:` block -- conditional on an agent having actually run
     (ADR-0014 tier 3)."""
 
+    model_config = ConfigDict(frozen=True)
+
     agent_id: str | None = None
     agent_version: str | None = None
     run_id: str | None = None
@@ -165,6 +197,8 @@ class Integrity(BaseModel):
     `ProvenanceRecord`'s own cross-field validator, not here, since this
     model has no visibility into its sibling `source` block."""
 
+    model_config = ConfigDict(frozen=True)
+
     content_sha256: str | None = None
     parent_hashes: list[str] = Field(default_factory=list)
 
@@ -172,6 +206,8 @@ class Integrity(BaseModel):
 class Licensing(BaseModel):
     """`licensing:` block. `licence` is required, no default -- see this
     module's docstring, Decision 6."""
+
+    model_config = ConfigDict(frozen=True)
 
     licence: LicenceStatus
     redistribution: str | None = None
@@ -205,6 +241,8 @@ class ProvenanceRecord(BaseModel):
     the same module every other Freeze-Point-bearing type in this repo
     already uses -- reused, not re-implemented.
     """
+
+    model_config = ConfigDict(frozen=True)
 
     id: str
     type: Literal["ProvenanceRecord"] = "ProvenanceRecord"
