@@ -11,6 +11,7 @@ requires credentials CI does not have.
 
 from __future__ import annotations
 
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -165,18 +166,195 @@ def test_resolve_event_created_at_passes_the_large_fetch_limit(monkeypatch):
     assert captured_cmd["cmd"][limit_index + 1] == str(cec._THREAD_FETCH_LIMIT)
 
 
+def test_resolve_event_passes_an_explicit_timeout(monkeypatch):
+    # Fizz's PR #51 review: a hung `buzz` process must not hang this script
+    # silently -- the opposite of its own fail-loudly discipline.
+    captured_kwargs = {}
+
+    def fake_run(cmd, **kwargs):
+        captured_kwargs.update(kwargs)
+        return subprocess.CompletedProcess(cmd, 0, stdout="[]", stderr="")
+
+    monkeypatch.setattr(cec.subprocess, "run", fake_run)
+    cec.resolve_event("some-channel", "abc123")
+
+    assert captured_kwargs.get("timeout") == cec._SUBPROCESS_TIMEOUT_SECONDS
+
+
+# --- resolve_event: the three distinguishable failure causes -----------------
+#
+# Fizz's PR #51 finding: a relay-unreachable failure, a malformed response,
+# and a genuine non-resolution must never collapse into one message -- the
+# original code returned bare `None` for all three and printed the
+# non-resolution message regardless, so a total outage (BUZZ_PRIVATE_KEY
+# unset, network down) misdiagnosed itself as "verify near the cited date."
+
+
+def test_resolve_event_reports_relay_unreachable_on_nonzero_exit(monkeypatch):
+    def fake_run(cmd, **kwargs):
+        return subprocess.CompletedProcess(cmd, 3, stdout="", stderr="auth_error: BUZZ_PRIVATE_KEY is required")
+
+    monkeypatch.setattr(cec.subprocess, "run", fake_run)
+    result = cec.resolve_event("some-channel", "abc123")
+
+    assert result.created_at is None
+    assert result.failure_reason is cec.ResolveFailureReason.RELAY_UNREACHABLE
+    assert "BUZZ_PRIVATE_KEY" in result.detail
+
+
+def test_resolve_event_reports_relay_unreachable_when_subprocess_raises(monkeypatch):
+    # e.g. `buzz` missing from PATH -- FileNotFoundError is an OSError.
+    def fake_run(cmd, **kwargs):
+        raise FileNotFoundError("buzz: command not found")
+
+    monkeypatch.setattr(cec.subprocess, "run", fake_run)
+    result = cec.resolve_event("some-channel", "abc123")
+
+    assert result.created_at is None
+    assert result.failure_reason is cec.ResolveFailureReason.RELAY_UNREACHABLE
+    assert "buzz" in result.detail
+
+
+def test_resolve_event_reports_relay_unreachable_on_timeout(monkeypatch):
+    def fake_run(cmd, **kwargs):
+        raise subprocess.TimeoutExpired(cmd, kwargs.get("timeout", 0))
+
+    monkeypatch.setattr(cec.subprocess, "run", fake_run)
+    result = cec.resolve_event("some-channel", "abc123")
+
+    assert result.created_at is None
+    assert result.failure_reason is cec.ResolveFailureReason.RELAY_UNREACHABLE
+
+
+def test_resolve_event_reports_malformed_response_on_bad_json(monkeypatch):
+    def fake_run(cmd, **kwargs):
+        return subprocess.CompletedProcess(cmd, 0, stdout="not json", stderr="")
+
+    monkeypatch.setattr(cec.subprocess, "run", fake_run)
+    result = cec.resolve_event("some-channel", "abc123")
+
+    assert result.created_at is None
+    assert result.failure_reason is cec.ResolveFailureReason.MALFORMED_RESPONSE
+
+
+def test_resolve_event_reports_not_found_when_call_succeeds_but_id_absent(monkeypatch):
+    def fake_run(cmd, **kwargs):
+        return subprocess.CompletedProcess(cmd, 0, stdout='[{"id": "unrelated", "created_at": 1788598433}]', stderr="")
+
+    monkeypatch.setattr(cec.subprocess, "run", fake_run)
+    result = cec.resolve_event("some-channel", "abc123")
+
+    assert result.created_at is None
+    assert result.failure_reason is cec.ResolveFailureReason.NOT_FOUND
+
+
+# --- resolve_event: the count-vs-limit truncation signal --------------------
+#
+# Named by the Engineering Coordinator (channel event, 2026-09-05) correcting
+# his own "101 events spanning the full day" claim: "endpoints prove nothing
+# -- count and continuity do." A page returning fewer than the requested
+# limit genuinely reached the end of history; a page returning exactly the
+# limit could be hiding anything past that boundary.
+
+
+def test_resolve_event_flags_possibly_truncated_when_page_hits_the_limit_and_id_absent(monkeypatch):
+    fake_events = [
+        {"id": f"other-{i}", "created_at": 1788598433} for i in range(cec._THREAD_FETCH_LIMIT)
+    ]
+
+    def fake_run(cmd, **kwargs):
+        return subprocess.CompletedProcess(cmd, 0, stdout=json.dumps(fake_events), stderr="")
+
+    monkeypatch.setattr(cec.subprocess, "run", fake_run)
+    result = cec.resolve_event("some-channel", "abc123")
+
+    assert result.created_at is None
+    assert result.possibly_truncated is True
+
+
+def test_resolve_event_does_not_flag_truncation_when_page_is_short(monkeypatch):
+    # Far fewer than the limit -- the relay genuinely ran out of history, so
+    # "not found" here is a real claim, not a truncation artefact.
+    fake_events = [{"id": "other-1", "created_at": 1788598433}]
+
+    def fake_run(cmd, **kwargs):
+        return subprocess.CompletedProcess(cmd, 0, stdout=json.dumps(fake_events), stderr="")
+
+    monkeypatch.setattr(cec.subprocess, "run", fake_run)
+    result = cec.resolve_event("some-channel", "abc123")
+
+    assert result.created_at is None
+    assert result.possibly_truncated is False
+
+
+def test_resolve_event_finding_the_id_is_never_flagged_as_truncated_even_at_a_full_page(monkeypatch):
+    # The event itself was on the page -- whatever might lie beyond the
+    # limit doesn't matter for this particular id.
+    fake_events = [{"id": f"other-{i}", "created_at": 1788598433} for i in range(cec._THREAD_FETCH_LIMIT - 1)]
+    fake_events.append({"id": "abc123", "created_at": 1788598433})
+
+    def fake_run(cmd, **kwargs):
+        return subprocess.CompletedProcess(cmd, 0, stdout=json.dumps(fake_events), stderr="")
+
+    monkeypatch.setattr(cec.subprocess, "run", fake_run)
+    result = cec.resolve_event("some-channel", "abc123")
+
+    assert result.created_at == "2026-09-05T08:53:53Z"
+    assert result.possibly_truncated is False
+
+
+def test_mismatch_carries_the_truncation_flag_through_check_citations(monkeypatch):
+    monkeypatch.setattr(
+        cec,
+        "resolve_event",
+        lambda channel, event_id: cec.ResolveResult(
+            created_at=None, failure_reason=cec.ResolveFailureReason.NOT_FOUND, possibly_truncated=True
+        ),
+    )
+    citation = cec.Citation("abc123", "2026-09-05T10:33:53Z", 1, "fake.md")
+
+    mismatches = cec.check_citations([citation], "some-channel")
+
+    assert len(mismatches) == 1
+    assert mismatches[0].possibly_truncated is True
+
+
+def test_mismatch_carries_the_failure_reason_through_check_citations(monkeypatch):
+    monkeypatch.setattr(
+        cec,
+        "resolve_event",
+        lambda channel, event_id: cec.ResolveResult(
+            created_at=None, failure_reason=cec.ResolveFailureReason.RELAY_UNREACHABLE, detail="auth_error"
+        ),
+    )
+    citation = cec.Citation("abc123", "2026-09-05T10:33:53Z", 1, "fake.md")
+
+    mismatches = cec.check_citations([citation], "some-channel")
+
+    assert len(mismatches) == 1
+    assert mismatches[0].failure_reason is cec.ResolveFailureReason.RELAY_UNREACHABLE
+    assert mismatches[0].detail == "auth_error"
+
+
 # --- check_citations: agreement/disagreement, via a monkeypatched resolver -
 
 
+def _fake_resolve(created_at, possibly_truncated=False):
+    reason = None if created_at is not None else cec.ResolveFailureReason.NOT_FOUND
+    return lambda channel, event_id: cec.ResolveResult(
+        created_at=created_at, failure_reason=reason, possibly_truncated=possibly_truncated
+    )
+
+
 def test_check_citations_reports_no_mismatch_when_relay_agrees(monkeypatch):
-    monkeypatch.setattr(cec, "resolve_event_created_at", lambda channel, event_id: "2026-09-05T10:33:53Z")
+    monkeypatch.setattr(cec, "resolve_event", _fake_resolve("2026-09-05T10:33:53Z"))
     citation = cec.Citation("abc123", "2026-09-05T10:33:53Z", 1, "fake.md")
 
     assert cec.check_citations([citation], "some-channel") == []
 
 
 def test_check_citations_reports_a_mismatch_when_relay_disagrees(monkeypatch):
-    monkeypatch.setattr(cec, "resolve_event_created_at", lambda channel, event_id: "2026-09-05T10:33:53Z")
+    monkeypatch.setattr(cec, "resolve_event", _fake_resolve("2026-09-05T10:33:53Z"))
     citation = cec.Citation("abc123", "2026-09-05T10:29:33Z", 1, "fake.md")
 
     mismatches = cec.check_citations([citation], "some-channel")
@@ -186,7 +364,7 @@ def test_check_citations_reports_a_mismatch_when_relay_disagrees(monkeypatch):
 
 
 def test_check_citations_reports_a_mismatch_when_the_event_cannot_be_resolved(monkeypatch):
-    monkeypatch.setattr(cec, "resolve_event_created_at", lambda channel, event_id: None)
+    monkeypatch.setattr(cec, "resolve_event", _fake_resolve(None))
     citation = cec.Citation("abc123", "2026-09-05T10:33:53Z", 1, "fake.md")
 
     mismatches = cec.check_citations([citation], "some-channel")

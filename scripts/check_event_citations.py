@@ -19,6 +19,18 @@ repository's CI. So this stays a pre-push script, never a `test`-job step;
 see `decisions/0008`'s "no CI job without a subject" rule -- this has a
 subject, but no credential-safe way to run it in CI.
 
+**Also observed empirically, running this against the real repository:** a
+full run makes one relay call per checkable citation (160+ and rising as
+the channel grows), and at that volume individual calls have hit both a
+30-second timeout and the relay's own rate limiting (`429: rate-limited`)
+in ad-hoc testing -- transient, not a script defect (a lone timed-out
+citation re-checked immediately afterward resolved correctly). Both surface
+through `ResolveFailureReason.RELAY_UNREACHABLE` with the real error
+message attached, and the printed report already says to re-run before
+concluding anything. Worth knowing before treating a single-run report as
+final: **re-run once before trusting a `RELAY_UNREACHABLE` result**, the
+same way a flaky network test gets a second look before it's called red.
+
 Usage:
     python scripts/check_event_citations.py [--channel UUID] [PATH ...]
 
@@ -74,6 +86,7 @@ import re
 import subprocess
 from dataclasses import dataclass
 from datetime import UTC, datetime
+from enum import StrEnum
 from pathlib import Path
 
 DEFAULT_CHANNEL = "17bd72a0-4d90-4e0b-b102-f9163f0cfd4b"  # CRIC-Dev
@@ -190,46 +203,136 @@ def extract_citations(text: str, source: str = "<text>") -> tuple[list[Citation]
 # known limitation below rather than presented as a guarantee.
 _THREAD_FETCH_LIMIT = 2000
 
+# How long a single `buzz messages thread` call may run before this script
+# gives up on it. Named explicitly, per Fizz's PR #51 review: without this,
+# a hung `buzz` process hangs the whole script silently -- the opposite of
+# this module's own "fail loudly, never invent a default" discipline.
+_SUBPROCESS_TIMEOUT_SECONDS = 30
 
-def resolve_event_created_at(channel: str, event_id: str) -> str | None:
-    """Return the event's real `created_at` as a full ISO-8601 string.
 
-    Returns None if the event id does not resolve within
-    `_THREAD_FETCH_LIMIT` entries of its thread -- report this as "could not
-    resolve," never as a confirmed non-existence claim. A large fetch limit
-    makes silent truncation unlikely for this repository's history today; it
-    does not make it impossible, and this function has no way to distinguish
-    "genuinely does not exist" from "exists further back than the limit
-    reaches" -- both look identical from here.
+class ResolveFailureReason(StrEnum):
+    """Why `resolve_event` could not produce a `created_at` for an id.
+
+    Three structurally different causes exist, and they must never be
+    collapsed into one message -- that was itself a defect (Fizz, PR #51
+    review, 2026-09-05): "a tool that collapses several causes into one
+    return value must not have a message that names one of them." A prior
+    version of this function returned a bare `None` for all three and
+    `main()`'s report text was written for `NOT_FOUND` alone, meaning a
+    total relay outage (unset `BUZZ_PRIVATE_KEY`, network down, `buzz`
+    missing from PATH) printed the same "verify near the cited date"
+    advice as a genuine non-resolution -- the wrong diagnosis pointing at
+    the wrong fix.
     """
-    result = subprocess.run(
-        [
-            "buzz", "messages", "thread",
-            "--channel", channel,
-            "--event", event_id,
-            "--limit", str(_THREAD_FETCH_LIMIT),
-        ],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+
+    RELAY_UNREACHABLE = "relay_unreachable"  # the subprocess call itself failed or timed out
+    MALFORMED_RESPONSE = "malformed_response"  # the call returned, but not parseable JSON
+    NOT_FOUND = "not_found"  # the call succeeded and parsed; the id just wasn't in the page
+
+
+@dataclass(frozen=True)
+class ResolveResult:
+    """The outcome of trying to resolve one event id against the relay.
+
+    `created_at`: the event's real timestamp, or None if not resolved.
+    `failure_reason`: None when `created_at` is set; otherwise which of the
+    three `ResolveFailureReason` causes applies -- see that enum's
+    docstring for why conflating them is itself the defect this exists to
+    prevent.
+    `detail`: the subprocess's stderr (for `RELAY_UNREACHABLE`) or the raw
+    stdout (for `MALFORMED_RESPONSE`), so a human gets the actual failure
+    rather than a guess at one.
+    `possibly_truncated`: only meaningful when `failure_reason is
+    NOT_FOUND`. True if the fetch returned exactly `_THREAD_FETCH_LIMIT`
+    entries -- the signal named by the Engineering Coordinator (channel
+    event, 2026-09-05, correcting his own "101 events spanning the full
+    day" claim): "endpoints prove nothing -- count and continuity do." A
+    page that returns fewer than the requested limit genuinely ran out of
+    history; a page that returns *exactly* the limit could be hiding
+    anything past that boundary. When True, `NOT_FOUND` must be reported as
+    inconclusive, never as "confirmed absent."
+    """
+
+    created_at: str | None
+    failure_reason: ResolveFailureReason | None = None
+    detail: str = ""
+    possibly_truncated: bool = False
+
+
+def resolve_event(channel: str, event_id: str) -> ResolveResult:
+    """Resolve one event id's real `created_at` against the relay.
+
+    See `ResolveResult`/`ResolveFailureReason` for what each outcome means.
+    `possibly_truncated`'s rationale: the same lesson `buzz messages
+    thread`'s undocumented default window taught this script's own author
+    (a *different* thread's content returned with exit 0), one level
+    deeper -- a fetch of the *right* thread can still be silently
+    incomplete even at a large explicit limit, and only the returned count,
+    compared against the limit that was asked for, can tell you so.
+    """
+    try:
+        result = subprocess.run(
+            [
+                "buzz", "messages", "thread",
+                "--channel", channel,
+                "--event", event_id,
+                "--limit", str(_THREAD_FETCH_LIMIT),
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=_SUBPROCESS_TIMEOUT_SECONDS,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        # buzz missing from PATH, permission denied, the process hanging
+        # past the timeout -- none of these are "the id wasn't found."
+        return ResolveResult(created_at=None, failure_reason=ResolveFailureReason.RELAY_UNREACHABLE, detail=str(exc))
+
     if result.returncode != 0:
-        return None
+        return ResolveResult(
+            created_at=None,
+            failure_reason=ResolveFailureReason.RELAY_UNREACHABLE,
+            detail=result.stderr.strip(),
+        )
     try:
         events = json.loads(result.stdout)
     except json.JSONDecodeError:
-        return None
+        return ResolveResult(
+            created_at=None,
+            failure_reason=ResolveFailureReason.MALFORMED_RESPONSE,
+            detail=result.stdout[:200],
+        )
+
+    possibly_truncated = len(events) >= _THREAD_FETCH_LIMIT
     for event in events:
         if event.get("id") == event_id:
             dt = datetime.fromtimestamp(event["created_at"], tz=UTC)
-            return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
-    return None
+            # Found the event itself -- the page wasn't too short to
+            # contain it, whatever else might lie beyond the limit.
+            return ResolveResult(created_at=dt.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    return ResolveResult(
+        created_at=None,
+        failure_reason=ResolveFailureReason.NOT_FOUND,
+        possibly_truncated=possibly_truncated,
+    )
+
+
+# Retained as a thin wrapper: existing callers/tests that only need the
+# timestamp (not the failure-cause detail) are unaffected.
+def resolve_event_created_at(channel: str, event_id: str) -> str | None:
+    """Return the event's real `created_at` as a full ISO-8601 string, or
+    None if unresolved for any reason. See `resolve_event` for the
+    cause-distinguishing form this delegates to."""
+    return resolve_event(channel, event_id).created_at
 
 
 @dataclass(frozen=True)
 class Mismatch:
     citation: Citation
     actual_iso: str | None  # None means the event id did not resolve at all
+    failure_reason: ResolveFailureReason | None = None
+    detail: str = ""
+    possibly_truncated: bool = False  # True: "not found" may just mean "not on this page"
 
 
 def check_citations(
@@ -238,9 +341,17 @@ def check_citations(
     """Resolve every citation against the relay; return the ones that disagree."""
     mismatches = []
     for citation in citations:
-        actual = resolve_event_created_at(channel, citation.event_id)
-        if actual != citation.cited_iso:
-            mismatches.append(Mismatch(citation, actual))
+        result = resolve_event(channel, citation.event_id)
+        if result.created_at != citation.cited_iso:
+            mismatches.append(
+                Mismatch(
+                    citation,
+                    result.created_at,
+                    result.failure_reason,
+                    result.detail,
+                    result.possibly_truncated,
+                )
+            )
     return mismatches
 
 
@@ -298,12 +409,32 @@ def main(argv: list[str] | None = None) -> int:
     print(f"\n{len(mismatches)} mismatch(es) found:\n")
     for m in mismatches:
         c = m.citation
-        if m.actual_iso is None:
+        if m.failure_reason is ResolveFailureReason.RELAY_UNREACHABLE:
             print(f"  {c.source}:{c.line_no}  {c.event_id}  cited {c.cited_iso} -- "
-                  f"could NOT resolve this event within the fetch limit. This "
-                  f"is NOT a confirmed non-existence claim -- verify manually "
-                  f"(e.g. `buzz messages get --since <window around the cited "
-                  f"date>`) before treating it as a citation defect.")
+                  f"RELAY CALL FAILED, nothing below this line was checked for this "
+                  f"citation. This is not a claim about the citation being wrong. "
+                  f"Fix the relay connection (check BUZZ_PRIVATE_KEY, network, that "
+                  f"`buzz` is on PATH) and re-run before drawing any conclusion:\n"
+                  f"      {m.detail}")
+        elif m.failure_reason is ResolveFailureReason.MALFORMED_RESPONSE:
+            print(f"  {c.source}:{c.line_no}  {c.event_id}  cited {c.cited_iso} -- "
+                  f"the relay call succeeded but its response wasn't valid JSON "
+                  f"(a `buzz` CLI or relay-format change, most likely) -- not a claim "
+                  f"about the citation, re-run after checking `buzz`'s own output:\n"
+                  f"      {m.detail}")
+        elif m.failure_reason is ResolveFailureReason.NOT_FOUND and m.possibly_truncated:
+            print(f"  {c.source}:{c.line_no}  {c.event_id}  cited {c.cited_iso} -- "
+                  f"INCONCLUSIVE: the fetch returned exactly the {_THREAD_FETCH_LIMIT}-"
+                  f"entry limit, so this event may simply be beyond that page rather "
+                  f"than absent. Endpoints and a large limit do not prove completeness "
+                  f"-- verify manually with a wider limit or a time-windowed "
+                  f"`buzz messages get` before treating this as a citation defect.")
+        elif m.failure_reason is ResolveFailureReason.NOT_FOUND:
+            print(f"  {c.source}:{c.line_no}  {c.event_id}  cited {c.cited_iso} -- "
+                  f"could NOT resolve this event (the relay call succeeded and the "
+                  f"page ended before hitting the limit, so this is not a truncation "
+                  f"artefact) -- verify manually before treating it as a citation "
+                  f"defect.")
         else:
             print(f"  {c.source}:{c.line_no}  {c.event_id}  cited {c.cited_iso}, "
                   f"actual {m.actual_iso}")
