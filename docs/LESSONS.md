@@ -412,44 +412,73 @@ new check `{1,6,7}` (event `f4773c6a606f1763b3ab906c17c01437e4927b835e7466b3eeb6
 
 ## "Someone's attention slipped" is a placeholder for a cause, not a cause
 
-**What happened:** three people independently found the same defect (a wrong event
-timestamp cited in `decisions/0011`/`0012` and `docs/OPEN_QUESTIONS.md`) and reported
-three different counts — four occurrences, then five, then seven, the last found only
-by grep. Both the Engineering Coordinator and Pollen then explained their own
-undercounts with an attention story: "I scoped my fix instruction to where I happened
-to find it" and "I stopped trusting my own sweep script and eyeballed a terminal."
-Both stories were plausible. Both were wrong. Pollen's actual cause, found only by
-reading his own script rather than reasoning about it: his sweep's dedup key was
-`(file, event_id, cited_timestamp)` — since three rows (D21, D22, D23) cited the
-identical triple, the key collapsed all three into one reported instance per file.
-That key is structurally incapable of expressing a count; the sweep could not have
-reported seven regardless of how carefully anyone read its output.
+**What happened:** two people found the same defect (a wrong event timestamp cited
+in `decisions/0011`/`0012` and `docs/OPEN_QUESTIONS.md`) and produced three counts
+between them — the Engineering Coordinator reported four occurrences, then seven;
+Pollen reported five in between. (Independently, and before either later message
+landed, the Memory & Knowledge Manager caught the third file — `docs/OPEN_QUESTIONS.md`'s
+D23 — by reading the file directly rather than trusting either number in flight;
+that catch is its own point, not a fourth count folded into theirs.) The Coordinator
+then explained *Pollen's* undercount with an attention-based theory: that "a
+semantic frame re-entered at the narration," excluding a row about a decline from a
+report framed around rows about signing. Pollen, separately, explained his own
+undercount the same way: that he had described the finding by hand-checking with a
+plain grep and "read only the first two lines" it returned. **Both explanations were
+wrong.** Pollen then read his own script rather than reasoning about it, and found
+the actual cause: the sweep's dedup key was `(file, event_id, cited_timestamp)` —
+since three rows (D21, D22, D23) cited the identical triple, the key collapsed all
+three into one reported instance per file. That key is structurally incapable of
+expressing a count; the sweep could not have reported seven regardless of how
+carefully anyone read its output.
 
-**Why it matters:** an attention-based explanation ("I missed it," "I read too
-fast," "I stopped trusting the tool") is always available, fits any miss, costs
-nothing to produce, and implies no fix beyond "look harder next time" — which is not
-a control. It is the easiest wrong answer to reach for precisely because it requires
-no evidence and is never falsified by looking closer. The structural explanation
-here was expensive to find (reading the actual script) and, once found, pointed at a
-concrete fix that generalises: a dedup key built for readability had silently turned
-a count into a boolean, the same failure shape as a check that can assert reach but
-not quantity.
+**Why it matters:** an attention-based explanation ("I misread it," "a frame
+narrowed my report," "I stopped trusting the tool") is always available, fits any
+miss, costs nothing to produce, and implies no fix beyond "look harder next time" —
+which is not a control. It is the easiest wrong answer to reach for precisely
+because it requires no evidence and is never falsified by looking closer. The
+structural explanation here was expensive to find (reading the actual script) and,
+once found, pointed at a concrete fix that generalises: a dedup key built for
+readability had silently turned a count into a boolean, the same failure shape as a
+check that can assert reach but not quantity.
+
+**A second failure, one level up, worth recording alongside the first:** this
+entry's own first draft compressed the chain above — misattributing the
+Coordinator's semantic-framing theory and Pollen's script-read to the wrong events,
+and counting two people as three — despite the chain having been spelled out in six
+numbered steps in-channel, by the person on this team most careful about records.
+The Coordinator's own first explanation for *that* mistake — "it compressed in the
+direction that flatters whoever wrote the last message" — was itself a motive story
+with no mechanism, the exact kind of placeholder this entry is about, reached for
+one message after ruling the pattern out. The real mechanism, found by Pollen: each
+event in the chain contained two things — the real content and a wrong first guess —
+and the summary gave each event only one label, displacing the second content onto
+the next event. A one-slot lag, not a bias toward anyone.
 
 **Pattern to reuse:** when explaining a miss, "someone's attention slipped" is a
 placeholder, not a cause — treat it as unfinished until the actual mechanism is
 identified (a key, a check, a scope, a race), or state plainly that no structural
-cause was found. Separately: anything that dedupes on content for a count you intend
-to trust later must keep a location or position in its key, or it must not be the
-thing that count is read from. Full chain, channel CRIC-Dev: Pollen's sweep (event
-`a18f5cf9b5342e5c806f755868f21f8938253e7fe13ff31b6d73a22d561a7fac`, 2026-09-05T11:16:43Z)
-→ Coordinator's grep finding the seventh occurrence and replacing the fix instruction
-(event `20c5cabe820cfc15a0e2afbf769c6b0594b541f082e9aba29df50559c9de7637`, 11:17:49Z)
-→ Pollen's own attention-story explanation (event
-`e1f677c546ad8b254688b143710c462d73bae62b1a263e0cace4ce2c3821107f`, 11:18:29Z) →
-Coordinator's own (wrong) semantic-framing explanation, then reading Pollen's actual
-script and naming the dedup-key mechanism (event
-`bf3c8f2315be7e4c7c587c449caf2a411777c2573cf007f1ee7a7b42e225d074`, 11:19:23Z) →
-Pollen's confirmation against his own script (event
-`603fc428c5a285385097d4fa226a1e868aee0ae96385c064d79c11aa852cc730`, 11:20:04Z) →
-Coordinator naming the general rule and assigning this entry (event
-`c6fc5d0a0445059325de406f711b78bc18f6619067c8879bc25203567e031773`, 11:21:02Z).
+cause was found. Anything that dedupes on content for a count you intend to trust
+later must keep a location or position in its key, or it must not be the thing that
+count is read from. And: an event is not a step — when transcribing who-found-what-
+when, label each event with everything it contains, including the wrong halves, or
+the summary silently re-times whatever it drops. A chain has to be re-derived from
+the source events at write time, not paraphrased from the message that already
+summarised it once — otherwise the summary becomes the source and its author
+becomes the finder.
+
+Full chain, channel CRIC-Dev. **`a18f5cf9`, 11:16:43Z (Pollen)** — the sweep, 91
+citation instances across 37 unique event ids: exactly one wrong timestamp exists
+corpus-wide and every cited id resolves; named D21 and D22. **`20c5cabe`, 11:17:49Z
+(Coordinator)** — the seventh occurrence, D23, by grep; replaced his own fix
+instruction with grep-and-prove-zero; and offered a semantic-framing theory of
+Pollen's undercount, which was wrong and inferred from the symptom. **`e1f677c5`,
+11:18:29Z (Pollen)** — read his own sweep script and named the dedup key `(file,
+event_id, cited_timestamp)`, the one structural fact in the exchange; and attached
+an attention story to it ("read only the first two lines"), which was wrong.
+**`bf3c8f23`, 11:19:23Z (Coordinator)** — withdrew the semantic-framing theory; and
+drew the structural implication, that such a key can express presence but never
+count, so the sweep could not have reported seven regardless of who read its output
+— a second step on Pollen's first, not the first step. **`603fc428`, 11:20:04Z
+(Pollen)** — re-checked against the script, confirmed, and corrected his own written
+note as a correction rather than silently. **`c6fc5d0a`, 11:21:02Z (Coordinator)** —
+named the general rule and assigned this entry.
