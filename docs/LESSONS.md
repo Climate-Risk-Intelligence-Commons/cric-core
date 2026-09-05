@@ -373,3 +373,113 @@ decision meant to be relied on later) may not rest on absence of prohibition —
 state the gap as open rather than closing it by inference, the same discipline
 `decisions/0011` and `decisions/0012` apply explicitly in their own Decision
 sections, not only in Alternatives.
+
+## A wording fix and a parser fix are not two guards — the wording one is the disease
+
+**What happened:** an unreleased build-status generator (WP-33a) would have read any
+`decisions/` Status line containing the phrase "Architecture Freeze Point" as
+ratified — a substring match with no check for the Status value actually being
+`Accepted`. Three ADRs' Proposed-status lines all contained that phrase verbatim
+(`decisions/0010`/`0011`/`0012`), which would have produced "6 of 8 Freeze Points
+ratified" on a public README while Ashley had signed none of them. The Engineering
+Coordinator initially asked for both a wording fix (reword the three Status lines to
+avoid the phrase) and a parser fix (require the Status value to be literally
+`Accepted`), then withdrew the wording half before it was committed: "one real guard
+beats one guard plus a standing obligation on people who have not been told it
+exists."
+
+**Why it matters:** the wording fix looks like defence in depth — belt and braces —
+but it isn't a second guard, it's an unenforced convention. It depends on every
+future ADR author remembering to write around a parser defect they were never told
+about, with no mechanism to catch the day someone doesn't. The parser fix (require
+`Accepted` *and* a named Freeze Point, not a substring anywhere in the line) removes
+the hazard structurally — "Proposed — Architecture Freeze Point candidate" becomes
+an accurate, un-gamed sentence again, because nothing downstream mis-reads it.
+Requiring the wording fix *in addition* would have reinstated the exact defect being
+ruled against, one ADR later, the moment someone wrote a natural sentence containing
+the phrase.
+
+**Pattern to reuse:** when a defect is "a program reads meaning into text that wasn't
+meant to carry it," fix the program, not the text. A text-side workaround is not a
+second independent guard — it's an obligation with no mechanism enforcing it, and it
+buys nothing once the real fix exists. Full chain: `decisions/0010`/`0011`/`0012`
+drafted with the phrase, Coordinator finding + both-fixes instruction (channel event
+`3da70cd9d4aae0fd1541306e0927380b256f5c40eeb3fc860678a22cdbef7e20`, 2026-09-05T10:46:46Z),
+Honey's parser fix verified against the real PR #40 files — old check `{1,3,4,5,6,7}`,
+new check `{1,6,7}` (event `f4773c6a606f1763b3ab906c17c01437e4927b835e7466b3eeb6936b50a1ec93`,
+10:49:39Z), Coordinator's withdrawal of the wording instruction (event
+`2744522a452ffe271e7caee423188686dc0c52b4d8775a28b12281a92f8f9996`, 10:50:20Z).
+
+## "Someone's attention slipped" is a placeholder for a cause, not a cause
+
+**What happened:** two people found the same defect (a wrong event timestamp cited
+in `decisions/0011`/`0012` and `docs/OPEN_QUESTIONS.md`) and produced three counts
+between them — the Engineering Coordinator reported four occurrences, then seven;
+Pollen reported five in between. (Independently, and before either later message
+landed, the Memory & Knowledge Manager caught the third file — `docs/OPEN_QUESTIONS.md`'s
+D23 — by reading the file directly rather than trusting either number in flight;
+that catch is its own point, not a fourth count folded into theirs.) The Coordinator
+then explained *Pollen's* undercount with an attention-based theory: that "a
+semantic frame re-entered at the narration," excluding a row about a decline from a
+report framed around rows about signing. Pollen, separately, explained his own
+undercount the same way: that he had described the finding by hand-checking with a
+plain grep and "read only the first two lines" it returned. **Both explanations were
+wrong.** Pollen then read his own script rather than reasoning about it, and found
+the actual cause: the sweep's dedup key was `(file, event_id, cited_timestamp)` —
+since three rows (D21, D22, D23) cited the identical triple, the key collapsed all
+three into one reported instance per file. That key is structurally incapable of
+expressing a count; the sweep could not have reported seven regardless of how
+carefully anyone read its output.
+
+**Why it matters:** an attention-based explanation ("I misread it," "a frame
+narrowed my report," "I stopped trusting the tool") is always available, fits any
+miss, costs nothing to produce, and implies no fix beyond "look harder next time" —
+which is not a control. It is the easiest wrong answer to reach for precisely
+because it requires no evidence and is never falsified by looking closer. The
+structural explanation here was expensive to find (reading the actual script) and,
+once found, pointed at a concrete fix that generalises: a dedup key built for
+readability had silently turned a count into a boolean, the same failure shape as a
+check that can assert reach but not quantity.
+
+**A second failure, one level up, worth recording alongside the first:** this
+entry's own first draft compressed the chain above — misattributing the
+Coordinator's semantic-framing theory and Pollen's script-read to the wrong events,
+and counting two people as three — despite the chain having been spelled out in six
+numbered steps in-channel, and despite being transcribed by this team's most careful
+record-keeper. The Coordinator's own first explanation for *that* mistake — "it
+compressed in the direction that flatters whoever wrote the last message" — was
+itself a motive story with no mechanism, the exact kind of placeholder this entry is
+about, reached for one message after ruling the pattern out. The real mechanism,
+found by Pollen: each event in the chain contained two things — often a real finding
+paired with a wrong first guess — and the summary gave each event only one label,
+displacing the second content onto the next event. A one-slot lag, not a bias toward
+anyone.
+
+**Pattern to reuse:** when explaining a miss, "someone's attention slipped" is a
+placeholder, not a cause — treat it as unfinished until the actual mechanism is
+identified (a key, a check, a scope, a race), or state plainly that no structural
+cause was found. Anything that dedupes on content for a count you intend to trust
+later must keep a location or position in its key, or it must not be the thing that
+count is read from. And: an event is not a step — when transcribing who-found-what-
+when, label each event with everything it contains, including the wrong halves, or
+the summary silently re-times whatever it drops. A chain has to be re-derived from
+the source events at write time, not paraphrased from the message that already
+summarised it once — otherwise the summary becomes the source and its author
+becomes the finder.
+
+Full chain, channel CRIC-Dev. **`a18f5cf9`, 11:16:43Z (Pollen)** — the sweep, 91
+citation instances across 37 unique event ids: exactly one wrong timestamp exists
+corpus-wide and every cited id resolves; named D21 and D22. **`20c5cabe`, 11:17:49Z
+(Coordinator)** — the seventh occurrence, D23, by grep; replaced his own fix
+instruction with grep-and-prove-zero; and offered a semantic-framing theory of
+Pollen's undercount, which was wrong and inferred from the symptom. **`e1f677c5`,
+11:18:29Z (Pollen)** — read his own sweep script and named the dedup key `(file,
+event_id, cited_timestamp)`, the one structural fact in the exchange; and attached
+an attention story to it ("read only the first two lines"), which was wrong.
+**`bf3c8f23`, 11:19:23Z (Coordinator)** — withdrew the semantic-framing theory; and
+drew the structural implication, that such a key can express presence but never
+count, so the sweep could not have reported seven regardless of who read its output
+— a second step on Pollen's first, not the first step. **`603fc428`, 11:20:04Z
+(Pollen)** — re-checked against the script, confirmed, and corrected his own written
+note as a correction rather than silently. **`c6fc5d0a`, 11:21:02Z (Coordinator)** —
+named the general rule and assigned this entry.

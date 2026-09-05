@@ -7,7 +7,7 @@
   ADR-0004/ADR-0007's exact phrasing (see `decisions/0008`'s CI-parsing note).
 - **Approver:** Ashley (signature pending)
 - **Ruled by:** Engineering Coordinator, channel event
-  `48159f91b0d06139169c8d7138b095f16709f2e9e58af409280ce186f675bbd3`, 2026-09-05T10:29:33Z
+  `48159f91b0d06139169c8d7138b095f16709f2e9e58af409280ce186f675bbd3`, 2026-09-05T10:33:53Z
 - **Date proposed:** 2026-09-05
 - **Evidence:** see Ratification chain below — every step cites its channel event id.
 
@@ -97,7 +97,7 @@ question in `docs/OPEN_QUESTIONS.md`, not a blocker on this signature.
 - Ruling — exclusion ratified, placement declined, scope precedence ratified,
   "no known evidence" excluded, D13 carried as precedent (Engineering Coordinator),
   event `48159f91b0d06139169c8d7138b095f16709f2e9e58af409280ce186f675bbd3`,
-  2026-09-05T10:29:33Z.
+  2026-09-05T10:33:53Z.
 - Ashley's signature: **pending** — not yet requested-and-received as of this ADR's
   creation. Do not treat this ADR as ratified until this line is updated with his
   acceptance event.
