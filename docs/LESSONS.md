@@ -586,7 +586,14 @@ the defect — the two are easy to conflate because the same person usually did 
 and only one of them is the actual claim being made. Any tool built to replace a
 manual sweep (`scripts/check_event_citations.py`, above) must default to repo-wide
 scope for the same reason: a tool that only looks where it is pointed inherits
-whoever pointed it. Channel event
+whoever pointed it. **Superseded as a standing method, not as an account of what
+happened:** `scripts/check_event_citations.py` has since shipped (PR #51) and is
+the standing sweep mechanism — see "A 'prove zero' grep on a corrected literal…"
+below for why a repo-wide grep, even scoped correctly per this entry's own rule,
+stops being sufficient once a corrected string can legitimately reappear. This
+entry's scoping rule still applies to the checker itself (it must default to
+repo-wide) and to any other one-off literal sweep; it is not a live instruction to
+grep for a timestamp correction anymore. Channel event
 `4177fb4179c07baeb8edfcbccfe2e00733ce901647dcd2c3be6f4904017631e0`, 2026-09-05T14:33:36Z
 (Engineering Coordinator, naming the pattern against himself, unprompted).
 
@@ -712,7 +719,7 @@ Full chain, channel CRIC-Dev, all 2026-09-05: Honey's PR #51, the 44-then-3-true
 
 **Why it matters:** a "prove zero" grep only proves zero at the commit it ran on. It has no way to tell three fundamentally different things apart once more content lands: a surviving instance of the fixed defect, a document *describing* the fixed defect (and therefore correctly containing the bad string as a quotation), and an unrelated event that coincidentally shares the corrected value. A string match cannot distinguish "wrong" from "quoted as an example of wrong" from "coincidentally correct" — only resolving the adjacent event id against the relay and comparing its real timestamp can. Anyone re-running the original zero-hit grep today would read four hits as a four-instance regression and could `sed` a correct citation into a wrong one trying to "fix" it.
 
-**Pattern to reuse:** a literal-string sweep is evidence for "clean at this commit," never for "stays clean." Once `scripts/check_event_citations.py` (PR #51) exists, it is the only tool that can re-answer this question later, because it resolves each id and compares timestamps rather than matching text — a grep cannot be handed over as the standing verification method for a timestamp correction, only as the one-time discovery method. Hand over a zero-*mismatch* run of the checker, not a zero-*hit* grep, when closing out a citation sweep. Channel event
+**Pattern to reuse:** a literal-string sweep is evidence for "clean at this commit," never for "stays clean." `scripts/check_event_citations.py` (PR #51) is the only tool that can re-answer this question later, because it resolves each id and compares timestamps rather than matching text — a grep cannot be handed over as the standing verification method for a timestamp correction, only as the one-time discovery method. Hand over a zero-*mismatch* run of the checker, not a zero-*hit* grep, when closing out a citation sweep. Channel event
 `a883b210382693bba0f16dae2900710a4bf21e9c621b0355556a6928ad303fb2`, 2026-09-05T16:03:23Z (Engineering Coordinator, catching this against his own team's earlier grep while re-verifying PR #47 against `main`).
 
 ## A test count is measured against a base commit, not against "now" — a concurrent PR merging in the gap makes it stale before it is even reported
