@@ -1,177 +1,268 @@
-# cric-core
+# Climate Risk Intelligence Commons
 
-### Climate Risk Intelligence Commons — the contract root
+### Climate-risk intelligence we can build together.
 
-> Climate Risk Intelligence Commons (CRIC) is an open-source, provenance-preserving,
-> temporally aware knowledge, data, modelling and agentic infrastructure for
-> representing, integrating, analysing and deriving intelligence from climate-risk
-> evidence. It is designed for human researchers, deterministic software and
-> autonomous agents to operate on the same inspectable evidence base.
->
-> — [`CRIC-PRD-MASTER.md`](docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md), Product Thesis (excerpted)
+[![CI](https://github.com/Climate-Risk-Intelligence-Commons/cric-core/actions/workflows/ci.yml/badge.svg)](https://github.com/Climate-Risk-Intelligence-Commons/cric-core/actions/workflows/ci.yml)
+[![Licence: AGPL-3.0](https://img.shields.io/badge/Licence-AGPL--3.0-blue)](LICENSE)
 
-In plain terms: most climate-risk tools give you an answer. CRIC is built to also give
-you the evidence behind the answer — what source produced it, what the system believed
-at an earlier point in time, which scientific sources disagree, and which
-transformation produced the number in front of you. That reconstructability, not any
-single model or dashboard, is what CRIC is.
+**Understand the evidence. See what changed. Build on what we learn.**
 
-Cryosphere risk — starting with Himalayan Glacial Lake Outburst Floods (GLOF) — is the
-first domain it's being built against. The architecture underneath is deliberately
-hazard-agnostic: flood, drought, landslide, wildfire, heat, coastal and compound
-hazards are the intended next domains, not a future rewrite.
+Understanding climate risk means connecting observations, scientific studies and
+models with the places and people exposed to harm. Those connections need to remain
+visible as evidence changes and understanding improves.
 
-`cric-core` is the contract root of the CRIC repository family: every other CRIC
-repository depends on this one, and this one may not depend on any domain-specific
-repository.
+**Climate Risk Intelligence Commons (CRIC)** is building open infrastructure for
+that work: a shared foundation for connecting evidence, examining uncertainty,
+reproducing analyses and contributing knowledge others can build upon.
+
+Our ambition is a **durable scientific memory for climate risk**—one that preserves
+what we knew, explains what changed, and keeps unresolved questions open to investigation.
+
+Whether you care about climate change and disasters, study their causes and
+consequences, work with affected communities, or build scientific software, there
+is a place to begin here.
+
+> **Project stage: early development.** The vision below describes the CRIC ecosystem
+> we are building. This repository, `cric-core`, contains its shared foundations and
+> product specifications. See [what exists today](#what-exists-today) for implemented
+> capabilities.
+
+[Why CRIC](#why-a-climate-risk-commons) ·
+[First application](#starting-with-glacial-lake-outburst-floods) ·
+[How it works](#how-the-pieces-fit) ·
+[Get involved](#help-build-the-commons) ·
+[Developer setup](#for-developers)
 
 ---
 
-## What CRIC is designed to do
+## Why a climate-risk commons?
 
-CRIC is layered infrastructure, not a single tool. Each layer has its own PRD chapter:
+An assessment becomes more useful when another person can examine its sources,
+understand its assumptions and build on the work. CRIC's purpose is to make those
+connections part of the infrastructure of climate-risk research.
 
-| Layer | What it's for | Specification |
+We want people to be able to ask:
+
+- **What evidence supports this assessment?** Follow a conclusion back to its
+  observations, sources and calculations.
+- **What did we know at the time?** Reconstruct an earlier assessment without
+  silently adding discoveries made later.
+- **Where do sources disagree?** Examine competing explanations alongside the
+  evidence supporting each.
+- **What is missing?** See gaps and uncertainty explicitly; a lack of observations
+  must never become an assumption of low risk.
+- **Can someone else reproduce this?** Recover the data, methods and versions
+  behind an analysis.
+
+**Commons** means building a shared resource that others can inspect, challenge,
+extend and reuse. CRIC's published specifications, software, contribution process
+and decision records make that work open to participation. Source datasets retain
+their own licensing and access conditions.
+
+Read the [vision and principles](docs/CRIC-PRD-v0.1/product/Product-Vision-and-Principles.md).
+
+## Starting with glacial lake outburst floods
+
+Our first application is **cryosphere risk**: risk involving Earth's snow, ice and
+frozen ground. We begin with Himalayan **glacial lake outburst floods (GLOFs)**,
+floods caused by a sudden release of water from a glacial lake.
+
+This first domain brings together changing landscapes, observations across time,
+possible cascading triggers and downstream exposure. It gives us a concrete way
+to develop and test the wider architecture.
+
+### Follow one question through the evidence
+
+*Illustrative research workflow, planned for CRIC:*
+
+> How did a glacial lake change before an outburst, what evidence supports the
+> proposed trigger, and which settlements and infrastructure lay downstream?
+
+```mermaid
+flowchart TD
+    A["Satellite observations, field records and scientific studies"] --> B["Linked evidence with sources and dates"]
+    B --> C["Lake and surrounding conditions across time"]
+    C --> D["Possible triggers and competing explanations"]
+    D --> E["Downstream exposure and consequences"]
+    E --> F["Human-reviewed interpretation"]
+```
+
+A researcher should be able to move through that chain and inspect the evidence
+behind each step. Where records are missing, CRIC should show the gap. Where
+studies disagree, it should preserve both claims. When new evidence changes the
+interpretation, earlier knowledge should remain retrievable.
+
+The planned **Event Cube** brings together records from before, during and after
+an event, linked to sources, claims and consequences. It is designed to support
+historical reconstruction and reproducible model experiments, including controls
+that keep information discovered after an event out of predictive training inputs.
+
+Explore the [Event Cube specification](docs/CRIC-PRD-v0.1/domains/StateSnapshot-and-Event-Cube-Specification.md).
+
+### Built to extend across hazards
+
+The shared foundation is designed to support future work on floods, droughts,
+landslides, wildfire, heat, coastal hazards and their interactions. These are
+**intended extensions**, not claims of current coverage.
+
+The architecture separates shared climate-risk concepts from specialised domain
+packages, so a future hazard domain can build on CRIC without installing the
+cryosphere or GLOF packages.
+
+## What makes CRIC distinctive?
+
+These are design commitments across the planned ecosystem:
+
+| Commitment | What it means for the person using CRIC |
+|---|---|
+| **Evidence stays connected** | Provenance—the record of where information came from and how it was transformed—travels with derived results. |
+| **History remains inspectable** | New knowledge can supersede earlier interpretations without erasing the accepted record. |
+| **Uncertainty is visible** | Missing, disputed and incomplete information remains explicit. |
+| **Disagreement has a place** | Conflicting scientific claims can coexist with their supporting evidence. |
+| **People and software share a foundation** | Knowledge is designed to be readable by humans and usable by software and AI agents. |
+| **Components remain replaceable** | The architecture avoids requiring one database, model provider, cloud or agent framework. |
+| **Human judgement has a defined role** | Oversight increases with uncertainty, consequence and the authority an action would exercise. |
+
+AI agents are planned participants in this system. They will use defined tools,
+permissions and structured outputs. Deterministic software retrieves and assembles
+the evidence before a language model interprets it.
+
+The [Master PRD](docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md) sets out the full
+constitutional rules.
+
+## How the pieces fit
+
+CRIC brings together several reusable parts. **This is the target architecture;
+the implementation starts with the core.**
+
+| Part | Purpose | Explore |
 |---|---|---|
-| CRIC Core | Identifiers, base contracts, versioning rules every other layer builds on | *this repository* |
-| Climate Risk Ontology | Hazard-agnostic concepts shared across every domain (Hazard, Exposure, Consequence, Cascade…) | [`product/Product-Scope-and-Domain-Architecture.md`](docs/CRIC-PRD-v0.1/product/Product-Scope-and-Domain-Architecture.md) |
-| Domain Ontologies | Domain-specific extensions — cryosphere and GLOF first | [`domains/`](docs/CRIC-PRD-v0.1/domains/) |
-| Evidence and Data Commons | Data cataloguing, licensing, quality and ingestion | [`data/`](docs/CRIC-PRD-v0.1/data/) |
-| Knowledge Commons | The OKF knowledge graph — provenance, temporal truth, contradiction kept as data, not noise | [`knowledge/`](docs/CRIC-PRD-v0.1/knowledge/) |
-| Agent Commons | Reusable, typed, permissioned AI agents — not prompt wrappers | [`ai/Agent-Commons-Architecture.md`](docs/CRIC-PRD-v0.1/ai/Agent-Commons-Architecture.md) |
-| Model Commons | Reproducible model training and evaluation | [`ai/Model-Commons-and-ML-Specification.md`](docs/CRIC-PRD-v0.1/ai/Model-Commons-and-ML-Specification.md) |
-| Computational Commons | Deterministic retrieval and computation, ahead of any LLM step | [`engineering/Deterministic-Retrieval-Engine-Specification.md`](docs/CRIC-PRD-v0.1/engineering/Deterministic-Retrieval-Engine-Specification.md) |
-| Interfaces | APIs, search, and human-facing applications | [`interfaces/`](docs/CRIC-PRD-v0.1/interfaces/) |
-| Human Review and Governance | Where human judgement sits, and where it's mandatory | [`ai/Responsible-Autonomy-and-HITL.md`](docs/CRIC-PRD-v0.1/ai/Responsible-Autonomy-and-HITL.md) |
+| **Core and shared vocabulary** | Common identifiers, schemas and concepts for describing hazards, exposure and consequences | [Domain architecture](docs/CRIC-PRD-v0.1/product/Product-Scope-and-Domain-Architecture.md) |
+| **Evidence and Data Commons** | Source catalogues, ingestion, licensing and data quality | [Data architecture](docs/CRIC-PRD-v0.1/data/Data-Commons-Architecture.md) |
+| **Knowledge Commons** | Connected evidence, claims, uncertainty and history in a knowledge graph | [Knowledge specification](docs/CRIC-PRD-v0.1/knowledge/OKF-Knowledge-Graph-Specification.md) |
+| **Domain packages** | Specialised concepts for cryosphere and GLOF research, with other hazards to follow | [Cryosphere](docs/CRIC-PRD-v0.1/domains/Cryosphere-Ontology.md) |
+| **Computation, agents and models** | Reproducible calculations, reusable AI workflows and model evaluation | [Retrieval](docs/CRIC-PRD-v0.1/engineering/Deterministic-Retrieval-Engine-Specification.md) · [Agents](docs/CRIC-PRD-v0.1/ai/Agent-Commons-Architecture.md) · [Models](docs/CRIC-PRD-v0.1/ai/Model-Commons-and-ML-Specification.md) |
+| **Interfaces and human review** | Search, APIs, research workbenches and review workflows | [Human applications](docs/CRIC-PRD-v0.1/interfaces/Human-Applications-and-UI.md) · [Human oversight](docs/CRIC-PRD-v0.1/ai/Responsible-Autonomy-and-HITL.md) |
 
-Full layer definition: [`CRIC-PRD-MASTER.md` — Product
-Layers](docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md).
+A **knowledge graph** records information and the relationships between it—for
+example, which observation supports a claim, which lake an observation describes,
+or which calculation produced a model input. CRIC's Knowledge Commons is a product
+in its own right, intended to support research as well as downstream tools.
 
-The near-term priority deliverable across these layers is the **OKF Knowledge
-Graph** — the property-graph-style knowledge representation the Knowledge Commons
-layer is built around, and the layer everything downstream (retrieval, agents,
-models) reads from. Specification:
-[`knowledge/OKF-Knowledge-Graph-Specification.md`](docs/CRIC-PRD-v0.1/knowledge/OKF-Knowledge-Graph-Specification.md).
+### The role of this repository
 
----
+`cric-core` defines the shared identifiers, schemas and versioning rules used
+throughout the repository family. In the architecture, every other CRIC repository
+depends on this one; **the core may not depend on a domain-specific repository**.
 
-## How it's built
+The [Master PRD](docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md) maps the specifications.
+The [implementation sequence](docs/CRIC-PRD-v0.1/CRIC-Repository-Dependency-and-Implementation-Sequence.md)
+maps the planned repository family and its dependencies.
 
-Thirteen constitutional rules govern every layer above — among them: evidence lineage
-is immutable, scientific contradiction is represented rather than erased, unknown is
-not treated as negative, and agents operate through typed contracts rather than
-open-ended autonomy. Full list: [`CRIC-PRD-MASTER.md` — Constitutional Product
-Rules](docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md).
+## What exists today
 
-CRIC is equally explicit about what it is *not* building:
+The project is building its foundations. Available in this repository:
 
-- not a single hazard dashboard, a single AI model, or a single agent;
-- not a proprietary data warehouse;
-- not an autonomous government warning authority, and it does not replace one — CRIC
-  never silently assumes institutional warning authority.
+- An installable [Python package](pyproject.toml).
+- Implemented [identifier validation](src/cric_core/identifiers/__init__.py).
+- Implemented [knowledge-state vocabulary and transition rules](src/cric_core/knowledge_state/__init__.py),
+  including rules governing the origin and entry state of review decisions.
+- [Automated checks](https://github.com/Climate-Risk-Intelligence-Commons/cric-core/actions/workflows/ci.yml)
+  for linting, types, tests and package builds.
+- Published product specifications, [architecture decisions](docs/DECISION_REGISTER.md)
+  and an [open-questions register](docs/OPEN_QUESTIONS.md).
 
-Full list: [`product/Product-Scope-and-Domain-Architecture.md` — Product
-Non-Goals](docs/CRIC-PRD-v0.1/product/Product-Scope-and-Domain-Architecture.md) and
-[`product/Product-Vision-and-Principles.md` —
-Non-Goals](docs/CRIC-PRD-v0.1/product/Product-Vision-and-Principles.md).
+The complete evidence-to-analysis workflow, reference Event Cubes, model pipelines,
+agent workflows and public research interfaces remain planned work. Installing
+`cric-core` gives you the foundational package; it does not launch that ecosystem.
 
----
+See [Project Facts](docs/PROJECT_FACTS.md) for dated implementation records and
+[GitHub Actions](https://github.com/Climate-Risk-Intelligence-Commons/cric-core/actions/workflows/ci.yml)
+for build results.
 
-## Where the build actually is
+### Where we are going
 
-*(Deliberately short — see [`docs/PROJECT_FACTS.md`](docs/PROJECT_FACTS.md) for the
-maintained detail behind every figure below.)*
+The implementation follows dependencies:
 
-As of 2026-09-03: the v0.1 specification — 39 PRD documents spanning product,
-knowledge, domain, data, AI, interfaces, engineering, community and implementation —
-is complete and under active, ratified revision. Of 8 Architecture Freeze Points, 3
-are ratified (identifier format; knowledge-state vocabulary; review-decision schema)
-and 1 is implemented as tested code
-([`src/cric_core/identifiers/`](src/cric_core/identifiers/), 32 passing test cases
-across 21 test functions, one parametrized). This is a spec-complete, early-build
-project: most of what's described above is design-complete rather than code-complete
-today, and this paragraph is written to keep saying so for as long as that's true.
+1. **Establish shared foundations** — identifiers, schemas, time, provenance and validation.
+2. **Connect knowledge and data** — the knowledge graph, source catalogues, domain records and reproducible ingestion.
+3. **Make research workflows reproducible** — retrieval, human review, agents and reference Event Cubes.
+4. **Build and evaluate models** — traceable training samples, baseline models and documented limitations.
+5. **Open up exploration** — APIs, research interfaces and a coordinated reference release.
 
-<details>
-<summary>This paragraph is a snapshot, not a promise — the mechanism keeping it honest</summary>
+The v0.1 milestone is concrete: an external researcher can reproduce a reference
+GLOF Event Cube, run a baseline model, trace its output to original evidence and
+inspect uncertainty and human review.
 
-Every commit changes what's built. This paragraph is hand-maintained today. The
-stronger fix — a CI-generated status, so a stale number becomes a build failure
-instead of a silent drift — is a named, tracked work item that has not started yet,
-not work already in motion. Until it ships, treat the date above as this paragraph's
-real expiry, not a formality.
+These are milestones rather than delivery-date promises.
+[Read the full sequence and acceptance criteria](docs/CRIC-PRD-v0.1/CRIC-Repository-Dependency-and-Implementation-Sequence.md).
 
-</details>
+> **Research scope:** CRIC v0.1 and v0.2 are research and reference implementations
+> unless separately validated and authorised for operational use. Model and agent
+> outputs are not official warnings. Emergency decisions and warning authority
+> remain with competent institutions.
 
----
+## Help build the commons
 
-## Roadmap
+**You do not need to write code to contribute.** Clear explanations, well-sourced
+evidence, careful review and useful questions all help build a stronger foundation.
 
-No delivery dates — CRIC is sequenced by dependency, not by calendar, and we'd rather
-say that plainly than invent a date. Full detail, including the dependency graph and
-per-phase acceptance criteria:
-[`CRIC-Repository-Dependency-and-Implementation-Sequence.md`](docs/CRIC-PRD-v0.1/CRIC-Repository-Dependency-and-Implementation-Sequence.md).
+| Your interest | A useful place to start |
+|---|---|
+| **Climate change and disasters** | Read the vision, follow development, and flag confusing explanations or questions the documentation should answer. |
+| **Education and communication** | Help make terminology and research workflows understandable to a wider audience. |
+| **Science and disaster-risk practice** | Propose source material, review scientific concepts or describe a research question CRIC should support. |
+| **Data and mapping** | Suggest datasets with source and licensing information, or identify gaps in quality and coverage. |
+| **Software, AI and modelling** | Explore the core package, review the specifications, or help develop validation and reproducible workflows. |
+| **Research institutions and resourcing partners** | Discuss collaboration, domain expertise, reference studies or support for open infrastructure. |
 
-<details>
-<summary>15 phases, dependency-ordered</summary>
+For a first contribution, [browse the issues](https://github.com/Climate-Risk-Intelligence-Commons/cric-core/issues)
+or [open a proposal](https://github.com/Climate-Risk-Intelligence-Commons/cric-core/issues/new).
+Describe the question or improvement, explain why it matters, and include sources
+where relevant. Some contribution types depend on infrastructure still being built;
+an issue is a useful starting point for scoping that work.
 
-0. **Organisation and Contracts** — repositories, branch protection, licences, CI
-   skeletons.
-1. **`cric-core`** *(in progress)* — implemented first; every other repository
-   consumes its contracts.
-2. **`cric-knowledge`** — the knowledge commons implementation.
-3. **`cric-data`** — the evidence and data commons implementation.
-4. **`cric-cryosphere` and `cric-glof`** — domain schemas and controlled
-   vocabularies.
-5. **`cric-ingest`** — deterministic acquisition and normalisation.
-6. **Graph Materialisation and Retrieval**.
-7. **`cric-review`** — human review and governance workflows.
-8. **`cric-agents`** — reusable agent infrastructure.
-9. **Event Cube Pipeline** — integrating domain, ingestion, retrieval and agents.
-10. **`cric-models`** — model training and evaluation.
-11. **`cric-api`**.
-12. **`cric-ui`**.
-13. **Reference Dataset Expansion**.
-14. **Coordinated v0.1 Release** — the point an external researcher can clone,
-    reproduce and audit the whole chain.
+Read [Contributing](CONTRIBUTING.md), [Governance](GOVERNANCE.md) and our
+[Code of Conduct](CODE_OF_CONDUCT.md). Scientific and data contributions require
+appropriate evidence, licensing and review. Report vulnerabilities through the
+[security process](SECURITY.md).
 
-</details>
+You can also **star the repository** to help others discover it, or **watch it**
+on GitHub to follow development.
 
----
+## For developers
 
-## Everything here is open
+Requires **Python 3.12 or later**. To install the foundational package from source:
 
-The specification, the decision records, the architecture — all of it, not just the
-code. [`docs/CRIC-PRD-v0.1/`](docs/CRIC-PRD-v0.1/) is the authoritative,
-continuously-updated PRD; [`decisions/`](decisions/) holds every ratified
-architecture decision with its approver and evidence; `docs/OPEN_QUESTIONS.md` tracks
-what's still unresolved, in the open, rather than off-repo. Nothing that shapes this
-project happens somewhere a contributor can't read it.
+```sh
+git clone https://github.com/Climate-Risk-Intelligence-Commons/cric-core.git
+cd cric-core
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e ".[dev]"
+python -m pytest
+```
 
-## Get involved
+The activation command above is for bash/zsh. On Windows PowerShell, use
+`.venv\Scripts\Activate.ps1`.
 
-- **Clone:**
-
-  ```sh
-  git clone https://github.com/Climate-Risk-Intelligence-Commons/cric-core.git
-  ```
-
-- **Specification:** starts at
-  [`docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md`](docs/CRIC-PRD-v0.1/CRIC-PRD-MASTER.md).
-- **Contributing:** [`docs/CRIC-PRD-v0.1/community/Contribution-and-Review-Process.md`](docs/CRIC-PRD-v0.1/community/Contribution-and-Review-Process.md).
-  Machine-facing operating rules for this repository: [`CLAUDE.md`](CLAUDE.md) (how
-  work is done) and [`AGENTS.md`](AGENTS.md) (who does what).
+Before preparing a change, read [Contributing](CONTRIBUTING.md).
+Coding-agent sessions should also read [CLAUDE.md](CLAUDE.md) and [AGENTS.md](AGENTS.md).
 
 ## Talk to us
 
-For research collaboration, institutional partnership, or funding discussions:
+For research collaboration, institutional partnership or funding discussions:
 
-**Eyekyam Risk Resolutions**
+**Eyekyam Risk Resolutions**  
 507, 5th Floor, Nirvana Courtyard, Sector 50, Gurgaon, Haryana – 122018
 
-- [ashley@eyekyam.com](mailto:ashley@eyekyam.com) (CTO)
-- [vidya@eyekyam.com](mailto:vidya@eyekyam.com) (CEO)
+- [ashley@eyekyam.com](mailto:ashley@eyekyam.com) — CTO
+- [vidya@eyekyam.com](mailto:vidya@eyekyam.com) — CEO
 
 ## Licence
 
-AGPL-3.0. See [`LICENSE`](LICENSE).
+`cric-core` is licensed under **AGPL-3.0**. See [LICENSE](LICENSE).
+
+---
+
+**Help make climate-risk knowledge something we can inspect, share and build upon—together.**
