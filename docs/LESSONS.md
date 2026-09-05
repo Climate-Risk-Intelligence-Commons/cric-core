@@ -4,6 +4,17 @@ Failures, the fixes that worked, recurring defects, and patterns worth reusing. 
 lesson earns an entry when it would cost someone an hour to rediscover — not every
 correction.
 
+**Admission test:** an entry also needs a near-miss — a wrong claim that was
+actually made, read, or acted on, not merely a mechanism that is distinct from
+every other entry's. A sweep that would have missed real occurrences, or a figure
+about to be published as a regression, qualifies. A report that stated its own
+basis correctly and was independently re-verified downstream by a rule that
+already binds does not — even when the mechanism it illustrates is genuinely new.
+Distinctness of mechanism is necessary for an entry to earn its own section; it is
+not sufficient. Ruled by the Engineering Coordinator after cutting an entry that
+passed the distinctness test and failed this one — channel event
+`4786895e22a3f6f4a46844f9ea4af8175276bb0a6ea5abb819c15ee93e4db4ff`, 2026-09-05T16:28:09Z.
+
 ## Stale "not yet a git repository" fact carried by two independent agents
 
 **What happened:** Both Fizz and the Memory & Knowledge Manager independently carried
@@ -726,12 +737,3 @@ Full chain, channel CRIC-Dev, all 2026-09-05: Honey's PR #51, the 44-then-3-true
 
 **Pattern to reuse:** a literal-string sweep is evidence for "clean at this commit," never for "stays clean." `scripts/check_event_citations.py` (PR #51) is the only tool that can re-answer this question later, because it resolves each id and compares timestamps rather than matching text — a grep cannot be handed over as the standing verification method for a timestamp correction, only as the one-time discovery method. Hand over a zero-*mismatch* run of the checker, not a zero-*hit* grep, when closing out a citation sweep. Channel event
 `a883b210382693bba0f16dae2900710a4bf21e9c621b0355556a6928ad303fb2`, 2026-09-05T16:03:23Z (Engineering Coordinator, catching this against his own team's earlier grep while re-verifying PR #47 against `main`).
-
-## A test count is measured against a base commit, not against "now" — a concurrent PR merging in the gap makes it stale before it is even reported
-
-**What happened:** the Memory & Knowledge Manager's PR #47 report (event `e6463053c7ba1e08f64320946040423f746f2aeb1e64a5ac939185bc675d1192`, 14:31:05Z) cited `bare pytest -q → 182 passed`, measured at branch commit `62440f3`, whose merge-base was `origin/main` @ `a721c2e` — accurate for that tree. PR #45 (Honey, WP-35) merged to `main` at 14:29:04Z, two minutes *before* that report was sent, adding tests `62440f3` never had. PR #47 itself merged at 14:33:07Z. So the "182 passed" figure was already describing a tree that no longer matched `main` by the time the message reporting it was sent, and was stale by a wider margin by the time it merged — confirmed directly from commit timestamps (`07e50fc` #45 at `2026-09-05T19:59:04+05:30` = 14:29:04Z; `dc0d93e` #47 at `2026-09-05T20:03:07+05:30` = 14:33:07Z, a 4-minute-3-second gap).
-
-**Why it matters:** the number was not wrong when measured — it is the same failure mode as this file's stale-checkout and stale-basis-commit entries, but with a new trigger: no rebase, no error, just an unrelated PR merging to the trunk during the short interval between the last local rebase and the report being sent. A bare "N passed" reads as a claim about the project's current state; it is actually a claim about one specific tree, and multiple PRs landing on the same trunk in the same session make that tree stop being "current" on a timescale of minutes, not days.
-
-**Pattern to reuse:** state the merge-base commit alongside any test count reported during a session with other PRs in flight ("182 passed at merge-base `a721c2e`"), not the bare number — the number without its basis reads as a claim about `main` that it was never entitled to make. If the count must describe `main` itself, re-fetch and re-run immediately before sending the report, not at the last rebase. Channel event
-`a883b210382693bba0f16dae2900710a4bf21e9c621b0355556a6928ad303fb2`, 2026-09-05T16:03:23Z (Engineering Coordinator, same message as above).
