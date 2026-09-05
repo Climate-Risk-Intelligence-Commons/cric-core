@@ -158,28 +158,38 @@ def test_every_number_is_immediately_followed_by_its_unit_noun(monkeypatch):
 
 
 def test_ratified_and_total_freeze_points_against_real_repo():
+    """Real-repo integration check, deliberately rot-proof rather than pinned.
+
+    An earlier version of this test asserted `ratified == {1, 6, 7}` -- a
+    literal snapshot of `decisions/`'s state on the day WP-33a was written.
+    It went red the moment ADR-0010/0011/0012 were signed (2026-09-05,
+    Engineering Coordinator, PR #44 review) -- not because anything was
+    wrong, but because the world had changed and the assertion hadn't.
+    "A test that hardcodes live repository state is not testing the
+    generator. It asserts that the world has not changed" -- and the CI
+    freshness check (`--check` against README's committed block) is already
+    the correct mechanism for "repo state moved but the derived output
+    didn't follow" -- this test doesn't need to be a worse duplicate of it.
+
+    So this asserts invariants that hold regardless of which Freeze Points
+    happen to be signed today, and reserves behavioural correctness (does
+    the parser require Accepted *and* the phrase, does it reject Proposed/
+    Superseded, does the extraction regex work) for the synthetic fixtures
+    above, which are fixture-bound and do not rot.
+    """
     total_fp = gbs.derive_total_freeze_points(REPO_ROOT)
     ratified = gbs.derive_ratified_freeze_points(REPO_ROOT)
 
+    # A genuine spec constant -- the Sequence document names exactly 8
+    # Freeze Points and that count is not expected to change.
     assert total_fp == 8
-    # Verified 2026-09-05 by reading decisions/0004 and decisions/0007 directly
-    # (per WP-33a instructions, since the work package's own guess of "2" did
-    # not match what the files actually said):
-    #   - 0004's Status line reads "...Accepted -- **Architecture Freeze
-    #     Point** (the first of 8 to lock...)" (singular, direct substring
-    #     match) and its title is "Freeze Point 1 -- Object Identifier
-    #     Format" -> extracts {1}.
-    #   - 0007's Status line reads "...Accepted -- **Architecture Freeze
-    #     Points** (second and third of the 8..." (plural, still a substring
-    #     match of "Architecture Freeze Point") and its title is "Freeze
-    #     Points 6 + 7 -- Knowledge-State Vocabulary and Review Decision
-    #     Schema" -> extracts {6, 7}.
-    #   - 0009 ("Any requirement naming a Freeze Point resolves to...") has a
-    #     plain "- **Status:** Accepted" line with no "Architecture Freeze
-    #     Point" substring, and its own Approver line says explicitly "not a
-    #     Freeze Point" -- correctly excluded.
-    # Union = {1, 6, 7} => ratified_count is 3, not 2.
-    assert ratified == {1, 6, 7}
+
+    # Rot-proof invariants: true today, true after the next signature, true
+    # after the one after that.
+    assert ratified, "expected at least one ratified Freeze Point in this repo's history"
+    assert ratified.issubset(set(range(1, 9))), (
+        f"ratified Freeze Point numbers must be within 1..8, got {sorted(ratified)}"
+    )
     assert len(ratified) <= total_fp
 
 
