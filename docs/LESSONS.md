@@ -586,16 +586,21 @@ the defect — the two are easy to conflate because the same person usually did 
 and only one of them is the actual claim being made. Any tool built to replace a
 manual sweep (`scripts/check_event_citations.py`, above) must default to repo-wide
 scope for the same reason: a tool that only looks where it is pointed inherits
-whoever pointed it. **Superseded as a standing method, not as an account of what
-happened:** `scripts/check_event_citations.py` has since shipped (PR #51) and is
-the standing sweep mechanism — see "A 'prove zero' grep on a corrected literal…"
-below for why a repo-wide grep, even scoped correctly per this entry's own rule,
-stops being sufficient once a corrected string can legitimately reappear. This
-entry's scoping rule still applies to the checker itself (it must default to
-repo-wide) and to any other one-off literal sweep; it is not a live instruction to
-grep for a timestamp correction anymore. Channel event
+whoever pointed it. Channel event
 `4177fb4179c07baeb8edfcbccfe2e00733ce901647dcd2c3be6f4904017631e0`, 2026-09-05T14:33:36Z
 (Engineering Coordinator, naming the pattern against himself, unprompted).
+
+**Superseded as a standing method, not as an account of what happened:**
+`scripts/check_event_citations.py` has since shipped (PR #51) and is the standing
+sweep mechanism — see "A 'prove zero' grep on a corrected literal…" below for why
+a repo-wide grep, even scoped correctly per this entry's own rule, stops being
+sufficient once a corrected string can legitimately reappear. This entry's scoping
+rule still applies to the checker itself (it must default to repo-wide) and to any
+other one-off literal sweep; it is not a live instruction to grep for a timestamp
+correction anymore. Channel event
+`a883b210382693bba0f16dae2900710a4bf21e9c621b0355556a6928ad303fb2`, 2026-09-05T16:03:23Z
+(Engineering Coordinator, retiring the grep-as-deliverable half of this entry while
+re-reviewing PR #47 against `main`).
 
 ## A hardcoded assertion against live repository state is not a guard — it is a snapshot that expires on the next correct change
 
