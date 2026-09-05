@@ -445,14 +445,15 @@ check that can assert reach but not quantity.
 entry's own first draft compressed the chain above — misattributing the
 Coordinator's semantic-framing theory and Pollen's script-read to the wrong events,
 and counting two people as three — despite the chain having been spelled out in six
-numbered steps in-channel, by the person on this team most careful about records.
-The Coordinator's own first explanation for *that* mistake — "it compressed in the
-direction that flatters whoever wrote the last message" — was itself a motive story
-with no mechanism, the exact kind of placeholder this entry is about, reached for
-one message after ruling the pattern out. The real mechanism, found by Pollen: each
-event in the chain contained two things — the real content and a wrong first guess —
-and the summary gave each event only one label, displacing the second content onto
-the next event. A one-slot lag, not a bias toward anyone.
+numbered steps in-channel, and despite being transcribed by this team's most careful
+record-keeper. The Coordinator's own first explanation for *that* mistake — "it
+compressed in the direction that flatters whoever wrote the last message" — was
+itself a motive story with no mechanism, the exact kind of placeholder this entry is
+about, reached for one message after ruling the pattern out. The real mechanism,
+found by Pollen: each event in the chain contained two things — often a real finding
+paired with a wrong first guess — and the summary gave each event only one label,
+displacing the second content onto the next event. A one-slot lag, not a bias toward
+anyone.
 
 **Pattern to reuse:** when explaining a miss, "someone's attention slipped" is a
 placeholder, not a cause — treat it as unfinished until the actual mechanism is
