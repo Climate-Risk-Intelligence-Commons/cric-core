@@ -183,6 +183,61 @@ def test_ratified_and_total_freeze_points_against_real_repo():
     assert len(ratified) <= total_fp
 
 
+# --- Regression: a "Proposed" candidate must not count as ratified ---------
+# Found in review of WP-34's PR #40 (Engineering Coordinator, 2026-09-05):
+# decisions/0010-0012's actual Status lines read "Proposed -- Architecture
+# Freeze Point candidate ..., not yet signed by Ashley" -- a pure substring
+# match on "Architecture Freeze Point" would have counted all three as
+# ratified before anyone signed anything. Reproduced here with synthetic
+# fixtures rather than depending on those three files' exact wording staying
+# unchanged.
+
+
+def test_proposed_candidate_is_not_counted_as_ratified(tmp_path):
+    decisions = tmp_path / "decisions"
+    decisions.mkdir()
+    (decisions / "0099-fake-candidate.md").write_text(
+        "# ADR-0099: Freeze Point 5 -- Fake Candidate\n\n"
+        "- **Status:** Proposed -- Architecture Freeze Point candidate (fifth "
+        "of 8), ruled by the Engineering Coordinator, not yet signed by "
+        "Ashley.\n",
+        encoding="utf-8",
+    )
+
+    assert gbs.derive_ratified_freeze_points(tmp_path) == set()
+
+
+def test_superseded_status_naming_a_freeze_point_is_not_counted(tmp_path):
+    # A second non-Accepted status word, so the fix isn't just "reject the
+    # literal string 'Proposed'" -- it must require Accepted specifically.
+    decisions = tmp_path / "decisions"
+    decisions.mkdir()
+    (decisions / "0099-fake-superseded.md").write_text(
+        "# ADR-0099: Freeze Point 5 -- Fake Superseded\n\n"
+        "- **Status:** Superseded by ADR-0100 -- was an Architecture Freeze "
+        "Point candidate.\n",
+        encoding="utf-8",
+    )
+
+    assert gbs.derive_ratified_freeze_points(tmp_path) == set()
+
+
+def test_accepted_status_naming_a_freeze_point_is_still_counted(tmp_path):
+    # Positive control: the fix must not overcorrect into rejecting a
+    # genuinely-ratified entry phrased exactly like ADR-0004/0007.
+    decisions = tmp_path / "decisions"
+    decisions.mkdir()
+    (decisions / "0099-fake-ratified.md").write_text(
+        "# ADR-0099: Freeze Point 5 -- Fake Ratified\n\n"
+        "- **Status:** Accepted -- **Architecture Freeze Point** (fifth of 8 "
+        "to lock; reversal requires explicit migration, not routine "
+        "amendment)\n",
+        encoding="utf-8",
+    )
+
+    assert gbs.derive_ratified_freeze_points(tmp_path) == {5}
+
+
 # --- Required case 7 -------------------------------------------------------
 # module_count / module_list against this repository's real
 # src/cric_core/, derived independently in the test rather than hardcoded.

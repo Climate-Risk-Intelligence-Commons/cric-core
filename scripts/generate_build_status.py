@@ -47,6 +47,7 @@ _FREEZE_POINTS_HEADING_RE = re.compile(r"^##\s+Architecture Freeze Points\s*$")
 _LIST_ITEM_RE = re.compile(r"^\d+\.")
 
 _STATUS_LINE_RE = re.compile(r"^- \*\*Status:\*\*.*$", re.MULTILINE)
+_ACCEPTED_STATUS_RE = re.compile(r"^- \*\*Status:\*\*\s*Accepted\b")
 _ADR_TITLE_RE = re.compile(r"^# ADR-\d+:.*$", re.MULTILINE)
 _FREEZE_POINT_NUMBERS_RE = re.compile(r"Freeze Points?\s+([0-9][0-9,+\s]*?)\s*[—-]")
 
@@ -59,7 +60,7 @@ TEMPLATE = """\
      generator derives from the live tree. See decisions/0008. -->
 - **{test_count} tests passing** (full suite, `pytest`, no path filter).
 - **{ratified_count} of {total_fp} Architecture Freeze Points ratified** (a `decisions/`
-  entry whose Status line reads "Architecture Freeze Point").
+  entry whose Status line is `Accepted` and names an Architecture Freeze Point).
 - **{module_count} module(s) shipped** under `src/cric_core/`: {module_list}.
 <!-- BUILD-STATUS:END -->"""
 
@@ -155,15 +156,32 @@ def derive_total_freeze_points(repo_root: Path) -> int:
 def derive_ratified_freeze_points(repo_root: Path) -> set[int]:
     """Scan decisions/*.md for ratified Architecture Freeze Points.
 
-    For each decision file, look at the first `^- **Status:**` line only. If
-    it contains "Architecture Freeze Point" (a substring match, so it also
-    catches the plural "Architecture Freeze Points"), extract the Freeze
-    Point number(s) named in the ADR's title line and union them into the
+    For each decision file, look at the first `^- **Status:**` line only. A
+    Freeze Point counts as ratified only if BOTH hold: (1) the status value
+    immediately after "Status:**" is literally "Accepted" -- not "Proposed",
+    "Superseded", or anything else -- and (2) the same line contains
+    "Architecture Freeze Point" (a substring match, so it also catches the
+    plural "Architecture Freeze Points"). Neither condition alone is
+    sufficient.
+
+    This two-part test exists because a substring-only check on
+    "Architecture Freeze Point" is not a guard: decisions/0010-0012's own
+    Status lines read "Proposed -- Architecture Freeze Point candidate...,
+    not yet signed by Ashley" while still containing the phrase verbatim.
+    Reading that as ratified would have announced signed Freeze Points on a
+    public README before Ashley signed anything (Engineering Coordinator,
+    caught in review of WP-34's PR #40, 2026-09-05). The fix is not asking
+    every future ADR author to phrase around a substring -- it's requiring
+    an explicit positive marker (the Status value itself) in addition to the
+    phrase, so a natural, honestly-worded "not yet accepted" sentence cannot
+    trip the check.
+
+    If it extracts the ADR's Freeze Point number(s), union them into the
     ratified set.
 
-    Raises RuntimeError if a Status line names an Architecture Freeze Point
-    but the title yields zero extractable numbers -- that would silently
-    undercount rather than fail loudly.
+    Raises RuntimeError if a Status line is Accepted and names an
+    Architecture Freeze Point but the title yields zero extractable numbers
+    -- that would silently undercount rather than fail loudly.
     """
     decisions_dir = repo_root / "decisions"
     ratified: set[int] = set()
@@ -173,6 +191,8 @@ def derive_ratified_freeze_points(repo_root: Path) -> set[int]:
         if status_match is None:
             continue
         status_line = status_match.group(0)
+        if not _ACCEPTED_STATUS_RE.match(status_line):
+            continue
         if "Architecture Freeze Point" not in status_line:
             continue
 
