@@ -27,5 +27,8 @@ jobs:
       - name: Test
         run: python -m pytest
 
+      - name: Build-status freshness check
+        run: python scripts/generate_build_status.py --check
+
       - name: Build
         run: python -m build
