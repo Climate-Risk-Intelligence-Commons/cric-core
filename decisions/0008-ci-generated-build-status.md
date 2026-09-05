@@ -64,10 +64,16 @@ states a constraint on what gets added to it going forward.
 ## Consequences
 
 - **Not a Freeze Point.** Reversible by ordinary amendment; no migration required.
-- **Critical-path dependency for Honey's WP-24** (the generation mechanism itself),
-  dispatched after WP-18. Until WP-24 lands, no build-status table appears on the
-  README — a generated table that doesn't exist yet is preferable to a hand-typed one
-  that will drift.
+- **Critical-path dependency for Honey's WP-33** (the generation mechanism itself),
+  dispatched after WP-18. **Correction, 2026-09-05:** this line originally named the
+  package "WP-24" — the Coordinator re-dispatched the same mechanism under a new
+  number without checking against this ADR first, and WP-33 (children 33a generator/CI,
+  33b README restructure) is the identifier that actually ran and shipped, not a
+  separate, lost package. WP-24 was its earlier working name in this document only;
+  no such package was ever dispatched. Until WP-33 lands (held as of 2026-09-05
+  pending Ashley's README clearance — `docs/OPEN_QUESTIONS.md` D16), no build-status
+  table appears on the README — a generated table that doesn't exist yet is
+  preferable to a hand-typed one that will drift.
 - **README's status section, once built, is a pointer into `decisions/` and
   `docs/PROJECT_FACTS.md`, not a second copy of their contents** — the same
   authoritative-source discipline this project's own `docs/LESSONS.md` already

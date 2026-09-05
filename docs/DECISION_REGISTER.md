@@ -16,6 +16,9 @@ applicable, otherwise `Proposed` / `Accepted` / `Superseded`.
 | [0007](../decisions/0007-freeze-points-6-7-knowledge-state-review-decision.md) | Freeze Points 6 + 7 — knowledge-state vocabulary and review decision schema, ratified as one unit | **Accepted — locked** | Ashley | 2026-09-03 | **Yes — Freeze Points 6 and 7 of 8** |
 | [0008](../decisions/0008-ci-generated-build-status.md) | Build status is CI-generated, never hand-typed; no CI job without a subject | Accepted | Engineering Coordinator | 2026-09-03 | No |
 | [0009](../decisions/0009-fp-requirement-verification.md) | Any requirement naming a Freeze Point resolves to exactly one of three verification states (shipped code / signed ADR / unratified proposal) | Accepted | Engineering Coordinator | 2026-09-04 | No |
+| [0010](../decisions/0010-freeze-point-5-relationship-representation.md) | Freeze Point 5 — relationship representation: predicate vocabulary closed at 35, direction representation ratified | **Proposed — ruled, Ashley's signature pending** | Ashley (pending) | 2026-09-05 | **Yes — Freeze Point 5 of 8 (not yet locked)** |
+| [0011](../decisions/0011-freeze-point-4-provenance-model.md) | Freeze Point 4 — provenance model: promotion rule, `ProvenanceRecord` shape, conditional source-hash rule | **Proposed — ruled, Ashley's signature pending** | Ashley (pending) | 2026-09-05 | **Yes — Freeze Point 4 of 8 (not yet locked)** |
+| [0012](../decisions/0012-freeze-point-3-temporal-model.md) | Freeze Point 3 — temporal model: negative-value exclusion, scope precedence over Training-Data's narrower restatement | **Proposed — ruled, Ashley's signature pending** | Ashley (pending) | 2026-09-05 | **Yes — Freeze Point 3 of 8 (not yet locked)** |
 
 **Consolidation note, 2026-09-03:** Ashley asked for "proper decisions" on licence,
 README, contributing, code of conduct, security, governance, CI, branch protection and

@@ -263,3 +263,113 @@ shapes explicitly — invented values, renamed/relocated real values, and misatt
 real values — rather than stopping at the first clean-looking pass. `decisions/0009-fp-requirement-verification.md`
 encodes the resulting standing check for this project's own generated planning
 artefacts.
+
+## A "missing rows" finding was reported without checking the actual file, and was wrong
+
+**What happened:** WP-34's finding #3 stated `docs/DECISION_REGISTER.md` was "missing
+rows for ADR-0008 and ADR-0009, both already on `main`." The Engineering Coordinator
+routed it for a future fix without checking it himself. Verified directly against
+`main` while preparing this records package: both rows have existed since the commit
+that introduced each ADR (`f94694b` for 0008, `2547ffe` for 0009) — there was never a
+point where either ADR existed on `main` without its register row. The finding was
+simply wrong, relayed from a subagent's report rather than checked against the file.
+
+**Why it matters:** a "missing X" claim is a negative claim about a specific,
+cheaply-checkable file — exactly the kind this project's own EVIDENCE requirements
+name as needing the exact scope searched, stated with the claim. This one didn't get
+even that: nobody grepped the file before reporting or before routing the fix.
+Unlike a citation that resolves to the wrong content, this defect had a one-command
+falsification available the whole time and nobody ran it.
+
+**Pattern to reuse:** before reporting or routing a "missing X" / "no row for Y" /
+"file doesn't contain Z" finding, grep or read the actual current file yourself. A
+completeness claim about a small, named file is cheaper to verify directly than to
+carry forward on trust — cheaper, in fact, than writing the finding down.
+
+## A test count taken from a stale local checkout looked exactly like a regression
+
+**What happened:** verifying the README's documented install-and-test instructions,
+the Engineering Coordinator's first attempt cloned the local checkout at
+`/home/ash/Eyekyam/CRIC-Core` instead of the public GitHub repository, and got
+`32 passed` — a number that would have read as a severe regression from the `139`/
+`166` already on record, on a repository nobody had actually broken. He caught it
+himself before publishing the number, re-ran against a genuine fresh clone of the
+public repo, and got `166` — reported plainly as his own error rather than silently
+corrected.
+
+**Why it matters:** the shared local checkout at that path is explicitly documented
+(this project's own worktree convention, `docs/PROJECT_FACTS.md`) as liable to be
+sitting on someone else's branch at any given moment — it is not a stable stand-in
+for "the public repo." A test count taken from it can be internally consistent
+(pytest ran, produced a real number, nothing crashed) and still describe the wrong
+tree entirely, with no error message to flag the mismatch. This is the same family as
+"32 vs 21" (right number, wrong unit) but one layer further back: wrong *source*, not
+wrong *unit* — and unlike a unit mismatch, a wrong-source test count is
+indistinguishable from a real regression until someone checks where it actually ran.
+
+**Pattern to reuse:** when a claim will be published as "verified against the real
+repo" — an install guide, a README instruction, a release check — clone fresh from
+the actual remote rather than reusing a local checkout, even one that looks current.
+If a number would read as alarming (a big drop, a red check), that is itself a signal
+to check the source before the number, not after.
+
+## A rebase moved the tree without moving the prose that describes it
+
+**What happened:** PR #39's `docs/PHASE-1-COMPLETION-PLAN.md` and
+`docs/PROJECT_FACTS.md` were drafted against `fa22597`, then the branch was rebased
+onto `origin/main` (`72f3fb7`, which includes PR #38/WP-32's
+`src/cric_core/review/`) to avoid conflicts. The rebase did exactly what a rebase
+does — the tree ended up in sync with `main`, no conflicts, nothing lost. It cannot,
+and did not, update the prose describing that tree: three separate spots kept saying
+build-order item 9 ("review contracts") hadn't shipped, on a commit where it plainly
+had (confirmed directly: `git merge-base HEAD origin/main` was exactly `72f3fb7`,
+`ls src/cric_core/` showed `review/` present). Found by Honey's non-author review,
+independently reconfirmed by the Engineering Coordinator before either routed it as
+fixed.
+
+**Why it matters:** this is the same family as "a measurement taken at one commit and
+reported at another" (see this file's other entries on stale snapshots and stale test
+counts) but a new variant within it — the earlier ones involved a number disagreeing
+with itself (166 vs 32, 3 vs 2 defects); this one had no number to disagree with. A
+document that names its own basis commit in its header reads as more trustworthy for
+doing so, which is exactly what let the mismatch survive a citation-level check: every
+individual citation in the document was still accurate against `fa22597`, and the
+document's own header still named `fa22597` as its pin. The defect was only visible by
+reading the prose against the tree the branch actually ships in, not against the tree
+it was drafted against.
+
+**Pattern to reuse:** if a document declares its own basis commit and its branch gets
+rebased afterward — for any reason, including pure conflict avoidance — treat every
+claim in that document about what code exists as needing re-derivation, not just
+re-verification of citations. The rebase changes the tree the document ships in even
+when it changes none of the document's own lines.
+
+## "Nothing forbids it" is not evidence for it — the same inference failed three times in one round
+
+**What happened:** in one Wave 1 ruling round, the same reasoning shape produced a
+wrong inference three separate times, each caught by someone other than its author.
+FP4's original field-count claim borrowed a nine-field embedded-`provenance` shape
+from the OKF Universal Frontmatter — the field existed and nothing said it didn't
+apply to FP4 — when the actual source was one side of an unrelated, unresolved
+disagreement (D10) about a different Freeze Point's subject. FP3's original
+`Observation.value` placement reasoned that `false`/`absent`/`not detected` belonged
+there because nothing said they belonged anywhere else — an untyped field, not a
+closed one. And earlier the same day, carve-out #4 was closed on the inference that
+FP4 implied a `derived_from` predicate, when the text never mentioned one at all in
+either direction.
+
+**Why it matters:** all three have the identical shape — treating the absence of a
+contrary statement as if it were a statement of support — and all three were
+initially presented with the same confidence as the claims that turned out to be
+well-supported. Nothing about the sentence *"nothing says otherwise"* distinguishes a
+genuinely settled question from an unexamined one; the tell is always external (a
+whole-corpus grep, a check against the actual disputed source), never in the
+confidence of the sentence itself.
+
+**Pattern to reuse:** when a candidate's supporting argument is "the corpus doesn't
+say otherwise" or "nothing rules this out," treat that as a flag requiring a
+positive citation, not as a citation in its own right. A Freeze Point (or any
+decision meant to be relied on later) may not rest on absence of prohibition —
+state the gap as open rather than closing it by inference, the same discipline
+`decisions/0011` and `decisions/0012` apply explicitly in their own Decision
+sections, not only in Alternatives.
