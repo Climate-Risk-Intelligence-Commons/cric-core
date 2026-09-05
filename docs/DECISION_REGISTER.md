@@ -16,9 +16,9 @@ applicable, otherwise `Proposed` / `Accepted` / `Superseded`.
 | [0007](../decisions/0007-freeze-points-6-7-knowledge-state-review-decision.md) | Freeze Points 6 + 7 — knowledge-state vocabulary and review decision schema, ratified as one unit | **Accepted — locked** | Ashley | 2026-09-03 | **Yes — Freeze Points 6 and 7 of 8** |
 | [0008](../decisions/0008-ci-generated-build-status.md) | Build status is CI-generated, never hand-typed; no CI job without a subject | Accepted | Engineering Coordinator | 2026-09-03 | No |
 | [0009](../decisions/0009-fp-requirement-verification.md) | Any requirement naming a Freeze Point resolves to exactly one of three verification states (shipped code / signed ADR / unratified proposal) | Accepted | Engineering Coordinator | 2026-09-04 | No |
-| [0010](../decisions/0010-freeze-point-5-relationship-representation.md) | Freeze Point 5 — relationship representation: predicate vocabulary closed at 35, direction representation ratified | **Proposed — ruled, Ashley's signature pending** | Ashley (pending) | 2026-09-05 | **Yes — Freeze Point 5 of 8 (not yet locked)** |
-| [0011](../decisions/0011-freeze-point-4-provenance-model.md) | Freeze Point 4 — provenance model: promotion rule, `ProvenanceRecord` shape, conditional source-hash rule | **Proposed — ruled, Ashley's signature pending** | Ashley (pending) | 2026-09-05 | **Yes — Freeze Point 4 of 8 (not yet locked)** |
-| [0012](../decisions/0012-freeze-point-3-temporal-model.md) | Freeze Point 3 — temporal model: negative-value exclusion, scope precedence over Training-Data's narrower restatement | **Proposed — ruled, Ashley's signature pending** | Ashley (pending) | 2026-09-05 | **Yes — Freeze Point 3 of 8 (not yet locked)** |
+| [0010](../decisions/0010-freeze-point-5-relationship-representation.md) | Freeze Point 5 — relationship representation: predicate vocabulary closed at 35, direction representation ratified | **Accepted — locked** | Ashley | 2026-09-05 | **Yes — Freeze Point 5 of 8** |
+| [0011](../decisions/0011-freeze-point-4-provenance-model.md) | Freeze Point 4 — provenance model: promotion rule, `ProvenanceRecord` shape, conditional source-hash rule | **Accepted — locked** | Ashley | 2026-09-05 | **Yes — Freeze Point 4 of 8** |
+| [0012](../decisions/0012-freeze-point-3-temporal-model.md) | Freeze Point 3 — temporal model: negative-value exclusion, scope precedence over Training-Data's narrower restatement | **Accepted — locked** | Ashley | 2026-09-05 | **Yes — Freeze Point 3 of 8** |
 
 **Consolidation note, 2026-09-03:** Ashley asked for "proper decisions" on licence,
 README, contributing, code of conduct, security, governance, CI, branch protection and
@@ -30,21 +30,31 @@ root `CONTRIBUTING.md`/`GOVERNANCE.md` pointers) — those are not re-recorded a
 ADRs. **ADR-0008 is the one genuinely new ruling from that pass**; see its own Context
 for why the rest don't get their own entries here.
 
-**Freeze Points 1, 6 and 7 are ratified — three of 8 locked — and both are now
-implemented as tested code, not just locked grammar.** WP-6 (build-order item 1,
-identifier types), against ADR-0004, merged (PR #17, `main` at `fda79b1`):
-`src/cric_core/identifiers/`. Honey's WP-18 (build-order item 2, knowledge-state
-models), against ADR-0007, merged (PR #29, `main` at `f5d8a06`, 139 tests):
-`src/cric_core/knowledge_state/`. Freeze Point 4 (provenance model) briefly looked
-coupled into ADR-0007's unit and was found not to be — it remains unratified, on its
-own evidence, along with Freeze Points 2, 3, 5 and 8. Each remaining ADR, when
-written, links its **Freeze Point?** column entry to the specific freeze point (of the
-8 listed in `docs/PROJECT_FACTS.md`), names Ashley as approver (not the Engineering
-Coordinator or Fizz), and its consequences section states explicitly that reversal
-requires a formal migration, not routine amendment — per the ratification checkpoint
-in `docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2, exercised first in
+**Freeze Points 1, 3, 4, 5, 6 and 7 are ratified — six of 8 locked, `{1,3,4,5,6,7}`.**
+Two of the six (1 and 6+7) are now implemented as tested code, not just locked
+grammar; ADR-0010/0011/0012 (Freeze Points 5, 4, 3) are ratified but have no shipped
+code yet. WP-6 (build-order item 1, identifier types), against ADR-0004, merged (PR
+#17, `main` at `fda79b1`): `src/cric_core/identifiers/`. Honey's WP-18 (build-order
+item 2, knowledge-state models), against ADR-0007, merged (PR #29, `main` at
+`f5d8a06`, 139 tests): `src/cric_core/knowledge_state/`. Freeze Point 4 (provenance
+model) briefly looked coupled into ADR-0007's unit and was found not to be — it
+ratified separately as ADR-0011. **Only Freeze Points 2 and 8 remain unratified.**
+Each remaining ADR, when written, links its **Freeze Point?** column entry to the
+specific freeze point (of the 8 listed in `docs/PROJECT_FACTS.md`), names Ashley as
+approver (not the Engineering Coordinator or Fizz), and its consequences section
+states explicitly that reversal requires a formal migration, not routine amendment —
+per the ratification checkpoint in
+`docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2, exercised first in
 ADR-0004 and, for the first time under real adversarial pressure across five rounds,
 in ADR-0007. **ADR-0009 (2026-09-04) is a process/quality-gate ruling, not a Freeze
 Point** — same class as ADR-0008: it constrains what any artefact may
 claim about a Freeze Point, ratified or not, rather than ratifying product schema
 itself.
+
+**Ratification for 0010/0011/0012, recorded as what it was:** Ashley's 2026-09-05
+blanket approval — *"Please consider all my signatures and all of the decisions as
+done. Go ahead"* (event `524472fa44b27d8f732d4033e444891120a5b7f155bef69e4ab21a19738482a3`,
+13:38:43Z) — covers D18, D21 and D22 together as one signing act, not three separate
+per-ADR assents. Full ratification chains, including this one, are in each ADR's own
+Ratification chain section and in `docs/OPEN_QUESTIONS.md`'s D18/D21/D22 rows, not
+restated here.

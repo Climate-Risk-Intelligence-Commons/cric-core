@@ -87,9 +87,10 @@ knowledge-state models), PR #29, merged to `main` `f5d8a06` (2026-09-04):
 `src/cric_core/knowledge_state/`, verified against the ADR decision-by-decision and
 attacked by planted violation on all four highest-risk criteria (Pollen), full suite
 re-verified 139 passed. Freeze Point 1 and Freeze Points 6+7 are now both executable,
-tested code — two of three ratified Freeze Points implemented. Freeze Point 4
+tested code — two of the now-six ratified Freeze Points implemented (see below;
+Freeze Points 3, 4 and 5 ratified 2026-09-05, no shipped code yet). Freeze Point 4
 (provenance model) briefly looked coupled into the FP6+7 ratification and was found
-not to be — it remains separate and unratified.
+not to be — it ratified separately as ADR-0011, below.
 
 **Freeze Point 7 gained a second piece of shipped code, 2026-09-05: Honey's WP-32
 (build-order item 9, registry §10), PR #38, merged to `main` `72f3fb7`** —
@@ -109,24 +110,29 @@ own requirement (Pollen, clean pass). Full local gate at merge: `ruff`/`mypy` cl
 bare `pytest` **166 passed** (139 existing + 27 new), `rev-parse` unchanged
 before/after.
 
-**Freeze Point 5 (relationship representation) is ruled but not yet signed** —
-`decisions/0010-freeze-point-5-relationship-representation.md`, Engineering
-Coordinator, 2026-09-05. Predicate vocabulary closed at exactly 35 (registry §8's 11
-core + 23 spatial/domain + 1 structural, excluding the two deprecated predicates and
-one rejected predicate); direction representation ratified as `out_edges`/`in_edges`
-traversal indices, named inverse pairs treated as an authoring convenience rather than
-a requirement. Two consequences ship with the ruling: `affected` becomes invalid,
-`impacted` canonical (propagation of registry §8:223, same shape as ADR-0006); and
+**Freeze Point 5 (relationship representation) is ratified and locked** —
+`decisions/0010-freeze-point-5-relationship-representation.md`, ruled by the
+Engineering Coordinator 2026-09-05, signed by Ashley 2026-09-05 (blanket approval,
+event `524472fa44b27d8f732d4033e444891120a5b7f155bef69e4ab21a19738482a3`, 13:38:43Z,
+covering D18/D21/D22 together — see `docs/OPEN_QUESTIONS.md` D18). Predicate
+vocabulary closed at exactly 35 (registry §8's 11 core + 23 spatial/domain + 1
+structural, excluding the two deprecated predicates and one rejected predicate);
+direction representation ratified as `out_edges`/`in_edges` traversal indices, named
+inverse pairs treated as an authoring convenience rather than a requirement. Two
+consequences ship with the ruling: `affected` becomes invalid, `impacted` canonical
+(propagation of registry §8:223, same shape as ADR-0006); and
 `Cryosphere-Ontology.md`'s existing `associated_with`/`connected_to` usage becomes
 non-conformant on day one, needing an owner (`docs/OPEN_QUESTIONS.md` D20). **Carved
 out, not ratified:** the relationship entry schema's `evidence` field —
 `Core-Ontology-Specification.md:440` requires it, no field of that name exists on the
 schema, and `evidence_nodes` is Claim-schema-only corpus-wide — tracked as D19.
-Awaiting Ashley's signature: `docs/OPEN_QUESTIONS.md` D18.
 
-**Freeze Point 4 (provenance model) is ruled but not yet signed** —
-`decisions/0011-freeze-point-4-provenance-model.md`, Engineering Coordinator,
-2026-09-05. Ratified: the promotion rule (standalone `ProvenanceRecord` on meeting
+**Freeze Point 4 (provenance model) is ratified and locked** —
+`decisions/0011-freeze-point-4-provenance-model.md`, ruled by the Engineering
+Coordinator 2026-09-05, signed by Ashley 2026-09-05 (blanket approval, event
+`524472fa44b27d8f732d4033e444891120a5b7f155bef69e4ab21a19738482a3`, 13:38:43Z,
+covering D18/D21/D22 together — see `docs/OPEN_QUESTIONS.md` D21). Ratified: the
+promotion rule (standalone `ProvenanceRecord` on meeting
 `Core-Ontology-Specification.md:54-58`'s field-vs-node trigger); the record's full
 shape when promoted; "significant" (§9's backward-traversal MUST) means a non-empty
 `parents` list, chosen over the alternative because `Source` — both a promoted §3
@@ -142,11 +148,14 @@ question as a side effect of ratifying FP4. Tracked at D10, not settled here.
 **Consequence stated explicitly, correcting the Coordinator's own earlier framing to
 Ashley:** Phase 3's gate is FP4 *and* FP2 (D10), not FP4 alone — FP4 unblocks the
 standalone node and promotion logic but does not settle what a `DataAsset`'s own
-embedded `provenance` field contains. Awaiting Ashley's signature: D21.
+embedded `provenance` field contains.
 
-**Freeze Point 3 (temporal model) is ruled but not yet signed** —
-`decisions/0012-freeze-point-3-temporal-model.md`, Engineering Coordinator,
-2026-09-05. Ratified: `false`/`absent`/`not detected` are excluded from both registry
+**Freeze Point 3 (temporal model) is ratified and locked** —
+`decisions/0012-freeze-point-3-temporal-model.md`, ruled by the Engineering
+Coordinator 2026-09-05, signed by Ashley 2026-09-05 (blanket approval, event
+`524472fa44b27d8f732d4033e444891120a5b7f155bef69e4ab21a19738482a3`, 13:38:43Z,
+covering D18/D21/D22 together — see `docs/OPEN_QUESTIONS.md` D22). Ratified:
+`false`/`absent`/`not detected` are excluded from both registry
 §5 and §6 — a well-supported negative (two independent whole-corpus sweeps, zero
 hits, plus `:365`'s positive prohibition on collapsing `unknown` into `false`); and
 registry §6's unqualified "negative training labels" scope governs over
@@ -163,8 +172,7 @@ settled `epistemic.status` versus `knowledge_state.status` — not re-attacked, 
 recorded question. **Named explicitly as a third level of citation discipline, worth
 keeping as a standing check** (found attacking this candidate): does the citation
 resolve → does its label match the cited body → does the cited document's own
-supporting claim hold up against the text it describes. Awaiting Ashley's signature:
-D22.
+supporting claim hold up against the text it describes.
 
 **Pattern named across this round, worth its own entry in `docs/LESSONS.md`:**
 "absence of prohibition read as presence of support" appeared three times in one day
@@ -434,11 +442,11 @@ restating it:
 | Area | File(s) | Status | Record |
 |---|---|---|---|
 | Licence | `LICENSE` | AGPL-3.0, decided, applied | D2, `docs/OPEN_QUESTIONS.md` |
-| README | `README.md` | Dual-audience rebuild (Fizz, WP-23a), contact filled (D8) — merged to `main`, PR #28. **WP-33's restructure (module-list retirement, build-status markers, predicate fix) held unmerged pending Ashley's clearance** — committed locally only (`fb80d56`), no push, no PR — see D16. Separately, D17 flags the existing merged contributor table's funder-class naming for Ashley to confirm. | this thread, D16, D17 |
+| README | `README.md` | Dual-audience rebuild (Fizz, WP-23a), contact filled (D8) — merged to `main`, PR #28. **WP-33's restructure landed, PR #42, `main` `1945c2a`**: hand-written module list retired for a CI-generated `<!-- BUILD-STATUS:START/END -->` block, `contributes to`→`refines` predicate fix applied, heading renamed to "Build status" (not the Coordinator's "keep 'What exists today'" recommendation — D16's own row flags this as unconfirmed whether deliberate or overlooked, not asserted either way). Separately, D17 (funder-class naming in the existing contributor table) resolved as stands-as-shipped. | this thread, D16, D17 |
 | Contributing / Governance | `CONTRIBUTING.md`, `GOVERNANCE.md` | Root pointer files to existing PRD specs (Honey, WP-19) | `docs/OPEN_QUESTIONS.md` |
 | Code of Conduct | `CODE_OF_CONDUCT.md` | Contributor Covenant v2.1 verbatim; enforcement contact resolved 2026-09-04 (D8) — both addresses, per the Coordinator's ruling — merged to `main`, PR #25 (Honey, WP-19c) | D8, `docs/OPEN_QUESTIONS.md` |
 | Security | `SECURITY.md` | Private Vulnerability Reporting, live, stated unconditionally (Honey, WP-19a) | `docs/OPEN_QUESTIONS.md` |
-| CI | `.github/workflows/ci.yml` | ruff → mypy → pytest → build; `test` required check; **no job added without an existing subject to examine**. **New hazard, flagged not yet built, 2026-09-05:** WP-33a's build-status generator derives "N of 8 Freeze Points ratified" by mechanically parsing the Status line of files in `decisions/`. That makes ADR prose formatting load-bearing for a required CI check — `0004` says "Architecture Freeze Point" (singular), `0007` says "Architecture Freeze Points" (plural), and the generator reads both correctly today, but any future ADR's Status line needs to match one of those two forms exactly or the required check goes red for a reason unrelated to the change that triggered it (the Coordinator's own warning, applied to ADR-0010's Status line above). | ADR-0008 |
+| CI | `.github/workflows/ci.yml` | ruff → mypy → pytest → build; `test` required check; **no job added without an existing subject to examine**. **Build-status freshness check added, PR #42** (`generate_build_status.py --check`, in the `test` job after Test, before Build). **Hazard found and fixed in the same PR, not left open:** the generator's first cut derived "N of 8 Freeze Points ratified" by mechanically matching the substring "Architecture Freeze Point" in a `decisions/` Status line — which would have counted `decisions/0010`'s pre-signature "Proposed — Architecture Freeze Point candidate… not yet signed" as ratified (the Coordinator caught this reviewing PR #40). Fixed to require the Status line's value be literally `Accepted` **and** contain "Architecture Freeze Point" — a positive-marker check, not a phrase future ADR authors have to write around. | ADR-0008 |
 | Branch protection | GitHub repo settings | Strict mode + `enforce_admins`, unchanged; stated exit condition if a batch stalls badly | D3, `docs/OPEN_QUESTIONS.md` |
 | Decision records | `decisions/`, `docs/DECISION_REGISTER.md` | Established convention, unchanged | `decisions/0001` |
-| Build status (README) | — | **CI-generated, not hand-typed** — mechanism built as **WP-33** (children 33a generator/CI, 33b README restructure). **Numbering correction, 2026-09-05:** ADR-0008's text named this "Honey's WP-24," a discrepancy this file flagged as unreconciled in WP-34 (this row's own prior text, superseded here). Ruled by the Coordinator: he re-dispatched the same mechanism under a new number without checking; WP-33 is the identifier that actually ran and shipped, WP-24 its earlier working name. `decisions/0008-ci-generated-build-status.md` corrected to say so in this same records package. **Held unmerged pending Ashley's README clearance** — see D16. | ADR-0008, D16 |
+| Build status (README) | — | **CI-generated, not hand-typed** — mechanism built as **WP-33** (children 33a generator/CI, 33b README restructure). **Numbering correction, 2026-09-05:** ADR-0008's text named this "Honey's WP-24," a discrepancy this file flagged as unreconciled in WP-34 (this row's own prior text, superseded here). Ruled by the Coordinator: he re-dispatched the same mechanism under a new number without checking; WP-33 is the identifier that actually ran and shipped, WP-24 its earlier working name. `decisions/0008-ci-generated-build-status.md` corrected to say so in this same records package. **Landed, PR #42, `main` `1945c2a`** — see D16. | ADR-0008, D16 |

@@ -239,7 +239,7 @@ public research interfaces — remain planned work.
      between these markers. CI's `test` job fails if this drifts from what the
      generator derives from the live tree. See decisions/0008. -->
 - **182 tests passing** (full suite, `pytest`, no path filter).
-- **3 of 8 Architecture Freeze Points ratified** (a `decisions/`
+- **6 of 8 Architecture Freeze Points ratified** (a `decisions/`
   entry whose Status line is `Accepted` and names an Architecture Freeze Point).
 - **3 module(s) shipped** under `src/cric_core/`: `identifiers`, `knowledge_state`, `review`.
 <!-- BUILD-STATUS:END -->

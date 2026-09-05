@@ -1,15 +1,15 @@
 # ADR-0010: Freeze Point 5 — Relationship Representation (Predicate Vocabulary + Direction)
 
-- **Status:** Proposed — Architecture Freeze Point candidate (fifth of 8), **ruled by
-  the Engineering Coordinator, not yet signed by Ashley.** Do not read this Status
-  line as ratified; it becomes `Accepted — Architecture Freeze Point (fifth of 8 to
-  lock; reversal requires explicit migration, not routine amendment)` only after
-  Ashley signs, in a follow-up edit, matching ADR-0004/ADR-0007's exact phrasing so
-  the build-status generator (`decisions/0008`, WP-33a) counts it correctly.
-- **Approver:** Ashley (signature pending)
+- **Status:** Accepted — **Architecture Freeze Point 5** of 8 (ratified 2026-09-05
+  together with Freeze Points 4 and 3; reversal requires explicit migration, not
+  routine amendment)
+- **Approver:** Ashley
 - **Ruled by:** Engineering Coordinator, channel event
   `d95acb598e4ccb772b6eccfa350f65091397cbfcc957598e89aabf263d871140`, 2026-09-05T10:23:29Z
 - **Date proposed:** 2026-09-05
+- **Date signed:** 2026-09-05 — blanket approval covering this ADR together with
+  ADR-0011 and ADR-0012 (D18/D21/D22), not a separate per-ADR assent; see Ratification
+  chain.
 - **Evidence:** see Ratification chain below — every step cites its channel event id.
 
 ## Context
@@ -127,6 +127,9 @@ no dedup collision.
 - Ruling — Option C chosen, both consequences and the evidence-field carve-out stated
   explicitly (Engineering Coordinator), event
   `d95acb598e4ccb772b6eccfa350f65091397cbfcc957598e89aabf263d871140`, 2026-09-05T10:23:29Z.
-- Ashley's signature: **pending** — not yet requested-and-received as of this ADR's
-  creation. Do not treat this ADR as ratified until this line is updated with his
-  acceptance event.
+- Ashley's signature — **blanket approval**, event
+  `524472fa44b27d8f732d4033e444891120a5b7f155bef69e4ab21a19738482a3`, 2026-09-05T13:38:43Z:
+  *"Please consider all my signatures and all of the decisions as done. Go ahead."*
+  This event does not name D18 individually — it covers D18, D21 and D22 together as
+  one act, per the Engineering Coordinator's own instruction not to record it as three
+  separate per-ADR assents that did not happen. Recorded as what it is.
