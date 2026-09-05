@@ -1,14 +1,15 @@
 # ADR-0012: Freeze Point 3 — Temporal Model (Negative-Value Exclusion, Scope Precedence)
 
-- **Status:** Proposed — Architecture Freeze Point candidate (third of 8), **ruled by
-  the Engineering Coordinator, not yet signed by Ashley.** Becomes
-  `Accepted — Architecture Freeze Point (third of 8 to lock; reversal requires
-  explicit migration, not routine amendment)` only after Ashley signs, matching
-  ADR-0004/ADR-0007's exact phrasing (see `decisions/0008`'s CI-parsing note).
-- **Approver:** Ashley (signature pending)
+- **Status:** Accepted — **Architecture Freeze Point 3** of 8 (ratified 2026-09-05
+  together with Freeze Points 5 and 4; reversal requires explicit migration, not
+  routine amendment)
+- **Approver:** Ashley
 - **Ruled by:** Engineering Coordinator, channel event
   `48159f91b0d06139169c8d7138b095f16709f2e9e58af409280ce186f675bbd3`, 2026-09-05T10:33:53Z
 - **Date proposed:** 2026-09-05
+- **Date signed:** 2026-09-05 — blanket approval covering this ADR together with
+  ADR-0010 and ADR-0011 (D18/D21/D22), not a separate per-ADR assent; see Ratification
+  chain.
 - **Evidence:** see Ratification chain below — every step cites its channel event id.
 
 ## Context
@@ -98,6 +99,9 @@ question in `docs/OPEN_QUESTIONS.md`, not a blocker on this signature.
   "no known evidence" excluded, D13 carried as precedent (Engineering Coordinator),
   event `48159f91b0d06139169c8d7138b095f16709f2e9e58af409280ce186f675bbd3`,
   2026-09-05T10:33:53Z.
-- Ashley's signature: **pending** — not yet requested-and-received as of this ADR's
-  creation. Do not treat this ADR as ratified until this line is updated with his
-  acceptance event.
+- Ashley's signature — **blanket approval**, event
+  `524472fa44b27d8f732d4033e444891120a5b7f155bef69e4ab21a19738482a3`, 2026-09-05T13:38:43Z:
+  *"Please consider all my signatures and all of the decisions as done. Go ahead."*
+  This event does not name D22 individually — it covers D18, D21 and D22 together as
+  one act, per the Engineering Coordinator's own instruction not to record it as three
+  separate per-ADR assents that did not happen. Recorded as what it is.
