@@ -373,6 +373,107 @@ def test_check_citations_reports_a_mismatch_when_the_event_cannot_be_resolved(mo
     assert mismatches[0].actual_iso is None
 
 
+# --- main(): the printed message for each failure branch --------------------
+#
+# Fizz's PR #51 round-2 finding: the *data* (ResolveFailureReason) was
+# exhaustively tested, but nothing checked that main()'s four report
+# branches print the message that actually matches the cause. Proved
+# necessary with a planted swap: exchanging the RELAY_UNREACHABLE and
+# MALFORMED_RESPONSE message bodies left all 27 (then) tests green. These
+# four close that hole -- each asserts the load-bearing diagnostic phrase
+# for its branch, not a full-string match.
+
+
+def _run_main_with_one_mismatch(tmp_path, monkeypatch, mismatch):
+    """Point main() at a real (empty-content) file so file discovery has
+    something to iterate, but force check_citations to return exactly the
+    one Mismatch under test -- isolates the print branch from extraction/
+    resolution entirely."""
+    md_file = tmp_path / "fake.md"
+    md_file.write_text("no citations in here\n", encoding="utf-8")
+    monkeypatch.setattr(cec, "check_citations", lambda citations, channel: [mismatch])
+    exit_code = cec.main([str(md_file)])
+    return exit_code
+
+
+def test_main_prints_relay_unreachable_diagnosis_not_verify_manually(tmp_path, monkeypatch, capsys):
+    mismatch = cec.Mismatch(
+        citation=cec.Citation("abc123", "2026-09-05T10:33:53Z", 1, "fake.md"),
+        actual_iso=None,
+        failure_reason=cec.ResolveFailureReason.RELAY_UNREACHABLE,
+        detail="auth_error: BUZZ_PRIVATE_KEY is required",
+    )
+    exit_code = _run_main_with_one_mismatch(tmp_path, monkeypatch, mismatch)
+
+    out = capsys.readouterr().out
+    assert exit_code == 1
+    assert "RELAY CALL FAILED" in out
+    assert "auth_error" in out
+    # Must NOT print the non-resolution diagnosis for a total outage.
+    assert "verify manually" not in out
+
+
+def test_main_prints_malformed_response_diagnosis(tmp_path, monkeypatch, capsys):
+    mismatch = cec.Mismatch(
+        citation=cec.Citation("abc123", "2026-09-05T10:33:53Z", 1, "fake.md"),
+        actual_iso=None,
+        failure_reason=cec.ResolveFailureReason.MALFORMED_RESPONSE,
+        detail="not json",
+    )
+    exit_code = _run_main_with_one_mismatch(tmp_path, monkeypatch, mismatch)
+
+    out = capsys.readouterr().out
+    assert exit_code == 1
+    assert "wasn't valid JSON" in out
+    assert "not json" in out
+    assert "RELAY CALL FAILED" not in out
+
+
+def test_main_prints_inconclusive_when_not_found_and_possibly_truncated(tmp_path, monkeypatch, capsys):
+    mismatch = cec.Mismatch(
+        citation=cec.Citation("abc123", "2026-09-05T10:33:53Z", 1, "fake.md"),
+        actual_iso=None,
+        failure_reason=cec.ResolveFailureReason.NOT_FOUND,
+        possibly_truncated=True,
+    )
+    exit_code = _run_main_with_one_mismatch(tmp_path, monkeypatch, mismatch)
+
+    out = capsys.readouterr().out
+    assert exit_code == 1
+    assert "INCONCLUSIVE" in out
+    assert "RELAY CALL FAILED" not in out
+    assert "not valid JSON" not in out
+
+
+def test_main_prints_plain_not_found_when_not_truncated(tmp_path, monkeypatch, capsys):
+    mismatch = cec.Mismatch(
+        citation=cec.Citation("abc123", "2026-09-05T10:33:53Z", 1, "fake.md"),
+        actual_iso=None,
+        failure_reason=cec.ResolveFailureReason.NOT_FOUND,
+        possibly_truncated=False,
+    )
+    exit_code = _run_main_with_one_mismatch(tmp_path, monkeypatch, mismatch)
+
+    out = capsys.readouterr().out
+    assert exit_code == 1
+    assert "could NOT resolve" in out
+    assert "not a truncation artefact" in out
+    assert "INCONCLUSIVE" not in out
+
+
+def test_main_prints_the_actual_mismatched_timestamps_when_relay_disagrees(tmp_path, monkeypatch, capsys):
+    mismatch = cec.Mismatch(
+        citation=cec.Citation("abc123", "2026-09-05T10:29:33Z", 1, "fake.md"),
+        actual_iso="2026-09-05T10:33:53Z",
+    )
+    exit_code = _run_main_with_one_mismatch(tmp_path, monkeypatch, mismatch)
+
+    out = capsys.readouterr().out
+    assert exit_code == 1
+    assert "2026-09-05T10:29:33Z" in out
+    assert "2026-09-05T10:33:53Z" in out
+
+
 # --- main(): file discovery scope --------------------------------------------
 
 
