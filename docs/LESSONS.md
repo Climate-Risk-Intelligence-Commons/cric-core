@@ -373,3 +373,83 @@ decision meant to be relied on later) may not rest on absence of prohibition —
 state the gap as open rather than closing it by inference, the same discipline
 `decisions/0011` and `decisions/0012` apply explicitly in their own Decision
 sections, not only in Alternatives.
+
+## A wording fix and a parser fix are not two guards — the wording one is the disease
+
+**What happened:** an unreleased build-status generator (WP-33a) would have read any
+`decisions/` Status line containing the phrase "Architecture Freeze Point" as
+ratified — a substring match with no check for the Status value actually being
+`Accepted`. Three ADRs' Proposed-status lines all contained that phrase verbatim
+(`decisions/0010`/`0011`/`0012`), which would have produced "6 of 8 Freeze Points
+ratified" on a public README while Ashley had signed none of them. The Engineering
+Coordinator initially asked for both a wording fix (reword the three Status lines to
+avoid the phrase) and a parser fix (require the Status value to be literally
+`Accepted`), then withdrew the wording half before it was committed: "one real guard
+beats one guard plus a standing obligation on people who have not been told it
+exists."
+
+**Why it matters:** the wording fix looks like defence in depth — belt and braces —
+but it isn't a second guard, it's an unenforced convention. It depends on every
+future ADR author remembering to write around a parser defect they were never told
+about, with no mechanism to catch the day someone doesn't. The parser fix (require
+`Accepted` *and* a named Freeze Point, not a substring anywhere in the line) removes
+the hazard structurally — "Proposed — Architecture Freeze Point candidate" becomes
+an accurate, un-gamed sentence again, because nothing downstream mis-reads it.
+Requiring the wording fix *in addition* would have reinstated the exact defect being
+ruled against, one ADR later, the moment someone wrote a natural sentence containing
+the phrase.
+
+**Pattern to reuse:** when a defect is "a program reads meaning into text that wasn't
+meant to carry it," fix the program, not the text. A text-side workaround is not a
+second independent guard — it's an obligation with no mechanism enforcing it, and it
+buys nothing once the real fix exists. Full chain: `decisions/0010`/`0011`/`0012`
+drafted with the phrase, Coordinator finding + both-fixes instruction (channel event
+`3da70cd9d4aae0fd1541306e0927380b256f5c40eeb3fc860678a22cdbef7e20`, 2026-09-05T10:46:46Z),
+Honey's parser fix verified against the real PR #40 files — old check `{1,3,4,5,6,7}`,
+new check `{1,6,7}` (event `f4773c6a606f1763b3ab906c17c01437e4927b835e7466b3eeb6936b50a1ec93`,
+10:49:39Z), Coordinator's withdrawal of the wording instruction (event
+`2744522a452ffe271e7caee423188686dc0c52b4d8775a28b12281a92f8f9996`, 10:50:20Z).
+
+## "Someone's attention slipped" is a placeholder for a cause, not a cause
+
+**What happened:** three people independently found the same defect (a wrong event
+timestamp cited in `decisions/0011`/`0012` and `docs/OPEN_QUESTIONS.md`) and reported
+three different counts — four occurrences, then five, then seven, the last found only
+by grep. Both the Engineering Coordinator and Pollen then explained their own
+undercounts with an attention story: "I scoped my fix instruction to where I happened
+to find it" and "I stopped trusting my own sweep script and eyeballed a terminal."
+Both stories were plausible. Both were wrong. Pollen's actual cause, found only by
+reading his own script rather than reasoning about it: his sweep's dedup key was
+`(file, event_id, cited_timestamp)` — since three rows (D21, D22, D23) cited the
+identical triple, the key collapsed all three into one reported instance per file.
+That key is structurally incapable of expressing a count; the sweep could not have
+reported seven regardless of how carefully anyone read its output.
+
+**Why it matters:** an attention-based explanation ("I missed it," "I read too
+fast," "I stopped trusting the tool") is always available, fits any miss, costs
+nothing to produce, and implies no fix beyond "look harder next time" — which is not
+a control. It is the easiest wrong answer to reach for precisely because it requires
+no evidence and is never falsified by looking closer. The structural explanation
+here was expensive to find (reading the actual script) and, once found, pointed at a
+concrete fix that generalises: a dedup key built for readability had silently turned
+a count into a boolean, the same failure shape as a check that can assert reach but
+not quantity.
+
+**Pattern to reuse:** when explaining a miss, "someone's attention slipped" is a
+placeholder, not a cause — treat it as unfinished until the actual mechanism is
+identified (a key, a check, a scope, a race), or state plainly that no structural
+cause was found. Separately: anything that dedupes on content for a count you intend
+to trust later must keep a location or position in its key, or it must not be the
+thing that count is read from. Full chain, channel CRIC-Dev: Pollen's sweep (event
+`a18f5cf9b5342e5c806f755868f21f8938253e7fe13ff31b6d73a22d561a7fac`, 2026-09-05T11:16:43Z)
+→ Coordinator's grep finding the seventh occurrence and replacing the fix instruction
+(event `20c5cabe820cfc15a0e2afbf769c6b0594b541f082e9aba29df50559c9de7637`, 11:17:49Z)
+→ Pollen's own attention-story explanation (event
+`e1f677c546ad8b254688b143710c462d73bae62b1a263e0cace4ce2c3821107f`, 11:18:29Z) →
+Coordinator's own (wrong) semantic-framing explanation, then reading Pollen's actual
+script and naming the dedup-key mechanism (event
+`bf3c8f2315be7e4c7c587c449caf2a411777c2573cf007f1ee7a7b42e225d074`, 11:19:23Z) →
+Pollen's confirmation against his own script (event
+`603fc428c5a285385097d4fa226a1e868aee0ae96385c064d79c11aa852cc730`, 11:20:04Z) →
+Coordinator naming the general rule and assigning this entry (event
+`c6fc5d0a0445059325de406f711b78bc18f6619067c8879bc25203567e031773`, 11:21:02Z).
