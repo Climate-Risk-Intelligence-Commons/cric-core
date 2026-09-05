@@ -71,18 +71,31 @@ Ratified decisions encoded below:
    model would still let `record.source.provider = ...` rewrite content
    reachable from an unchanged top-level reference.
 
+   **`frozen=True` alone blocks attribute *reassignment*, not in-place
+   mutation of a mutable container already held by a frozen attribute** --
+   a first pass shipped with `list[str]` fields left `record.parents.
+   append(...)` free to rewrite the exact thing `:107` names (appending to
+   `parents` "to make a later workflow appear cleaner" is the canonical
+   case the prohibition means). **`parents`, `human_reviews`, `Source.
+   node_ids`, `Source.uris`, and `Integrity.parent_hashes` are therefore
+   `tuple[str, ...]`, not `list[str]`** -- same JSON array shape on the
+   wire, no change to the reference structure, but a tuple has no mutating
+   method for a frozen instance to fail to guard: appending now raises
+   `AttributeError` structurally, not by a check that could be bypassed.
+
    **What this does NOT close, stated so D28 is not recorded as settled:**
    - The *store* half of D28 -- append-only, WORM, hash-chaining so a
      *new* record cannot silently replace an old one -- is untouched.
      `frozen=True` constrains one in-memory object; it says nothing about
      what a caller does with the next `ProvenanceRecord` it constructs.
-   - `frozen=True` blocks attribute *reassignment*. It does not make the
-     mutable container fields (`parents`, `human_reviews`, `Source.
-     node_ids`, `Source.uris`, `Integrity.parent_hashes`) immutable --
-     `record.parents.append(...)` still mutates the same list object in
-     place, because the frozen check only fires on `setattr`, never on a
-     method called on an already-assigned value. See
-     `test_frozen_blocks_reassignment_not_in_place_list_mutation`.
+   - **`Transformation.parameters: dict[str, object] | None` is the one
+     remaining mutable container, and it stays a plain `dict` on purpose.**
+     Python's standard library has no frozen mapping type, and typing it
+     as `Mapping[str, object]` would be a type-checker hint, not a runtime
+     guarantee -- `parameters` would still be a `dict` underneath and
+     still mutate in place. Shipping something that looks like a guard and
+     is not would be worse than the documented gap it replaces. See
+     `test_parameters_dict_remains_mutable_in_place_the_documented_gap`.
 
 Explicitly OPEN -- not decided anywhere in this module, on purpose:
 
@@ -136,8 +149,8 @@ class Source(BaseModel):
 
     model_config = ConfigDict(frozen=True)
 
-    node_ids: list[str] = Field(default_factory=list)
-    uris: list[str] = Field(default_factory=list)
+    node_ids: tuple[str, ...] = Field(default_factory=tuple)
+    uris: tuple[str, ...] = Field(default_factory=tuple)
     provider: str | None = None
     version: str | None = None
 
@@ -200,7 +213,7 @@ class Integrity(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     content_sha256: str | None = None
-    parent_hashes: list[str] = Field(default_factory=list)
+    parent_hashes: tuple[str, ...] = Field(default_factory=tuple)
 
 
 class Licensing(BaseModel):
@@ -250,13 +263,13 @@ class ProvenanceRecord(BaseModel):
 
     source: Source
     acquisition: Acquisition
-    parents: list[str] = Field(default_factory=list)
+    parents: tuple[str, ...] = Field(default_factory=tuple)
     integrity: Integrity
     licensing: Licensing
 
     transformation: Transformation | None = None
     agent: AgentInfo | None = None
-    human_reviews: list[str] = Field(default_factory=list)
+    human_reviews: tuple[str, ...] = Field(default_factory=tuple)
 
     @model_validator(mode="after")
     def _validate_own_id(self) -> ProvenanceRecord:

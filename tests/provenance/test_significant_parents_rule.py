@@ -48,14 +48,14 @@ def test_a_claims_record_with_non_empty_parents_is_accepted():
     record = ProvenanceRecord(
         **_minimal_kwargs(CLAIM_OBJECT_ID, parents=["CRIC:knowledge:feature:01ARZ3NDEKTSV4RRFFQ69G5FAV"])
     )
-    assert record.parents == ["CRIC:knowledge:feature:01ARZ3NDEKTSV4RRFFQ69G5FAV"]
+    assert record.parents == ("CRIC:knowledge:feature:01ARZ3NDEKTSV4RRFFQ69G5FAV",)
 
 
 def test_a_sources_record_with_empty_parents_is_accepted():
     # The positive control: proves the rule excludes Source by construction
     # rather than by accident (e.g. a bug that never rejects anything).
     record = ProvenanceRecord(**_minimal_kwargs(SOURCE_OBJECT_ID, parents=[]))
-    assert record.parents == []
+    assert record.parents == ()
 
 
 def test_a_sources_record_with_non_empty_parents_is_also_accepted():
@@ -64,7 +64,7 @@ def test_a_sources_record_with_non_empty_parents_is_also_accepted():
     record = ProvenanceRecord(
         **_minimal_kwargs(SOURCE_OBJECT_ID, parents=["CRIC:knowledge:source:01BX5ZZKBKACTAV9WEVGEMMVRZ"])
     )
-    assert record.parents == ["CRIC:knowledge:source:01BX5ZZKBKACTAV9WEVGEMMVRZ"]
+    assert record.parents == ("CRIC:knowledge:source:01BX5ZZKBKACTAV9WEVGEMMVRZ",)
 
 
 def test_invalid_object_id_is_rejected_before_the_significant_rule_runs():

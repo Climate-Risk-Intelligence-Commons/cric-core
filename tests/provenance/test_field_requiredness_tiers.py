@@ -62,7 +62,7 @@ def test_agent_transformation_and_human_reviews_may_all_be_absent():
     record = ProvenanceRecord(**_base_kwargs())
     assert record.agent is None
     assert record.transformation is None
-    assert record.human_reviews == []
+    assert record.human_reviews == ()
 
 
 def test_agent_may_be_populated_when_an_agent_actually_ran():
