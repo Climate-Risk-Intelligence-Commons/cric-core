@@ -1,0 +1,32 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/engineering/Deterministic-Retrieval-Engine-Specification.md",
+  "type": "SPEC",
+  "confidence": "high",
+  "manifest_override": false,
+  "title": "CRIC Deterministic Retrieval Engine Specification",
+  "summary": "Engine-level design for deterministic multi-hop graph retrieval: package responsibilities, graph indexes, traversal algorithm, compiled artefact and incremental recompilation.",
+  "scope": [
+    "deterministic retrieval engine",
+    "multi-hop graph traversal",
+    "context package",
+    "OKF Markdown vault",
+    "parser",
+    "compiler",
+    "graph indexes",
+    "traversal profiles",
+    "ranking",
+    "completeness checking",
+    "compiled graph artefact",
+    "incremental recompilation",
+    "token budgeting"
+  ],
+  "cross_refs": [
+    "interfaces/Search-and-Graph-Interfaces.md",
+    "engineering/Software-Architecture.md",
+    "Software-Architecture.md",
+    "CRIC-Requirements-Traceability-Matrix.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

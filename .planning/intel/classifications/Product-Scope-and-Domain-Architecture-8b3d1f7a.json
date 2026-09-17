@@ -1,0 +1,27 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/product/Product-Scope-and-Domain-Architecture.md",
+  "type": "PRD",
+  "confidence": "high",
+  "manifest_override": false,
+  "title": "CRIC Product Scope and Domain Architecture",
+  "summary": "Defines the boundary between domain-independent CRIC core and its domain implementations, with product scope, non-goals, and acceptance criteria.",
+  "scope": [
+    "CRIC Core",
+    "Climate Risk Ontology",
+    "Domain Ontology",
+    "Hazard / Application Package",
+    "Cryosphere",
+    "GLOF",
+    "domain package",
+    "domain manifest",
+    "cross-domain relationships",
+    "cascading and compound risk",
+    "core invariance rule",
+    "climate risk shared concepts",
+    "domain independence"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "Path convention docs/CRIC-PRD-v0.1/product/ plus dominant PRD content signals (Product Scope, Product Non-Goals, Acceptance Criteria) → PRD. Ambiguity resolved: contains a layered architecture diagram and a YAML domain-registration manifest skeleton (SPEC-like), but those are subordinate to the scope/non-goals/acceptance-criteria structure. No frontmatter, no status field, no markdown links to other docs."
+}

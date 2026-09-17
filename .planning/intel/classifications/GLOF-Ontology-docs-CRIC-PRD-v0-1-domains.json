@@ -1,0 +1,33 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/domains/GLOF-Ontology.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC GLOF Ontology Specification",
+  "summary": "Defines the Glacial Lake Outburst Flood domain ontology: type hierarchy, event fields, trigger and failure-mechanism vocabularies, susceptibility indicators, training labels and model task separation.",
+  "scope": [
+    "GLOF domain ontology",
+    "GLOFEvent",
+    "GLOFTrigger",
+    "GLOFFailureProcess",
+    "failure mechanism vocabulary",
+    "trigger representation",
+    "multi-trigger events",
+    "cascading GLOF",
+    "compound GLOF",
+    "event reconstruction snapshots",
+    "pre-event variables",
+    "post-event variables",
+    "susceptibility assessment",
+    "trigger-state assessment",
+    "lake stability state",
+    "downstream exposure",
+    "evidence and claims",
+    "training labels",
+    "model task separation"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "SPEC vs PRD ambiguity resolved to SPEC. Dominant content is a data/ontology contract: type hierarchies, required/recommended entity fields, and closed controlled vocabularies (failure mechanisms, stability states, training labels) the system must honor. Competing PRD signals: file lives under docs/CRIC-PRD-v0.1/ (PRD-family path) and the final section is 'v0.1 Acceptance Criteria' with nine criteria. Per ambiguity rule, higher-precedence signal (SPEC > PRD) wins; the acceptance-criteria section is one section of nineteen. H1 self-describes as 'Specification'. No ADR signals: no frontmatter, no status field, no Decision/Consequences sections. No markdown links or explicit file references, so cross_refs is empty. Output filename uses a path-derived suffix instead of a SHA-256 prefix; this classifier has no shell tool available to compute a hash, and the path-derived suffix serves the same collision-avoidance purpose."
+}

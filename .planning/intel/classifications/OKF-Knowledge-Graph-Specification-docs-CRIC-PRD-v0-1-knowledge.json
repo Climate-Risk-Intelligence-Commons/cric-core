@@ -1,0 +1,42 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/knowledge/OKF-Knowledge-Graph-Specification.md",
+  "type": "SPEC",
+  "confidence": "high",
+  "manifest_override": false,
+  "title": "CRIC OKF Knowledge Graph Specification",
+  "summary": "Defines the canonical Open Knowledge Format node representation: YAML frontmatter contract, temporal and epistemic semantics, relationship grammar, validation levels, file naming and versioning.",
+  "scope": [
+    "Open Knowledge Format (OKF)",
+    "knowledge graph",
+    "canonical node model",
+    "universal YAML frontmatter",
+    "temporal semantics (event/observation/valid/system time)",
+    "time precision",
+    "epistemic status",
+    "knowledge workflow status",
+    "relationship grammar",
+    "adjacency derivation",
+    "atomicity rule",
+    "node categories",
+    "StateSnapshot node",
+    "claims",
+    "contradiction handling",
+    "supersession",
+    "data asset nodes",
+    "copyrighted publications",
+    "Obsidian compatibility",
+    "programmatic parsing",
+    "graph materialisation",
+    "search modes",
+    "validation levels",
+    "file naming",
+    "versioning",
+    "Pydantic validators"
+  ],
+  "cross_refs": [
+    "CRIC-Schema-and-Vocabulary-Registry.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": "Path sits under docs/CRIC-PRD-v0.1/ (weak PRD path signal), but filename says 'Specification' and content is schema/frontmatter contracts, validation levels, relationship grammar and file-naming rules — no user stories or acceptance criteria. Resolved to SPEC. Document defers to CRIC-Schema-and-Vocabulary-Registry.md section 8 as sole authority for the canonical predicate list."
+}

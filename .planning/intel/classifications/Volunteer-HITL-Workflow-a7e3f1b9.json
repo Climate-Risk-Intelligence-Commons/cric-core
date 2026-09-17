@@ -1,0 +1,31 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/community/Volunteer-HITL-Workflow.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC Volunteer Human-in-the-Loop Workflow",
+  "summary": "Specifies the volunteer HITL review workflow: review repository layout, bundle structure, reviewer registry schema, assignment routing, outcome vocabulary, signatures, and v0.1 acceptance criteria.",
+  "scope": [
+    "volunteer human-in-the-loop review",
+    "cric-review repository layout",
+    "review bundle template",
+    "reviewer registry schema",
+    "expertise tags",
+    "Review Router assignment",
+    "review outcome vocabulary",
+    "reviewer signature",
+    "double review policy",
+    "volunteer reputation",
+    "local workflow",
+    "GitHub pull-request workflow",
+    "review of visual evidence",
+    "review of scientific claims",
+    "review of training labels",
+    "review of ontology",
+    "volunteer safety"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "Competing signals resolved by precedence rule (SPEC > PRD). Dominant content is implementation contract material: directory/file layout trees, a reviewer-registry YAML field schema, a closed review-outcome vocabulary, and a numbered GitHub workflow sequence. PRD signals present but weaker: parent path 'docs/CRIC-PRD-v0.1/' and one 'v0.1 Acceptance Criteria' section. No frontmatter, no status field, no user stories. No markdown links or referenced doc paths in the source, so cross_refs is empty; 'cric-review/' is a repository name, not a document reference. Filename suffix is a placeholder, not a computed SHA-256 (no shell available to this classifier)."
+}

@@ -1,0 +1,31 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/domains/StateSnapshot-and-Event-Cube-Specification.md",
+  "type": "SPEC",
+  "confidence": "high",
+  "manifest_override": false,
+  "title": "CRIC StateSnapshot and Event Cube Specification",
+  "summary": "Defines StateSnapshot node fields, temporal semantics, immutability, and the Event Cube structure and manifest for GLOF and later hazards.",
+  "scope": [
+    "StateSnapshot",
+    "Event Cube",
+    "snapshot temporal semantics",
+    "nearest-observation offsets",
+    "snapshot immutability",
+    "event cube manifest",
+    "lake state block",
+    "glacier state block",
+    "dam and terrain block",
+    "trigger context block",
+    "downstream context block",
+    "event block",
+    "post-event block",
+    "negative event cubes",
+    "TrainingSample generation",
+    "leakage prevention",
+    "GLOF"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "Dominant signals are data-model field blocks and YAML schemas (snapshot identity, event cube manifest, nearest-observation fields) plus a '-Specification' filename -> SPEC. Competing signals: file sits under a 'CRIC-PRD-v0.1' path and ends with a 'v0.1 Acceptance Criteria' section (PRD-like); resolved to SPEC per ADR > SPEC > PRD precedence and because the body is implementation contracts, not user stories. No markdown links or doc paths present, so cross_refs is empty; TrainingSample is referenced as a type name only."
+}

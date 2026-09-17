@@ -1,0 +1,31 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/knowledge/Evidence-Provenance-and-Trust.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC Evidence, Provenance and Trust Specification",
+  "summary": "Defines how CRIC records provenance, evidence classes, trust dimensions, licensing and integrity hashing so every consequential output traverses back to source evidence.",
+  "scope": [
+    "provenance record",
+    "ProvenanceRecord YAML structure",
+    "evidence lineage chain",
+    "immutable lineage",
+    "SHA-256 hashing",
+    "parentage",
+    "provenance granularity",
+    "evidence classes vocabulary",
+    "source authority",
+    "trust dimensions",
+    "evidence completeness",
+    "copyrighted scientific papers",
+    "licence status vocabulary",
+    "agent provenance",
+    "model provenance",
+    "release manifests",
+    "provenance audit agent"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "Path sits under docs/CRIC-PRD-v0.1/ (PRD-family directory) and the doc ends with a 'v0.1 Acceptance Criteria' section, both PRD signals. Dominant content signals are implementation contracts: a ProvenanceRecord YAML schema, controlled vocabularies (evidence classes, licence status), a named hash algorithm, and required fields for agent/model provenance and release manifests. H1 self-identifies as 'Specification'. Resolved to SPEC per the ADR > SPEC > PRD > DOC precedence rule. No YAML frontmatter, no markdown links or filename mentions to other docs."
+}

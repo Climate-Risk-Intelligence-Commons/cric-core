@@ -1,0 +1,35 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/interfaces/Search-and-Graph-Interfaces.md",
+  "type": "SPEC",
+  "confidence": "high",
+  "manifest_override": false,
+  "title": "CRIC Search and Graph Interfaces Specification",
+  "summary": "Specifies deterministic retrieval for CRIC: search modes, edge index, versioned traversal profiles and query templates, context package schema, and completeness reporting.",
+  "scope": [
+    "deterministic retrieval",
+    "search modes",
+    "edge index",
+    "traversal profiles",
+    "query templates",
+    "context package",
+    "ContextPack",
+    "temporal search",
+    "spatial search",
+    "hybrid retrieval",
+    "vector index",
+    "contradiction-aware retrieval",
+    "provenance-aware retrieval",
+    "evidence budget",
+    "retrieval completeness",
+    "retrieval reproducibility",
+    "agent retrieval tool"
+  ],
+  "cross_refs": [
+    "CRIC-Schema-and-Vocabulary-Registry.md",
+    "engineering/Deterministic-Retrieval-Engine-Specification.md",
+    "Temporal-and-Epistemic-Ontology.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": "Ambiguity resolved: path segment 'CRIC-PRD-v0.1' and a closing 'v0.1 Acceptance Criteria' section give a PRD signal, but dominant content is implementation contracts (edge table schema, YAML traversal-profile and query-template schemas, context package field schema, ranking and budget rules) and the H1 reads 'Specification'. SPEC also outranks PRD under the ambiguity rule. No frontmatter, no status field."
+}

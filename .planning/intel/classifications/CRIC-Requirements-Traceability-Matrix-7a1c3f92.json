@@ -1,0 +1,36 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/CRIC-Requirements-Traceability-Matrix.md",
+  "type": "PRD",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC Cross-Document Requirements Traceability Matrix",
+  "summary": "Matrix mapping 41 numbered CRIC constitutional requirements (R-001..R-041) to their primary and supporting PRD specifications and v0.1 verification tests.",
+  "scope": [
+    "requirements traceability",
+    "constitutional requirements",
+    "evidence provenance and lineage",
+    "OKF knowledge graph",
+    "temporal and epistemic ontology",
+    "claims and contradictions",
+    "GLOF Event Cube",
+    "training data and leakage prohibition",
+    "Agent Commons",
+    "Model Commons",
+    "Data Commons",
+    "responsible autonomy and HITL",
+    "deterministic retrieval engine",
+    "ontology governance",
+    "software architecture",
+    "repository architecture",
+    "deployment and releases",
+    "human UI",
+    "testing and QA",
+    "v0.1 implementation"
+  ],
+  "cross_refs": [
+    "docs/OPEN_QUESTIONS.md"
+  ],
+  "locked": false,
+  "precedence": null,
+  "notes": "Dominant signal is a numbered requirement register (R-001..R-041) with per-requirement verification criteria, under the docs/CRIC-PRD-v0.1/ family -> PRD. Competing DOC signal: the document is an index/traceability table whose requirement text is defined in other specs, not here. Competing ADR signal is confined to one row (R-041 marked 'ACCEPTED - Engineering Coordinator ... 2026-09-03T10:04:53Z' with a channel event id); a single accepted-decision annotation does not override the dominant requirements-register structure, so locked remains false. Supporting-specification column entries (e.g. 'Product Vision', 'Core Ontology', 'Agent Commons') are short document names, not paths, so they are not recorded as cross_refs. Filename hash suffix is a stable placeholder, not a computed SHA-256: no Bash/hashing tool available to this agent; uniqueness holds via the slug."
+}

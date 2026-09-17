@@ -1,0 +1,33 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/implementation/CRIC-v0.1-Implementation-Specification.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC v0.1 Implementation Specification",
+  "summary": "Defines v0.1 delivery contract: required repositories, twelve workstreams, milestones A-G with exit criteria, non-goals, and definition of done for GLOF reference implementation.",
+  "scope": [
+    "CRIC v0.1 reference implementation",
+    "Himalayan cryosphere",
+    "GLOF",
+    "core Pydantic and JSON schemas",
+    "ontology registry",
+    "temporal schema",
+    "provenance schema",
+    "knowledge-state schema",
+    "OKF knowledge vault",
+    "GLOF reference dataset",
+    "observation factory pipelines",
+    "StateSnapshot and Event Cube",
+    "training dataset",
+    "baseline models",
+    "agent commons",
+    "HITL review loop",
+    "search and graph traversal",
+    "API endpoints",
+    "UI scientific workbench"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "No frontmatter, no markdown links. Competing signals: PRD-style goals/non-goals, milestone exit criteria and a 'Definition of Done' section versus SPEC-style enumeration of technical deliverables the build must honour (Pydantic/JSON schemas, ontology registry, OKF parser, graph materialiser, named API endpoints, five named agents). Resolved to SPEC via the ambiguity rule (SPEC > PRD) plus the document's own title 'Implementation Specification'. Confidence medium, not high: filename does not match the SPEC-*.md convention and the path segment is 'implementation' under a 'CRIC-PRD-v0.1' directory, so the path heuristic points weakly at PRD. Repository names (cric-core, cric-knowledge, etc.) are listed but are repos, not doc references, so cross_refs is empty."
+}

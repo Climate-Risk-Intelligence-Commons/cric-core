@@ -1,0 +1,30 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/knowledge/Temporal-and-Epistemic-Ontology.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC Temporal and Epistemic Ontology",
+  "summary": "Defines CRIC's four-dimensional temporal model, epistemic status vocabulary, knowledge-state lifecycle, confidence representation and the unknown-versus-negative distinction, with v0.1 acceptance criteria.",
+  "scope": [
+    "temporal model",
+    "event time",
+    "observation time",
+    "valid time",
+    "system time",
+    "partial and uncertain dates",
+    "temporal precision vocabulary",
+    "temporal uncertainty",
+    "temporal conflict",
+    "bitemporal query",
+    "StateSnapshot",
+    "epistemic status vocabulary",
+    "knowledge state lifecycle",
+    "confidence representation",
+    "unknown versus negative",
+    "temporal reconciliation agents"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "Competing signals resolved to SPEC. Dominant content is a data model: YAML reference schemas (temporal, epistemic, confidence), closed controlled vocabularies (precision, epistemic status, knowledge state), a supersession/state lifecycle, and 'CRIC must support' system constraints — SPEC hallmarks. Competing PRD signals: file sits under the docs/CRIC-PRD-v0.1/ PRD family directory (not a literal **/prd/** path segment) and closes with a 'v0.1 Acceptance Criteria' section. Per the ambiguity rule (ADR > SPEC > PRD > DOC) and the dominant schema/vocabulary content, classified SPEC. No frontmatter, no filename type convention, no ADR status field, no Decision/Consequences sections. Entity names (StateSnapshot, supersedes) and topics (training-data construction) are referenced inline but no document paths or markdown links are present, so cross_refs is empty."
+}

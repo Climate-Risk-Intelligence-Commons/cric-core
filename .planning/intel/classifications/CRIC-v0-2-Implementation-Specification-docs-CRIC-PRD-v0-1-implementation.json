@@ -1,0 +1,30 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/implementation/CRIC-v0.2-Implementation-Specification.md",
+  "type": "PRD",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC v0.2 Implementation Specification",
+  "summary": "Scope and objectives for CRIC v0.2: larger GLOF knowledge commons, expanded agent teams, multimodal models, institutional deployment, and one cross-domain pilot.",
+  "scope": [
+    "GLOF knowledge commons",
+    "Observation Factory",
+    "historical reconstruction",
+    "GLOF-SM model series",
+    "multimodal fusion",
+    "cryosphere foundation encoder",
+    "agent teams",
+    "agent workflow authoring",
+    "hybrid semantic search",
+    "institutional deployment",
+    "benchmark expansion",
+    "scientific validation",
+    "cross-domain pilot",
+    "community and reviewer registry",
+    "StateSnapshots",
+    "Event Cubes"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "Filename says 'Specification' (SPEC signal) but content contains no endpoint tables, schemas, protocol definitions or SLOs. Dominant signals are scope/objectives, explicit 'v0.2 Non-Goals' and 'v0.2 Definition of Done' sections plus requirement-language directives ('Evaluation must test modality ablation', 'Workflow definitions should remain typed and versioned') -> PRD. Path is under docs/CRIC-PRD-v0.1/, reinforcing PRD. Ambiguity resolved on content over filename; confidence medium. No frontmatter, no status field, no markdown links or referenced doc paths."
+}

@@ -1,0 +1,28 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/community/Open-Source-Governance.md",
+  "type": "PRD",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC Open-Source Governance Specification",
+  "summary": "Governance model for CRIC as an open commons: principles, per-domain governance, roles, maintainer authority, scientific/ontology/security/safety governance, and v0.1 acceptance criteria.",
+  "scope": [
+    "open-source governance",
+    "governance domains",
+    "governance roles",
+    "maintainer authority",
+    "core maintainer",
+    "scientific governance",
+    "ontology governance",
+    "decision records",
+    "code of conduct",
+    "conflict of interest",
+    "security governance",
+    "safety governance",
+    "project stewardship",
+    "governance evolution"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "Title says 'Specification' (SPEC signal) but no SPEC hallmarks are present: no endpoint tables, schemas, protocols, SLOs or data models. Dominant signals are normative 'should/must' requirements, role definitions and an explicit '# v0.1 Acceptance Criteria' section, inside the docs/CRIC-PRD-v0.1/ family -> PRD. Ambiguity resolved on content dominance, not on the higher-precedence tiebreak, since SPEC support is title-only. No frontmatter, no status field. 'Decision Records' section recommends using ADRs but is not itself an ADR and links no ADR path. Mentions of contribution/conduct documents carry no paths, so cross_refs left empty. FILENAME DEVIATION: no Bash tool available to this agent, so the required SHA-256 path hash could not be computed; the collision suffix is the parent directory name ('community') instead of 8 hex chars."
+}

@@ -1,0 +1,27 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/community/Contribution-and-Review-Process.md",
+  "type": "PRD",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC Contribution and Review Process",
+  "summary": "Defines contribution types, PR requirements, per-artifact contribution rules, review dimensions, automated checks and merge rules across CRIC repositories.",
+  "scope": [
+    "contribution flow",
+    "pull request requirements",
+    "OKF knowledge contributions",
+    "data contributions",
+    "ontology proposals",
+    "agent contributions",
+    "model contributions",
+    "training labels",
+    "review dimensions",
+    "CODEOWNERS",
+    "automated checks",
+    "merge rules",
+    "attribution"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "Competes between DOC (process/contributor guide prose) and PRD. Resolved to PRD: dominant signals are normative requirement lists ('Must include', 'must pass') plus an explicit 'v0.1 Acceptance Criteria' section, and the path sits in the docs/CRIC-PRD-v0.1/ family. No Decision/Consequences sections and no status field, so not ADR; no endpoint/schema/protocol definitions, so not SPEC. No markdown links present; mentions of CONTRIBUTING, PR templates and CODEOWNERS are artifacts to be produced, not references to other documents, so cross_refs left empty."
+}

@@ -1,0 +1,29 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/knowledge/Ontology-Evolution-and-Governance.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC Ontology Evolution and Governance",
+  "summary": "Governance contracts for evolving the CRIC ontology: gap results, proposals, lifecycle states, review triggers, PR workflow, versioning, deprecation and migration.",
+  "scope": [
+    "ontology evolution",
+    "OntologyGapResult",
+    "OntologyProposal",
+    "ontology lifecycle states",
+    "experimental namespace (CRIC-EXP)",
+    "human review triggers",
+    "pull request workflow",
+    "Ontology Watch Agent",
+    "Ontology Synthesis Agent",
+    "Ontology Critic Agent",
+    "semantic versioning",
+    "deprecation metadata",
+    "schema migration",
+    "governance roles",
+    "automated PR checks"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "Competing signals: sits in the CRIC-PRD-v0.1 family and ends with a 'v0.1 Acceptance Criteria' section (PRD signal), but the dominant content is implementation contracts — typed YAML schemas (gap result, deprecation metadata), required-field lists for OntologyProposal, a closed lifecycle state sequence, semantic-versioning rules and required automated checks. No ADR signals (no status frontmatter, no Decision/Consequences), no user stories. Ambiguity resolved to SPEC per SPEC > PRD precedence."
+}

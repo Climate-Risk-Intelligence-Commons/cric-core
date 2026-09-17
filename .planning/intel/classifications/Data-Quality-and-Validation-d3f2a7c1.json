@@ -1,0 +1,27 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/data/Data-Quality-and-Validation.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC Data Quality and Validation Specification",
+  "summary": "Defines CRIC's quality dimensions, layered validators V0-V8, QualityAssessment and validation-report schemas, quality flags, and promotion gates.",
+  "scope": [
+    "quality dimensions",
+    "validation layers V0-V8",
+    "QualityAssessment node",
+    "quality flags",
+    "evidence completeness",
+    "measurement quality",
+    "source quality",
+    "contradiction-aware validation",
+    "validation reports",
+    "promotion gates",
+    "automated repair",
+    "Data Quality Agent",
+    "quality regression CI"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "Path sits under docs/CRIC-PRD-v0.1/ (weak PRD path signal) and the doc closes with a 'v0.1 Acceptance Criteria' section (PRD signal), but dominant content is implementation contracts: layered validator definitions, YAML node/report schemas, enumerated quality flags, promotion gates. SPEC > PRD under the ambiguity rule. No ADR status field or Decision/Consequences sections. No markdown links or filename mentions, so cross_refs is empty. Output filename suffix is a stable disambiguator, not a computed SHA-256 (no shell tool available to hash the path)."
+}

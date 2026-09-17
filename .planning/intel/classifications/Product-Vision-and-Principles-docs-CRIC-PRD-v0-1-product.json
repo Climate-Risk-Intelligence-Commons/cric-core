@@ -1,0 +1,28 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/product/Product-Vision-and-Principles.md",
+  "type": "PRD",
+  "confidence": "high",
+  "manifest_override": false,
+  "title": "CRIC Product Vision and Principles",
+  "summary": "Long-term product intent, values, users, scope, non-goals, success criteria and design invariants for the Climate Risk Intelligence Commons, starting with cryosphere/GLOF.",
+  "scope": [
+    "Climate Risk Intelligence Commons",
+    "CRIC Core",
+    "climate-risk evidence integration",
+    "knowledge graph",
+    "temporal knowledge preservation",
+    "scientific provenance",
+    "contradiction management",
+    "reusable agents",
+    "model training and evaluation",
+    "cryosphere",
+    "GLOF",
+    "training datasets",
+    "ontology",
+    "domain packages"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": ""
+}

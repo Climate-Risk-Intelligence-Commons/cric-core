@@ -1,0 +1,34 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/CRIC-Schema-and-Vocabulary-Registry.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC Canonical Schema and Vocabulary Registry",
+  "summary": "Canonical registry fixing CRIC identifier form, object types, controlled vocabularies, relationship predicates, temporal model, and data formats for implementation.",
+  "scope": [
+    "canonical identifier form (CRIC:<namespace>:<type>:<ulid>)",
+    "root object types and canonical core types",
+    "knowledge state vocabulary",
+    "epistemic status vocabulary",
+    "negative-case vocabulary",
+    "multi-temporal model (event/observation/valid/system time)",
+    "canonical relationship predicates",
+    "deprecated predicates",
+    "evidence and provenance levels",
+    "canonical review states",
+    "autonomy levels",
+    "canonical repository names",
+    "agent composition contract",
+    "GLOF analytical decomposition",
+    "canonical data formats",
+    "precedence rule",
+    "OKF Markdown",
+    "Pydantic"
+  ],
+  "cross_refs": [
+    "CRIC-PRD-MASTER"
+  ],
+  "locked": false,
+  "precedence": 0,
+  "notes": "Lives in the docs/CRIC-PRD-v0.1/ family directory (PRD-adjacent path signal) but contains no user stories, acceptance criteria, or success metrics. Dominant content is schema and controlled-vocabulary contracts: ID format, type hierarchy, closed enums, predicate lists, YAML field blocks, data formats -> SPEC. Its '## Status' section is a scope statement, not an ADR status field, so ADR was ruled out and locked remains false. Section 16 self-declares a precedence order for implementation disputes: (1) this registry, (2) CRIC-PRD-MASTER, (3) specialised PRD documents, (4) older examples; recorded here because precedence is null (no MANIFEST_PRECEDENCE supplied). Section 16 also states a future executable schema repository release supersedes this prose registry. Orchestrator set precedence=0 per repository CLAUDE.md section 2 authority precedence (registry > PRD-MASTER > specialised PRD documents > examples)."
+}

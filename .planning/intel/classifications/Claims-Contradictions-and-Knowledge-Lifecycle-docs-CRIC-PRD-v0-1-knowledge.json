@@ -1,0 +1,30 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/knowledge/Claims-Contradictions-and-Knowledge-Lifecycle.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC Claims, Contradictions and Knowledge Lifecycle",
+  "summary": "Defines the Claim node model, claim relationship predicates, contradiction typing and reconciliation, and the candidate-to-archived knowledge lifecycle states.",
+  "scope": [
+    "Claim node",
+    "claim relationship predicates",
+    "contradiction record",
+    "contradiction types",
+    "reconciliation outcomes",
+    "knowledge lifecycle states",
+    "candidate knowledge",
+    "promotion to accepted",
+    "disputed state",
+    "supersession",
+    "rejection",
+    "retractions and withdrawals",
+    "dependency impact analysis",
+    "scientific minority views",
+    "agent behaviour constraints",
+    "retrieval requirements"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "No frontmatter. Path sits under the docs/CRIC-PRD-v0.1/ family and the doc ends with a 'v0.1 Acceptance Criteria' section (PRD signals), but the dominant body is technical contract material: a YAML Claim field schema, closed predicate and contradiction-type vocabularies, a knowledge-state transition graph, agent must/must-not constraints, and required retrieval queries. Ambiguity resolved to SPEC per SPEC > PRD precedence. No markdown links or filename mentions found, so cross_refs is empty."
+}

@@ -1,0 +1,32 @@
+{
+  "source_path": "/home/ash/Eyekyam/CRIC-Core/docs/CRIC-PRD-v0.1/data/Ingestion-and-Licensing.md",
+  "type": "SPEC",
+  "confidence": "medium",
+  "manifest_override": false,
+  "title": "CRIC Ingestion and Licensing Specification",
+  "summary": "Defines how CRIC discovers, licence-assesses, acquires, normalises and registers external sources, with licence/reference vocabularies, ingestion manifest schema, quarantine and security rules.",
+  "scope": [
+    "ingestion pipeline",
+    "source discovery",
+    "source qualification",
+    "licence assessment",
+    "licence status vocabulary",
+    "copyrighted scientific literature",
+    "acquisition modes",
+    "ingestion manifest",
+    "idempotency",
+    "source change detection",
+    "metadata extraction",
+    "normalisation",
+    "agent team for literature extraction",
+    "human review triggers",
+    "community-contributed data",
+    "ingestion security",
+    "quarantine states",
+    "failure handling"
+  ],
+  "cross_refs": [],
+  "locked": false,
+  "precedence": null,
+  "notes": "Self-declared 'Specification' in H1; dominant signals are implementation contracts — closed licence-status and reference-state vocabularies, an ingestion-manifest YAML schema, idempotency/change-detection rules, security constraints. Competing PRD signal: a 'v0.1 Acceptance Criteria' section and residence in the docs/CRIC-PRD-v0.1/ family directory. Resolved to SPEC per ambiguity rule (SPEC > PRD) because the acceptance criteria assert contract properties rather than user-facing requirements. Confidence medium: no frontmatter, no spec/ path or filename convention — content signals only. No markdown links or explicit file references present, so cross_refs is empty."
+}
