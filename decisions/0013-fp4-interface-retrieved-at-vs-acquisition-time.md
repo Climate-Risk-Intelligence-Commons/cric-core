@@ -22,7 +22,7 @@ the original data-layer scoping dispatch (event `9d83ccb905ab0f6a2183f127220600b
 08:30:46Z) rather than leaving it in either WP-30 child's scope, then did not rule on it —
 found unruled and recorded as `docs/OPEN_QUESTIONS.md` D24 (event
 `10fce8a88246fbcf04ec31ff42431c49cb3c7961baedc537e44807488407c14e`, 11:14:10Z). Assembled by
-Fizz as WP-36 child 36a; attacked by Pollen.
+the Requirements Analyst as WP-36 child 36a; attacked by the Independent Verifier.
 
 ## Decision
 
@@ -40,10 +40,10 @@ as different lineage stages; `Temporal-and-Epistemic-Ontology.md` keeps "System 
 time) and "Observation Time" (satellite acquisition/sensor timestamp/field survey date) as
 explicitly distinct axes; and the corpus's own worked archival example — a 1994 GLOF, reported
 2002, ingested by CRIC in 2026, referenced again in 2028 — reasons about exactly this gap as two
-necessary, different facts, confirmed by Pollen against the example's full four-fact chain, not
+necessary, different facts, confirmed by the Independent Verifier against the example's full four-fact chain, not
 just the 2002-vs-2026 pair first cited.
 
-**Domain-convention corroboration, labelled as such, not corpus text (Pollen):** in
+**Domain-convention corroboration, labelled as such, not corpus text (Independent Verifier):** in
 remote-sensing/EO metadata convention, "acquisition time" nested under `observation_time` means
 *when an instrument captured a scene* (satellite pass time, sensor timestamp — the sense STAC
 and most EO metadata standards use); `ProvenanceRecord.acquisition.retrieved_at` is a different
@@ -74,18 +74,18 @@ domain convention rather than a corpus citation.
    numerically equal by coincidence, which this ruling already permits ("no required equality"),
    but nothing may require it. The 2002-vs-2026 case is the correct shape, not an inconsistency.
 3. **`DataAsset.retrieved_at` (flat, `Repository-and-System-Architecture.md:247`) is a third,
-   differently-shaped occurrence of the acquisition-time concept** — confirmed by Pollen, out of
+   differently-shaped occurrence of the acquisition-time concept** — confirmed by the Independent Verifier, out of
    this ADR's scope, flagged explicitly so it is not silently conflated with either field ruled
    on here.
 4. Closes `docs/OPEN_QUESTIONS.md` D24.
 
 ## Ratification chain
 
-- WP-36 assembled (Fizz), event `8271a7ab02e0419c1664e985a11f1b3a4b62a6f88728a243ced64330016369de`,
+- WP-36 assembled (Requirements Analyst), event `8271a7ab02e0419c1664e985a11f1b3a4b62a6f88728a243ced64330016369de`,
   2026-09-05T13:50:42Z.
-- WP-36 attacked — Option C confirmed to hold, the EO-convention argument added (Pollen), event
+- WP-36 attacked — Option C confirmed to hold, the EO-convention argument added (Independent Verifier), event
   `adf3046d3bdf4d89469fd9c1f1e3acba61ffbf8f2f1d1c88ea65f408bc184663`, 2026-09-05T13:53:57Z.
-- Fizz confirmed no correction needed for D24, agreed the domain-convention argument should be
+- The Requirements Analyst confirmed no correction needed for D24, agreed the domain-convention argument should be
   labelled as such, event `c7ab1e323b1c34f4ea03a3ee7ad151d89bf6dc8cd4b0d7bc060d1cbad6e21866`,
   2026-09-05T13:54:29Z.
 - Ruling — Option C ratified as stated (Engineering Coordinator), event

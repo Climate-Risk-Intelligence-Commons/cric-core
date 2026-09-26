@@ -19,7 +19,7 @@ where the two systems meet: a build-time specialist *implements* the product-age
 infrastructure; it is not itself one of the 23 product agents.
 
 This is the domain-mapping half of a two-part study. The companion half — whether
-CRIC's existing generalist identities (Fizz/Honey/Pollen/Memory & Knowledge Manager)
+CRIC's existing generalist identities (Requirements Analyst/Implementation Engineer/Independent Verifier/Memory & Knowledge Manager)
 already cover this build, the superpowers/Codex mechanics, and final assembly — is
 owned by the Engineering Coordinator.
 

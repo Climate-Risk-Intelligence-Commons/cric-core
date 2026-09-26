@@ -22,11 +22,11 @@
 `docs/OPEN_QUESTIONS.md` D14: no canonical CRS is named anywhere in the corpus, yet
 `DatasetVersion` must carry a spatial extent, V5 validation must check "valid CRS," and
 normalisation must perform CRS transformation. A related, undecided gap: no document resolves
-which geometry encoding format applies to which kind of spatial data. Assembled by Fizz as
+which geometry encoding format applies to which kind of spatial data. Assembled by the Requirements Analyst as
 WP-37 (children 37a geometry, 37b CRS — 37b independently re-derived after an anchoring-fix
 redispatch, per a two-phase framing: derive independently first, only then compare against the
-Coordinator's own prior reasoning); attacked by Pollen, who found a gap in the Coordinator's
-first-pass CRS justification requiring one further verification pass from Fizz before this
+Coordinator's own prior reasoning); attacked by the Independent Verifier, who found a gap in the Coordinator's
+first-pass CRS justification requiring one further verification pass from the Requirements Analyst before this
 ruling.
 
 **This ADR supersedes the CRS justification first recorded in D14's own resolution note.** The
@@ -77,7 +77,7 @@ specify as core science, and a naive geographic CRS (plain lat/long) produces di
 non-metric results for exactly these calculation types. WGS84 remains the canonical *storage*
 CRS under this ruling; any computation of these five quantity types must reproject to a
 geodesic or suitable projected CRS first. This was not present in the Coordinator's first-pass
-ruling and is the substantive product of Fizz's independent re-derivation, not a restatement of
+ruling and is the substantive product of the Requirements Analyst's independent re-derivation, not a restatement of
 it.
 
 **4. Per-asset override field: confirmed zero textual basis anywhere in the corpus.** A
@@ -94,8 +94,8 @@ existence.
 **CRS value:** no alternative CRS value was found or proposed anywhere in the corpus, and none
 was proposed by any team member as a rival candidate — the corpus is genuinely silent. An
 exhaustive sweep for `EPSG`, `WGS84`/`WGS 84`, `UTM`, "coordinate reference system", `reproject`,
-`datum`, `geodetic` returned **zero hits, all seven terms**, confirmed independently twice (Fizz,
-then Pollen re-running the same sweep). The choice of WGS84 is external domain reasoning applied
+`datum`, `geodetic` returned **zero hits, all seven terms**, confirmed independently twice (the Requirements Analyst,
+then the Independent Verifier re-running the same sweep). The choice of WGS84 is external domain reasoning applied
 to a genuine gap, not a selection among corpus-named alternatives — stated explicitly so this
 ADR is not misread as weighing options the corpus actually offered.
 
@@ -132,13 +132,13 @@ that shape either.
 
 ## Ratification chain
 
-- WP-37 assembled (Fizz, 37a geometry + 37b CRS, two-phase redo), event
+- WP-37 assembled (Requirements Analyst, 37a geometry + 37b CRS, two-phase redo), event
   `5a31598482bb5126f5bac6aa74afb13ee27fd0bdd107cb441e2ff6ad7618b88b`, 2026-09-05T13:52:14Z.
 - WP-37 attacked — corpus-silence finding confirmed, two citation-count corrections (four not
   five, twice), and a real gap found in the "one named format" claim, routing STAC's
-  Item-geometry constraint back to Fizz for primary-source verification (Pollen), event
+  Item-geometry constraint back to the Requirements Analyst for primary-source verification (Independent Verifier), event
   `55f00dc314997e0104affe06bbc1c8e8709c5e7a757a32d811c52791ae4f5355`, 2026-09-05T13:55:28Z.
-- Fizz verified the STAC point against the primary spec (`radiantearth/stac-spec`), confirming
+- The Requirements Analyst verified the STAC point against the primary spec (`radiantearth/stac-spec`), confirming
   two formats carry the WGS84 constraint, not one, event
   `6f3f9b767f89a37eb4be6287c2602be029506b446b1629543e598c356cef9712`, 2026-09-05T13:56:17Z.
 - Ruling — geometry closure adopted, CRS justification corrected, mandatory-reprojection

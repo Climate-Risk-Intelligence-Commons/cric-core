@@ -37,7 +37,7 @@ found three defects, full detail in `docs/OPEN_QUESTIONS.md` D6:
    artefact was generated.
 
 Defect 3 is the most severe of the three, and it was found only because a second
-reader (Pollen) opened `REQUIREMENTS.md` — the file an implementer actually builds
+reader (Independent Verifier) opened `REQUIREMENTS.md` — the file an implementer actually builds
 from — which the first pass had not.
 
 The Engineering Coordinator proposed a standing check inside the same finding that
@@ -103,7 +103,7 @@ enough that the stricter, unconditional rule costs nothing.
   claimed as a differently-named top-level field — a distinct failure mode from
   `source_type`'s outright invention), and ten of the twelve fields the other two
   canonical declarations agree on are omitted. Recorded as its own open item,
-  `docs/OPEN_QUESTIONS.md` D10, attacked and confirmed by Pollen the same day — not
+  `docs/OPEN_QUESTIONS.md` D10, attacked and confirmed by the Independent Verifier the same day — not
   folded into this ADR as settled, since this ADR is about the rule, not that
   specific finding's content.
 - **`.planning/`'s generated output does not merge to `main` as-is.** The FP6

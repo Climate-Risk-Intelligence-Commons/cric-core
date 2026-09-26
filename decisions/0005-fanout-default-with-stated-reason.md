@@ -40,7 +40,7 @@ admission test) or a one-line justification for proceeding sequentially instead.
   both look identical (silence).
 - **Fan-out as the stated default, sequential requires a reason (adopted).** Higher
   annotation cost — every package states something — but the annotation is exactly what
-  makes the choice auditable. Pollen's argument, cited by the Coordinator as the
+  makes the choice auditable. The Independent Verifier's argument, cited by the Coordinator as the
   strongest case for this option: a one-line "why not parallel" costs the author
   almost nothing to write and costs a reviewer everything to reconstruct later if it's
   missing.
@@ -48,7 +48,7 @@ admission test) or a one-line justification for proceeding sequentially instead.
 ## Ratification chain
 
 - **Recommended:** Engineering Coordinator, event `4e262256…f326454` (full id above),
-  2026-08-29T14:51:13Z, citing Pollen's auditability argument as the strongest case.
+  2026-08-29T14:51:13Z, citing the Independent Verifier's auditability argument as the strongest case.
 - **Accepted:** Ashley, event `1426b5ec…316c62a` (full id above), 2026-08-29T14:58:22Z —
   "go ahead with [the Engineering Coordinator's] prudent decision... as my accepted
   responses."
@@ -62,7 +62,7 @@ admission test) or a one-line justification for proceeding sequentially instead.
   vacuous-disjointness fix (children changing no files are judged on deliverable, and
   two children answering one question is the anti-pattern, not a valid split); the
   parent's three obligations; verify-the-merged-result; and the redundant-fan-out
-  anti-pattern. That edit is **WP-7**, dispatched to Honey, `files_allowed_to_change:
+  anti-pattern. That edit is **WP-7**, dispatched to the Implementation Engineer, `files_allowed_to_change:
   AGENTS.md, CLAUDE.md` — not made by this ADR or this role (outside `docs/`).
 - **First live application, dispatched together:** WP-6 (Phase 1 build-order item 1,
   identifier types against ADR-0004) and WP-7 (this rule's own text) — chosen

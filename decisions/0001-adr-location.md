@@ -24,7 +24,7 @@ file per decision (`decisions/NNNN-slug.md`), indexed from `docs/DECISION_REGIST
    Engineering Coordinator's WP-0 proposal (event `feb934ea…62a706e`) names `decisions/`
    directly, and that is sufficient on its own. (An earlier draft of this ADR cited
    EnergyMatrix's ADR-0004 as precedent for a `docs/adr/`→`decisions/` migration there;
-   that citation was checked against the EnergyMatrix repo by Pollen and found false —
+   that citation was checked against the EnergyMatrix repo by the Independent Verifier and found false —
    EnergyMatrix used `decisions/` from its own ADR-0001 onward, a full day before
    ADR-0004 existed, so there was never a migration to cite. Corrected here rather than
    left uncorrected in a permanent record.)
