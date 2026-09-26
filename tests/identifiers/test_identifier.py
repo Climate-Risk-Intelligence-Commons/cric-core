@@ -173,7 +173,7 @@ def test_equal_ids_from_identical_strings_are_equal_and_hash_equal():
 
 
 def test_cric_id_is_immutable():
-    # Guardrail (Fizz's addition): once minted, an ID's segments are
+    # Guardrail (the Requirements Analyst's addition): once minted, an ID's segments are
     # immutable. Nothing in this module implies segments can be rewritten.
     result = CricId.parse(f"CRIC:core:claim:{VALID_ULID}")
 
