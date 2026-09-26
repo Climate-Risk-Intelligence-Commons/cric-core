@@ -16,8 +16,8 @@
 
 Freeze Point 4 of 8. Subject: when provenance is a standalone node versus an embedded
 field, what a promoted `ProvenanceRecord` contains, and how the source-hash
-requirement is satisfied. Assembled by Fizz as WP-30 from three children; attacked by
-Pollen, who closed the carve-out on whether FP4 implies a relationship predicate and
+requirement is satisfied. Assembled by the Requirements Analyst as WP-30 from three children; attacked by
+the Independent Verifier, who closed the carve-out on whether FP4 implies a relationship predicate and
 found the field-count claim underneath the candidate's most confident line was
 borrowed from a disputed source.
 
@@ -38,7 +38,7 @@ list assembled for this ADR.
 
 **3. "Significant" (§9's "every significant derived object MUST support backward
 traversal") means a non-empty `parents` list.** Chosen over the alternative that
-"significant" is a separately-declared property, on Pollen's evidence: `Source` is
+"significant" is a separately-declared property, on the Independent Verifier's evidence: `Source` is
 both a promoted registry §3 type and the root of the corpus's own lineage chain, with
 nothing upstream by design. The alternative makes the MUST either vacuous or
 unsatisfiable for `Source`, and the corpus never states which; treating "significant"
@@ -62,7 +62,7 @@ is tracked at `docs/OPEN_QUESTIONS.md` D10, not here.
 
 ## Alternatives considered
 
-- **"Significant" as a separately-declared property (Fizz's original Option 1).**
+- **"Significant" as a separately-declared property (the Requirements Analyst's original Option 1).**
   Rejected — see Decision 3. It needed an ad-hoc exception for `Source`, the one case
   in the corpus that actually tests the rule, and the corpus never states what that
   exception would be. An option that needs an ad-hoc exception for the case that
@@ -92,9 +92,9 @@ is tracked at `docs/OPEN_QUESTIONS.md` D10, not here.
 
 ## Ratification chain
 
-- WP-30 assembled (Fizz), event `6f4893bc51d94331dcd2ca9b7178c7fc1fe80d1b0b6731b8bd87d52baa1a5f9e`,
+- WP-30 assembled (Requirements Analyst), event `6f4893bc51d94331dcd2ca9b7178c7fc1fe80d1b0b6731b8bd87d52baa1a5f9e`,
   2026-09-05T10:05:35Z.
-- WP-30 attacked — carve-out #4 confirmed closed, field-count borrow flagged (Pollen),
+- WP-30 attacked — carve-out #4 confirmed closed, field-count borrow flagged (Independent Verifier),
   event `a1aeb8bc4aaf7749a0f5fbc2ca031c452a5525ce357ca6e3886189009a3d9907`, 2026-09-05T10:14:07Z.
 - Ruling — promotion rule, record shape, "significant" = non-empty `parents`,
   conditional source-hash rule, field-count exclusion, Phase-3-gate correction to

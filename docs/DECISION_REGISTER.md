@@ -38,14 +38,14 @@ for why the rest don't get their own entries here.
 Two of the six (1 and 6+7) are now implemented as tested code, not just locked
 grammar; ADR-0010/0011/0012 (Freeze Points 5, 4, 3) are ratified but have no shipped
 code yet. WP-6 (build-order item 1, identifier types), against ADR-0004, merged (PR
-#17, `main` at `fda79b1`): `src/cric_core/identifiers/`. Honey's WP-18 (build-order
+#17, `main` at `fda79b1`): `src/cric_core/identifiers/`. The Implementation Engineer's WP-18 (build-order
 item 2, knowledge-state models), against ADR-0007, merged (PR #29, `main` at
 `f5d8a06`, 139 tests): `src/cric_core/knowledge_state/`. Freeze Point 4 (provenance
 model) briefly looked coupled into ADR-0007's unit and was found not to be — it
 ratified separately as ADR-0011. **Only Freeze Points 2 and 8 remain unratified.**
 Each remaining ADR, when written, links its **Freeze Point?** column entry to the
 specific freeze point (of the 8 listed in `docs/PROJECT_FACTS.md`), names Ashley as
-approver (not the Engineering Coordinator or Fizz), and its consequences section
+approver (not the Engineering Coordinator or the Requirements Analyst), and its consequences section
 states explicitly that reversal requires a formal migration, not routine amendment —
 per the ratification checkpoint in
 `docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2, exercised first in
@@ -62,3 +62,17 @@ done. Go ahead"* (event `524472fa44b27d8f732d4033e444891120a5b7f155bef69e4ab21a1
 per-ADR assents. Full ratification chains, including this one, are in each ADR's own
 Ratification chain section and in `docs/OPEN_QUESTIONS.md`'s D18/D21/D22 rows, not
 restated here.
+
+**Retired 2026-09-26 — `docs/CRIC-Implementation-Team/01-Existing-Agent-Fit-Assessment.md`.**
+The document assessed which of four existing persistent agent identities fitted which
+CRIC build-time role, and concluded that the four generalists plus one narrow brief
+covered the 14-phase sequence. That conclusion survives and is now stated normatively
+in `AGENTS.md` §9 (the five role mandates), §10 (the Build & Release brief) and §11
+(the roles deliberately not created). Its *premise* does not: build-time roles are now
+defined by **mandate** rather than by identity, so that any agent harness can hold one,
+and an assessment of which named identities fit them no longer describes how this
+project works. Retired rather than rewritten because nothing in it is unique once the
+mandates are stated directly — see WP-43e. Last present at `ab3cbb7`; the reasoning
+remains readable in git history. The three `docs/OPEN_QUESTIONS.md` rows that cited it
+as where a question was raised (U1, U2 and the Memory & Knowledge Manager row) now cite
+this entry instead.

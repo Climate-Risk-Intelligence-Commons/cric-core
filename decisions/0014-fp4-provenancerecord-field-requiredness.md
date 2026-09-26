@@ -19,12 +19,12 @@ obligation level. WP-30 child 30a found that of roughly 26 fields in the referen
 (`Evidence-Provenance-and-Trust.md:32-51`), **exactly one** — `parents` — carries unambiguous
 mandatory language (`:135` and the v0.1 acceptance criterion at `:360`); the rest are genuinely
 undetermined, not a search failure — the text simply never states an obligation level for them.
-Tracked as `docs/OPEN_QUESTIONS.md` D29. Assembled by Fizz as WP-36 child 36b; attacked by
-Pollen, who found one real defect in the assembled tiering.
+Tracked as `docs/OPEN_QUESTIONS.md` D29. Assembled by the Requirements Analyst as WP-36 child 36b; attacked by
+the Independent Verifier, who found one real defect in the assembled tiering.
 
 ## Decision
 
-**Three tiers, not two — the third corrected from Fizz's original assembly during attack:**
+**Three tiers, not two — the third corrected from the Requirements Analyst's original assembly during attack:**
 
 1. **Required (scoped): `parents`.** The one field with unambiguous mandatory language.
 2. **Required-whenever-applicable: `source.*`, `acquisition.*`, `integrity.*` (output hash),
@@ -66,13 +66,13 @@ is an inference nobody has tested against a real counter-example.
 - **Option B — global-required/strict.** Rejected: manufactures a "must" the text never states
   for roughly 20 fields, and is impractical — it would force `transformation.*`/`agent.*` on
   records where nothing was transformed and no agent was involved.
-- **Option C (chosen, as corrected) — tier by field-group semantics.** Fizz's original assembly
+- **Option C (chosen, as corrected) — tier by field-group semantics.** The Requirements Analyst's original assembly
   placed `integrity.*`/`licensing.*` in an "optional" tier alongside the genuinely
-  event-conditional fields. Pollen's attack found this backward: event-conditional
+  event-conditional fields. The Independent Verifier's attack found this backward: event-conditional
   ("doesn't apply if the event didn't happen") and universally-applicable-but-unqualified
   ("applies to every record, nothing says otherwise") are different shapes, and
   `integrity.*`/`licensing.*` are the second shape, not the first — they belong with
-  `source.*`/`acquisition.*`. Fizz confirmed the correction directly against the text before
+  `source.*`/`acquisition.*`. The Requirements Analyst confirmed the correction directly against the text before
   this ruling. The `agent.*`/`transformation.*`/`human_reviews` tier held unattacked throughout.
 
 ## Consequences
@@ -93,12 +93,12 @@ is an inference nobody has tested against a real counter-example.
 
 ## Ratification chain
 
-- WP-36 assembled (Fizz), event `8271a7ab02e0419c1664e985a11f1b3a4b62a6f88728a243ced64330016369de`,
+- WP-36 assembled (Requirements Analyst), event `8271a7ab02e0419c1664e985a11f1b3a4b62a6f88728a243ced64330016369de`,
   2026-09-05T13:50:42Z.
 - WP-36 attacked — the `integrity.*`/`licensing.*` tier placement found backward and corrected
-  (Pollen), event `adf3046d3bdf4d89469fd9c1f1e3acba61ffbf8f2f1d1c88ea65f408bc184663`,
+  (Independent Verifier), event `adf3046d3bdf4d89469fd9c1f1e3acba61ffbf8f2f1d1c88ea65f408bc184663`,
   2026-09-05T13:53:57Z.
-- Fizz confirmed the tier correction against the text directly, net effect stated as three
+- The Requirements Analyst confirmed the tier correction against the text directly, net effect stated as three
   tiers, event `c7ab1e323b1c34f4ea03a3ee7ad151d89bf6dc8cd4b0d7bc060d1cbad6e21866`,
   2026-09-05T13:54:29Z.
 - Ruling — three tiers as corrected, falsification stated (Engineering Coordinator), event

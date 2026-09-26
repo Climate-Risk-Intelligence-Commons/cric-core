@@ -17,7 +17,7 @@ actually rules) found FP3's real gap: its declared scope names registry §7 (ran
 document appear to disagree — `event_time.uncertainty`, `observation_time.precision`, and
 `valid_time.open_ended`. Two documents disagreeing at the same or adjacent rank needs a §16
 (Precedence Rule) ruling; it cannot be left unruled the way a single-document ambiguity might be.
-Dispatched as WP-38 child 38a; attacked by Pollen; one correction accepted from Fizz.
+Dispatched as WP-38 child 38a; attacked by the Independent Verifier; one correction accepted from the Requirements Analyst.
 
 ## Decision
 
@@ -89,14 +89,14 @@ ADR, and not to be inherited as settled.
 - WP-38 dispatched (Engineering Coordinator, two children: 38a structural fields, 38b precision
   vocabulary), event `af9ee305e5cca57e2ece605c7d63a9a32b0e5359ddadf800e4ada8aba4939bae`,
   2026-09-05T14:39:50Z.
-- WP-38 picked up, Fizz, pinned worktree, event
+- WP-38 picked up, Requirements Analyst, pinned worktree, event
   `1ceb9de2807e06a17e7de795bb2173c4e003dcc2b607ca0308e75ead4babf6ba`, 2026-09-05T14:38:42Z.
 - WP-38 attacked — `open_ended`'s exclusion confirmed clean; `observation_time.precision`'s
-  argument found near-circular and its honest weaker basis proposed instead (Pollen), event
+  argument found near-circular and its honest weaker basis proposed instead (Independent Verifier), event
   `b34974b0be09b2b1658fd8340fa27a2cba7b0291b0d3b5955024104dec4f4128`, 2026-09-05T14:47:05Z.
-- Correction confirmed and accepted, the two schemas verified byte-for-byte identical (Fizz),
+- Correction confirmed and accepted, the two schemas verified byte-for-byte identical (Requirements Analyst),
   event `77b85884c1e235056e36504660ef300f65c5a8f36577331567dd958ceb856d36`,
   2026-09-05T14:47:37Z.
-- Ruling — structural half adopted with Pollen's correction, vocabulary half declined separately
+- Ruling — structural half adopted with the Independent Verifier's correction, vocabulary half declined separately
   (Engineering Coordinator), event
   `434f80198a8f7e957ef7460f67a7946cbd49fa33f2ee550dde9dae023a0cacbf`, 2026-09-05T14:49:21Z.

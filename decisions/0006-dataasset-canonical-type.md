@@ -9,7 +9,7 @@
 - **Evidence:** Engineering Coordinator's ruling, channel CRIC-Dev
   (`17bd72a0-4d90-4e0b-b102-f9163f0cfd4b`), event
   `1724653e311b31ade3a7a32d3a96281329e3e38e773fad6243eeb1c98812bc4b`,
-  2026-08-29T15:42:00Z. Underlying finding first surfaced by Fizz during WP-8
+  2026-08-29T15:42:00Z. Underlying finding first surfaced by the Requirements Analyst during WP-8
   (`docs/CRIC-Implementation-Team/Domain-Phase-Mapping.md` citation work) and
   independently confirmed by the Engineering Coordinator during WP-5 (ADR-0004).
 
@@ -91,7 +91,7 @@ into amending the PRD — at that point it goes to Ashley. Not yet reached.
   convention) on its own, since a reader deciding the frontmatter `type:` vocabulary
   cannot be required to also open this ADR to get the `Asset`/`DataAsset` rule right.
 - **Trigger for action, a performed event, not a date:** whoever assembles Freeze
-  Point 2 (registry §4/specialised-doc candidate work, analogous to Fizz's WP-5/WP-9
+  Point 2 (registry §4/specialised-doc candidate work, analogous to the Requirements Analyst's WP-5/WP-9
   role) reads this ADR before finalising that candidate, and incorporates the
   `DataAsset` ruling into the FP2 ADR's own text. Nothing to chase in
   `docs/OPEN_QUESTIONS.md` in the meantime — there is no absence to wait on, only an

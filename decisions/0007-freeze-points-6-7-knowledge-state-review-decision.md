@@ -13,7 +13,7 @@ Freeze Points 6 and 7 of 8 (per `CRIC-Repository-Dependency-and-Implementation-S
 knowledge-state vocabulary (registry §4) and the review decision schema. Ratified as
 one unit because Freeze Point 6's transition graph is the image of Freeze Point 7's
 `ReviewDecision.decision` vocabulary — neither is independently closable. Blast radius:
-phases 4, 6, 7, 8, 9, 13, verified independently by both Pollen and the Engineering
+phases 4, 6, 7, 8, 9, 13, verified independently by both the Independent Verifier and the Engineering
 Coordinator against `Domain-Phase-Mapping.md`'s actual rows.
 
 **Freeze Point 4 (provenance model) is explicitly not part of this unit.** It looked
@@ -22,7 +22,7 @@ pulled it in turned out to govern a different field entirely (see Alternatives).
 freeze-point count this ADR locks is two (6 and 7), not three.
 
 Ratification checkpoint per `docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md`
-§2: Fizz assembles and cites the candidate → Pollen does blast-radius verification and
+§2: the Requirements Analyst assembles and cites the candidate → the Independent Verifier does blast-radius verification and
 tries to break it → Ashley signs. This was the first Freeze Point to go through the
 checkpoint's full adversarial cycle more than once: four assembly rounds (WP-9, WP-11,
 WP-13, WP-14), the Engineering Coordinator holding signature once mid-flight over
@@ -83,7 +83,7 @@ carried, not settled — see open items below.
 
 ## Alternatives considered
 
-- **Scoping Freeze Point 6 to `KnowledgeObject`-family types only** (Pollen's reading,
+- **Scoping Freeze Point 6 to `KnowledgeObject`-family types only** (the Independent Verifier's reading,
   built on "Model-Commons mentions `knowledge_state` zero times"). Genuinely
   incompatible with the Engineering Coordinator's independently-withheld reading
   (record-standing vs. thing-maturity orthogonality) — the two diverged, not
@@ -98,7 +98,7 @@ carried, not settled — see open items below.
   Ashley's signature that this ruling avoids triggering.
 - **Orthogonality as an empirical claim — "no counter-example exists in the corpus."**
   Its author (the Engineering Coordinator) could not verify his own reasoning per
-  WP-12's rule and asked Pollen to attack it. Pollen's attack found that
+  WP-12's rule and asked the Independent Verifier to attack it. The Independent Verifier's attack found that
   `ProvenanceRecord` and `MigrationRecord` — the hardest cases available — are both
   single-axis, with no documented second lifecycle anywhere in the corpus (event
   `be2c80454b187863fb9bbaa8b7f1c397414290f64a12648a2241a277c15b18f2`, 2026-08-29T16:00:39Z):
@@ -118,7 +118,7 @@ carried, not settled — see open items below.
   the type that carries it. The invariant was exercised, not merely asserted, against
   two dual-axis types: `OntologyProposal` — inherited `knowledge_state` alongside its
   own `experimental → candidate → review → stable → deprecated → removed` lifecycle,
-  zero cross-reference between the two anywhere in the corpus (Pollen, event
+  zero cross-reference between the two anywhere in the corpus (Independent Verifier, event
   `47d5bd1a217a715e56ffe15733fb5b155b332308585e8e0af48cecdfb4331962`, identified as the
   sharpest real conflict, not a hypothetical) — and, on adversarial re-attempt to
   construct a counter-example, held (`be2c8045…`, above); and `Licence` — its own
@@ -148,29 +148,29 @@ carried, not settled — see open items below.
 
 ## Ratification chain
 
-- **WP-9 (FP6 candidate) and WP-11 (transition graph):** Fizz, in-channel, 2026-08-29
+- **WP-9 (FP6 candidate) and WP-11 (transition graph):** Requirements Analyst, in-channel, 2026-08-29
   (same day as Freeze Point 1).
 - **Scope/orthogonality question — ruled:** Engineering Coordinator, event
   `090f5e242e0f57eb40055b5099ccfc55adf66028f6ab6482f655c7e3b4e84e35`, 2026-08-29 —
   "Our two readings diverged, and the deciding citation was in neither," naming
   `OKF-Knowledge-Graph-Specification.md:306` as the deciding citation.
 - **WP-13 (re-assembly, scope settled) and WP-14 (final assembly, Freeze Points 6+7 as
-  one unit):** Fizz, in-channel, 2026-08-29.
+  one unit):** Requirements Analyst, in-channel, 2026-08-29.
 - **Held:** Engineering Coordinator flagged three carried-but-unattacked items in
   WP-14 (`modify`'s evidentiary/presentational split, `ReviewDecision`'s entry point,
   the four dual-axis exclusions) and dispatched WP-15 rather than let them ride into
   signature unattacked, in-channel, 2026-08-29.
-- **WP-15 (targeted attack):** Pollen, in-channel, 2026-08-29 — found one real gap
+- **WP-15 (targeted attack):** Independent Verifier, in-channel, 2026-08-29 — found one real gap
   (`status` reachable through `modified_values` without exclusion), confirmed the
   four exclusions independently, flagged the multi-reviewer question as open but
   non-blocking.
-- **`status`-exclusion fix and duplicate-declaration finding:** Fizz accepted the fix;
+- **`status`-exclusion fix and duplicate-declaration finding:** Requirements Analyst accepted the fix;
   Engineering Coordinator sharpened it to name both `Claim.status` and
   `Claim.knowledge_state.status`, in-channel, 2026-08-29.
 - **Ratified:** Engineering Coordinator, event
   `0eae51c3f2c98b0ffae59993f8c64d78ac0943ee9f133369f0ded3ed653b2e45`, 2026-08-29T16:18:29Z
   — full ruling, the five items below named explicitly open.
-- **Confirmed:** Pollen, event
+- **Confirmed:** Independent Verifier, event
   `3a6430be79ce41b842428658bb51a101adf5db73ca21884fb878edf201c5898c`, 2026-08-29T16:19:21Z.
 - **D7 registered** in `docs/OPEN_QUESTIONS.md` ahead of the decision digest to Ashley
   (PR #21, later corrected for three citation defects across two review rounds — see
@@ -212,7 +212,7 @@ carried, not settled — see open items below.
   assembly and was found not to be; it ratifies separately, on its own evidence, when
   it assembles.
 - **Critical path unblocked.** Before this ADR, the ratified text existed only in the
-  channel thread. Honey's build-order item 2 (knowledge-state models, WP-18) can now
+  channel thread. The Implementation Engineer's build-order item 2 (knowledge-state models, WP-18) can now
   implement from a committed artefact instead of chat messages.
 - **This is the second Freeze Point to lock**, and the first to go through more than
   one adversarial round before signature (WP-9 → WP-15) — recorded as the checkpoint
