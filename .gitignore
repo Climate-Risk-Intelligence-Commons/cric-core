@@ -8,3 +8,4 @@ __pycache__/
 .venv/
 gsd-ingest-manifest.yaml
 .planning/config.json
+CLAUDE.local.md
