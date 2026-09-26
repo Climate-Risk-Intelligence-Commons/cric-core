@@ -18,7 +18,7 @@ It is a pointer, not a copy; the process itself is not duplicated here.
 - **Security issues.** Do not open a public issue for a security vulnerability.
   See [`SECURITY.md`](SECURITY.md).
 - **Governance and roles.** See [`GOVERNANCE.md`](GOVERNANCE.md) for who can
-  approve what.
+  approve what, and [`MAINTAINERS.md`](MAINTAINERS.md) for the current holders.
 - **cric-core is the contract root.** Every other CRIC repository depends on this
   one; this repository may not depend on any domain-specific repository (see
   [`README.md`](README.md)).

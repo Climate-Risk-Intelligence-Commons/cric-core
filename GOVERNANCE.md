@@ -14,6 +14,10 @@ first pass find it without knowing the PRD folder structure in advance. It is a
 pointer, not a copy — the specification above is the single source; nothing here is
 duplicated or restated.
 
+For who currently holds the roles the specification defines, see
+[`MAINTAINERS.md`](MAINTAINERS.md) — the roster is kept there so that no rule or
+specification document has to name a person.
+
 For the standards of behaviour that govern all participation, see
 [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). For how to propose and submit a change,
 see [`CONTRIBUTING.md`](CONTRIBUTING.md).
