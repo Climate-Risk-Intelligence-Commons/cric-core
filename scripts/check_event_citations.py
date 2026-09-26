@@ -135,7 +135,7 @@ def _most_recent_date_before(anchors: list[tuple[int, str]], position: int) -> s
     `anchors` is a list of (offset, date) sorted by offset. This is the
     "sticky running date" a bare `HH:MM:SSZ` time inherits -- not the date
     that opens whichever parenthetical happens to textually enclose it.
-    Both the `2026-09-05 (Fizz assembled, event ..., 10:07:38Z; ...)` group
+    Both the `2026-09-05 (the Requirements Analyst assembled, event ..., 10:07:38Z; ...)` group
     shape and the long, unparenthesised prose shape (a running paragraph
     that states "2026-09-04T06:57:16Z" once and then several more bare
     times after it) resolve correctly under this one rule, because both are
@@ -204,7 +204,7 @@ def extract_citations(text: str, source: str = "<text>") -> tuple[list[Citation]
 _THREAD_FETCH_LIMIT = 2000
 
 # How long a single `buzz messages thread` call may run before this script
-# gives up on it. Named explicitly, per Fizz's PR #51 review: without this,
+# gives up on it. Named explicitly, per the Requirements Analyst's PR #51 review: without this,
 # a hung `buzz` process hangs the whole script silently -- the opposite of
 # this module's own "fail loudly, never invent a default" discipline.
 _SUBPROCESS_TIMEOUT_SECONDS = 30
@@ -214,7 +214,7 @@ class ResolveFailureReason(StrEnum):
     """Why `resolve_event` could not produce a `created_at` for an id.
 
     Three structurally different causes exist, and they must never be
-    collapsed into one message -- that was itself a defect (Fizz, PR #51
+    collapsed into one message -- that was itself a defect (the Requirements Analyst, PR #51
     review, 2026-09-05): "a tool that collapses several causes into one
     return value must not have a message that names one of them." A prior
     version of this function returned a bare `None` for all three and

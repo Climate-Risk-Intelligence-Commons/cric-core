@@ -39,9 +39,9 @@ def test_self_contained_full_iso_citation_is_extracted():
 
 def test_grouped_citation_inherits_the_groups_own_leading_date():
     text = (
-        "2026-09-05 (Fizz assembled, event "
+        "2026-09-05 (the Requirements Analyst assembled, event "
         "`a8480a1e5f677b922c8ddb916fc09541e92074bbba810f34b7e6178ea60f4eaa`, 10:07:38Z; "
-        "Pollen attacked, event "
+        "the Independent Verifier attacked, event "
         "`3239ebfa7c476d20aa136195baeddcfceaaeae2cf0affb964a4ce5f1d5203fb8`, 10:16:54Z)"
     )
     citations, skipped = cec.extract_citations(text)
@@ -167,7 +167,7 @@ def test_resolve_event_created_at_passes_the_large_fetch_limit(monkeypatch):
 
 
 def test_resolve_event_passes_an_explicit_timeout(monkeypatch):
-    # Fizz's PR #51 review: a hung `buzz` process must not hang this script
+    # The Requirements Analyst's PR #51 review: a hung `buzz` process must not hang this script
     # silently -- the opposite of its own fail-loudly discipline.
     captured_kwargs = {}
 
@@ -183,7 +183,7 @@ def test_resolve_event_passes_an_explicit_timeout(monkeypatch):
 
 # --- resolve_event: the three distinguishable failure causes -----------------
 #
-# Fizz's PR #51 finding: a relay-unreachable failure, a malformed response,
+# The Requirements Analyst's PR #51 finding: a relay-unreachable failure, a malformed response,
 # and a genuine non-resolution must never collapse into one message -- the
 # original code returned bare `None` for all three and printed the
 # non-resolution message regardless, so a total outage (BUZZ_PRIVATE_KEY
@@ -375,7 +375,7 @@ def test_check_citations_reports_a_mismatch_when_the_event_cannot_be_resolved(mo
 
 # --- main(): the printed message for each failure branch --------------------
 #
-# Fizz's PR #51 round-2 finding: the *data* (ResolveFailureReason) was
+# The Requirements Analyst's PR #51 round-2 finding: the *data* (ResolveFailureReason) was
 # exhaustively tested, but nothing checked that main()'s four report
 # branches print the message that actually matches the cause. Proved
 # necessary with a planted swap: exchanging the RELAY_UNREACHABLE and

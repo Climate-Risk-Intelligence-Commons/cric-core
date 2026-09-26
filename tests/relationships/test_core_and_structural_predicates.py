@@ -60,7 +60,7 @@ def test_core_predicates_are_exactly_the_parametrized_values():
     # misclassification into or out of this group fails loudly instead of
     # passing on a count alone. Proven necessary, not precautionary: a
     # planted swap of CONTRADICTS (core) with HAS_SNAPSHOT (structural)
-    # left both len() guards and the disjoint/union check green (Pollen,
+    # left both len() guards and the disjoint/union check green (the Independent Verifier,
     # PR #45 review, 2026-09-05) -- a bare count and a partition check both
     # tolerate two groups trading members, only a named-list comparison
     # catches it.
