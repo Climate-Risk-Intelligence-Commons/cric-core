@@ -16,8 +16,8 @@
 
 Freeze Point 3 of 8. Subject includes where `false`/`absent`/`not detected` sit
 relative to registry §5 (Epistemic Status) and §6 (Negative-Case Vocabulary), and
-which document's negative-case scope governs when two disagree. Assembled by Fizz as
-WP-29 from three children; attacked by Pollen, who found the routing citation
+which document's negative-case scope governs when two disagree. Assembled by the Requirements Analyst as
+WP-29 from three children; attacked by the Independent Verifier, who found the routing citation
 (Domain-Phase-Mapping.md row 3 → §5/§6) resolves textually but its own supporting
 claim — that §6 "overlaps at coarser granularity" the ontology's "Unknown Versus
 Negative" list — does not hold against the text it describes.
@@ -25,7 +25,7 @@ Negative" list — does not hold against the text it describes.
 ## Decision
 
 **Ratified — the exclusion.** `false`, `absent`, and `not detected` are **not**
-members of registry §5 or §6. Both Fizz and Pollen independently swept the whole
+members of registry §5 or §6. Both the Requirements Analyst and the Independent Verifier independently swept the whole
 corpus for controlled-vocabulary use of any of the three and found none anywhere;
 `:365`'s explicit prohibition on collapsing `unknown` into `false` is positive
 evidence the two concepts must stay distinct, not merely an absence of a contrary
@@ -33,7 +33,7 @@ rule. FP3's closure rejects all three from both vocabularies.
 
 **Explicitly declined, not ratified, and stated here so nobody applies it as if it
 were: the placement of those three tokens on `Observation.value`.** That they belong
-there is, in Pollen's finding and Fizz's own acceptance of it, unconstrained by
+there is, in the Independent Verifier's finding and the Requirements Analyst's own acceptance of it, unconstrained by
 omission rather than affirmatively supported — the corpus states no type for
 `Observation.value` at all, and `unit` sitting beside it in the schema reads at least
 as naturally as numeric. **A Freeze Point may not rest on "nothing forbids it."**
@@ -64,7 +64,7 @@ question in `docs/OPEN_QUESTIONS.md`, not a blocker on this signature.
 
 ## Alternatives considered
 
-- **Adopting Fizz's Option 1 whole** (both the negative-value exclusion and the
+- **Adopting the Requirements Analyst's Option 1 whole** (both the negative-value exclusion and the
   `Observation.value` placement together). Rejected as a package — the two halves are
   not equally supported. The exclusion is a well-supported negative (whole-corpus
   sweep, twice, zero hits, plus `:365`'s positive prohibition). The placement is an
@@ -88,12 +88,12 @@ question in `docs/OPEN_QUESTIONS.md`, not a blocker on this signature.
 
 ## Ratification chain
 
-- WP-29 assembled (Fizz), event `6739900881d9c9fe1956f7217d42dd6354bfc8df700edb69f3fe5696b74dd485`,
+- WP-29 assembled (Requirements Analyst), event `6739900881d9c9fe1956f7217d42dd6354bfc8df700edb69f3fe5696b74dd485`,
   2026-09-05T10:06:50Z.
 - WP-29 attacked — routing citation's supporting claim found not to hold, intra-document
-  `unknown` collision found (Pollen), event
+  `unknown` collision found (Independent Verifier), event
   `e5ea70ce178de59d29f2e4255e7c25184611bbe7fd6e833924cb2b6fd3c71e4b`, 2026-09-05T10:16:00Z.
-- Fizz's confirmation and retraction of the citation-label-vs-content gap, event
+- The Requirements Analyst's confirmation and retraction of the citation-label-vs-content gap, event
   `9e501d8c5a775e6aa6135a6a1d1c83a12fe9a911c54cb9cd3dd038a28a8637dc`, 2026-09-05T10:17:15Z.
 - Ruling — exclusion ratified, placement declined, scope precedence ratified,
   "no known evidence" excluded, D13 carried as precedent (Engineering Coordinator),

@@ -17,7 +17,7 @@ passed the distinctness test and failed this one — channel event
 
 ## Stale "not yet a git repository" fact carried by two independent agents
 
-**What happened:** Both Fizz and the Memory & Knowledge Manager independently carried
+**What happened:** Both the Requirements Analyst and the Memory & Knowledge Manager independently carried
 a memory fact that `/home/ash/Eyekyam/CRIC-Core` was "not yet a git repository" — true
 when first recorded, stale by the time it mattered (the repo was initialized, given an
 `origin`, and had two PRs merged to `main` later the same day). Both agents caught and
@@ -42,7 +42,7 @@ to look and what was true when written, not a cache that invalidates itself.
 ADRs under `decisions/` by citing "precedent" — EnergyMatrix's ADR-0004 "moved ADRs
 out of `docs/adr/` into `decisions/`." The Memory & Knowledge Manager's own persistent
 memory (`buzz mem` slugs `core` and `energymatrix-facts`) carried this same claim
-across sessions. Pollen's INV-2 pass checked it against the actual EnergyMatrix repo
+across sessions. The Independent Verifier's INV-2 pass checked it against the actual EnergyMatrix repo
 rather than accepting it on the page: `docs/adr/` never existed there, and `decisions/`
 was used from that repo's own ADR-0001 — a full day before ADR-0004 was written. ADR-
 0004 does contain the sentence "ADRs stay in `decisions/`," but as one consequence of a
@@ -76,7 +76,7 @@ push and the PR's merge — so the merged result stated an instruction ("don't t
 org remote as live") that was already false the moment it landed on `main`, and stayed
 that way silently, because nothing re-reads a caveat once it's written. Caught by the
 Coordinator checking the *merged result* against current reality (the same discipline
-`CLAUDE.md` §9 names for code), not by either author — Pollen's review of the branch
+`CLAUDE.md` §9 names for code), not by either author — the Independent Verifier's review of the branch
 and the Coordinator's confirmation were each individually accurate; only their merge
 into a world that had moved produced the false statement.
 
@@ -145,9 +145,9 @@ wrote several `first8…last7`-style abbreviations of 64-character hex event ids
 were meant to shorten — real substrings of the correct id, but from the wrong position
 (e.g. `8d0c3e56…649a4a6` written for an id whose actual tail is `…4a66628`). Caught by
 re-slicing every full id with a script and diffing, not by re-reading the prose. Then,
-reviewing that exact fix, Pollen restated nine of those same abbreviations from memory
+reviewing that exact fix, the Independent Verifier restated nine of those same abbreviations from memory
 in a channel message rather than re-slicing them, and three of the nine were wrong the
-same way — despite Pollen's own message claiming "every single event id checked against
+same way — despite the Independent Verifier's own message claiming "every single event id checked against
 the raw thread, not sampled," which was true of the verification step and false of the
 transcription step.
 
@@ -212,7 +212,7 @@ ruling and FP2-routing withdrawal." The event was real, the author was right, th
 timestamp was right, and the quoted words genuinely appeared in it — but they appeared
 as a passing backward reference ("having already withdrawn one routing ruling today"),
 not as the ruling itself. The actual ruling lived in a different message, five and a
-half minutes earlier. Pollen's review had checked the citation and reported it clean —
+half minutes earlier. The Independent Verifier's review had checked the citation and reported it clean —
 correctly, by the check he ran: the ID resolved, to the right author, at the right
 time, containing the quoted substring. That check answers "does this citation point at
 something real." It does not answer "does the citing sentence's description match what
@@ -334,7 +334,7 @@ does — the tree ended up in sync with `main`, no conflicts, nothing lost. It c
 and did not, update the prose describing that tree: three separate spots kept saying
 build-order item 9 ("review contracts") hadn't shipped, on a commit where it plainly
 had (confirmed directly: `git merge-base HEAD origin/main` was exactly `72f3fb7`,
-`ls src/cric_core/` showed `review/` present). Found by Honey's non-author review,
+`ls src/cric_core/` showed `review/` present). Found by the Implementation Engineer's non-author review,
 independently reconfirmed by the Engineering Coordinator before either routed it as
 fixed.
 
@@ -416,7 +416,7 @@ second independent guard — it's an obligation with no mechanism enforcing it, 
 buys nothing once the real fix exists. Full chain: `decisions/0010`/`0011`/`0012`
 drafted with the phrase, Coordinator finding + both-fixes instruction (channel event
 `3da70cd9d4aae0fd1541306e0927380b256f5c40eeb3fc860678a22cdbef7e20`, 2026-09-05T10:46:46Z),
-Honey's parser fix verified against the real PR #40 files — old check `{1,3,4,5,6,7}`,
+the Implementation Engineer's parser fix verified against the real PR #40 files — old check `{1,3,4,5,6,7}`,
 new check `{1,6,7}` (event `f4773c6a606f1763b3ab906c17c01437e4927b835e7466b3eeb6936b50a1ec93`,
 10:49:39Z), Coordinator's withdrawal of the wording instruction (event
 `2744522a452ffe271e7caee423188686dc0c52b4d8775a28b12281a92f8f9996`, 10:50:20Z).
@@ -426,16 +426,16 @@ new check `{1,6,7}` (event `f4773c6a606f1763b3ab906c17c01437e4927b835e7466b3eeb6
 **What happened:** two people found the same defect (a wrong event timestamp cited
 in `decisions/0011`/`0012` and `docs/OPEN_QUESTIONS.md`) and produced three counts
 between them — the Engineering Coordinator reported four occurrences, then seven;
-Pollen reported five in between. (Independently, and before either later message
+the Independent Verifier reported five in between. (Independently, and before either later message
 landed, the Memory & Knowledge Manager caught the third file — `docs/OPEN_QUESTIONS.md`'s
 D23 — by reading the file directly rather than trusting either number in flight;
 that catch is its own point, not a fourth count folded into theirs.) The Coordinator
-then explained *Pollen's* undercount with an attention-based theory: that "a
+then explained *the Independent Verifier's* undercount with an attention-based theory: that "a
 semantic frame re-entered at the narration," excluding a row about a decline from a
-report framed around rows about signing. Pollen, separately, explained his own
-undercount the same way: that he had described the finding by hand-checking with a
+report framed around rows about signing. The Independent Verifier, separately, explained their own
+undercount the same way: that they had described the finding by hand-checking with a
 plain grep and "read only the first two lines" it returned. **Both explanations were
-wrong.** Pollen then read his own script rather than reasoning about it, and found
+wrong.** The Independent Verifier then read their own script rather than reasoning about it, and found
 the actual cause: the sweep's dedup key was `(file, event_id, cited_timestamp)` —
 since three rows (D21, D22, D23) cited the identical triple, the key collapsed all
 three into one reported instance per file. That key is structurally incapable of
@@ -454,14 +454,14 @@ check that can assert reach but not quantity.
 
 **A second failure, one level up, worth recording alongside the first:** this
 entry's own first draft compressed the chain above — misattributing the
-Coordinator's semantic-framing theory and Pollen's script-read to the wrong events,
+Coordinator's semantic-framing theory and the Independent Verifier's script-read to the wrong events,
 and counting two people as three — despite the chain having been spelled out in six
 numbered steps in-channel, and despite being transcribed by this team's most careful
 record-keeper. The Coordinator's own first explanation for *that* mistake — "it
 compressed in the direction that flatters whoever wrote the last message" — was
 itself a motive story with no mechanism, the exact kind of placeholder this entry is
 about, reached for one message after ruling the pattern out. The real mechanism,
-found by Pollen: each event in the chain contained two things — often a real finding
+found by the Independent Verifier: each event in the chain contained two things — often a real finding
 paired with a wrong first guess — and the summary gave each event only one label,
 displacing the second content onto the next event. A one-slot lag, not a bias toward
 anyone.
@@ -478,20 +478,20 @@ the source events at write time, not paraphrased from the message that already
 summarised it once — otherwise the summary becomes the source and its author
 becomes the finder.
 
-Full chain, channel CRIC-Dev. **`a18f5cf9`, 11:16:43Z (Pollen)** — the sweep, 91
+Full chain, channel CRIC-Dev. **`a18f5cf9`, 11:16:43Z (Independent Verifier)** — the sweep, 91
 citation instances across 37 unique event ids: exactly one wrong timestamp exists
 corpus-wide and every cited id resolves; named D21 and D22. **`20c5cabe`, 11:17:49Z
 (Coordinator)** — the seventh occurrence, D23, by grep; replaced his own fix
 instruction with grep-and-prove-zero; and offered a semantic-framing theory of
-Pollen's undercount, which was wrong and inferred from the symptom. **`e1f677c5`,
-11:18:29Z (Pollen)** — read his own sweep script and named the dedup key `(file,
+the Independent Verifier's undercount, which was wrong and inferred from the symptom. **`e1f677c5`,
+11:18:29Z (Independent Verifier)** — read their own sweep script and named the dedup key `(file,
 event_id, cited_timestamp)`, the one structural fact in the exchange; and attached
 an attention story to it ("read only the first two lines"), which was wrong.
 **`bf3c8f23`, 11:19:23Z (Coordinator)** — withdrew the semantic-framing theory; and
 drew the structural implication, that such a key can express presence but never
 count, so the sweep could not have reported seven regardless of who read its output
-— a second step on Pollen's first, not the first step. **`603fc428`, 11:20:04Z
-(Pollen)** — re-checked against the script, confirmed, and corrected his own written
+— a second step on the Independent Verifier's first, not the first step. **`603fc428`, 11:20:04Z
+(Independent Verifier)** — re-checked against the script, confirmed, and corrected their own written
 note as a correction rather than silently. **`c6fc5d0a`, 11:21:02Z (Coordinator)** —
 named the general rule and assigned this entry.
 
@@ -523,7 +523,7 @@ the field would remove a real capability along with the defect.
 
 **Pattern to reuse:** treat a timestamp cited beside an event id as a claim requiring
 its own check, never as inherited trust from the id resolving. The chosen mechanism
-is a script (`scripts/check_event_citations.py`, assigned to Honey, not yet built as
+is a script (`scripts/check_event_citations.py`, assigned to the Implementation Engineer, not yet built as
 of this writing) that extracts every event-id-plus-timestamp pair from `decisions/`
 and `docs/` and resolves each against the relay directly — mechanical verification of
 a field that has now independently drifted twice, rather than a third round of
@@ -543,7 +543,7 @@ is genuinely load-bearing here, not a convenience.
 
 **Because the resulting control is the weaker, remember-to-run kind, the obligation
 was deliberately not left implicit:** the event-citation sweep is now a standing item
-in Pollen's review scope for every records PR, independent of whether the Coordinator
+in the Independent Verifier's review scope for every records PR, independent of whether the Coordinator
 thinks to name it that round — the same defect this file already ascribes to leaving
 a corrective sweep's scope wherever the person who wrote the instruction happened to
 have already looked (see the entry above), one level up: leaving a proven check's
@@ -553,16 +553,16 @@ a default nobody needs to invoke.
 Full chain: this morning's D21/D22 instance (above); this afternoon's, caught
 independently by two parties before comparing notes — the Memory & Knowledge Manager
 pulled the event directly while investigating an unrelated instruction (unpublished
-at the moment of catching it), Pollen's own citation sweep of PR #47 found the
+at the moment of catching it), the Independent Verifier's own citation sweep of PR #47 found the
 identical mismatch minutes later (channel event
 `699c6df91332a9dc21044051ffe8af3b1c834d94c7b85beb978504b5b3d21fb7`, 2026-09-05T14:27:31Z);
 the Coordinator's ruling on the mechanism rather than the instance, and the rejected
 alternative of deleting the field (channel event
 `e19fb6d8c031e3a6d3fb383a42077f88d70ad87541dcf7e2efe5a0e240c9e783`, 2026-09-05T14:29:43Z);
-Honey's empirical relay-readability check (channel event
+the Implementation Engineer's empirical relay-readability check (channel event
 `40eca17531956f39fccd991e9f7a3d934554e2aba74b759f16667e6d8a7ef933`, 2026-09-05T14:33:54Z);
 the Coordinator's rejected self-consistency alternative and the standing-obligation
-ruling on Pollen's scope (channel event
+ruling on the Independent Verifier's scope (channel event
 `354ddbf52bce9284f5232f9312bda35edef148bc1d7c7675c3c4903fb11389c7`, 2026-09-05T14:34:38Z).
 
 ## Handing over a grep is not enough if the grep's own scope is left where the corrector already looked
@@ -621,9 +621,9 @@ from WP-33a) asserted the exact set of ratified Freeze Points as a literal,
 `decisions/` directory. When PR #44 flipped ADR-0010/0011/0012 to Accepted — the
 correct, intended effect of signing three more Freeze Points — the literal assertion
 failed: `{1, 3, 4, 5, 6, 7} == {1, 6, 7}`. Four people reached the same failure
-independently (a predicted-but-wrong mechanism from Honey, a rebased-tree
+independently (a predicted-but-wrong mechanism from the Implementation Engineer, a rebased-tree
 reproduction from the Memory & Knowledge Manager, a fresh-worktree reproduction from
-Pollen, a live-PR trigger from the Coordinator) before the Coordinator ruled that the
+the Independent Verifier, a live-PR trigger from the Coordinator) before the Coordinator ruled that the
 literal itself was the defect, not the flip that exposed it: **"a test that hardcodes
 live repository state is not testing the generator — it asserts that the world has
 not changed."**
@@ -644,7 +644,7 @@ subset of the valid range, count bounded by the spec constant — adopted here, 
 explicitly a well-formedness check, not a correctness guard: a parser that
 misclassified `Proposed` ADRs as ratified would still pass all three), or (b) a
 **differential oracle** — a second, independently-written implementation of the same
-extraction logic, run against the same real files, asserting the two agree. Pollen
+extraction logic, run against the same real files, asserting the two agree. The Independent Verifier
 built one for this exact case (a separate regex/string-split extractor, not calling
 into the generator's own code) and proved it catches what the invariants can't: it
 was run against a scratch copy of the generator with the original substring-only bug
@@ -665,11 +665,11 @@ PR #44 after reproducing the failure on a rebased tree (event
 `acac0c309678e80e1910eb8cfc6e62de595ea25fb9568995d5bf3cd36fb63d93`, 14:01:45Z); the
 Coordinator's ruling that the literal, not the flip, was the defect (event
 `8d5aeef702d608cdc80f6b4f77e9b8496487244745825e2f6585aaf89f3dd834`, 14:04:04Z);
-Honey's fix to rot-proof invariants, verified against a scratch copy of PR #44's real
+the Implementation Engineer's fix to rot-proof invariants, verified against a scratch copy of PR #44's real
 ADRs (event `5c0d0a342d8431569f9328e338e2aed94ea82faddb937fd054558582998b8d71`,
 14:06:31Z); the Coordinator's explicit refusal to review his own prescription (event
 `f9d36ec94aa3f97df502d1dfc95570dd7726b0a6fb330889328bc09c253efbe1`, 14:08:16Z);
-Pollen's differential-oracle design and planted-defect proof (event
+the Independent Verifier's differential-oracle design and planted-defect proof (event
 `929447ae2065c1ccda09bf49d6a1da8aadcf1fbea9db33f4a5fb5dd764f6b340`, 14:10:46Z); the
 Coordinator's adoption with the self-test condition (event
 `cba4886e73da520da0edf29895d4bc2343d05ef2d2290b17327a1a3a5cc6bcda`, 14:12:00Z). Not
@@ -680,7 +680,7 @@ the citation checker above.
 
 **What happened:** the Engineering Coordinator's standing merge discipline is to diff
 the reviewed commit against the head about to merge, to confirm a rebase changed
-nothing Pollen had already verified. Between Pollen's review of PR #44 (`ab298fc`)
+nothing the Independent Verifier had already verified. Between the Independent Verifier's review of PR #44 (`ab298fc`)
 and its merge, the branch was rebased twice, landing at `205b60c`. `ab298fc` was no
 longer fetchable — `git fetch origin ab298fc` was rejected outright — because a
 rebase abandons the original commit, and GitHub only retains orphaned commits
@@ -688,7 +688,7 @@ temporarily, with no guaranteed window. The reviewed SHA was still recorded, cor
 in the channel thread, which reads like durable evidence; it pointed at an object
 that no longer existed anywhere fetchable. The Coordinator recovered it through
 GitHub's contents API, which happened to still serve the orphaned tree, and diffed
-the six reviewed files individually to confirm Pollen's verdict still carried before
+the six reviewed files individually to confirm the Independent Verifier's verdict still carried before
 merging.
 
 **Why it matters:** a citation to a commit SHA in a permanent record implies the
@@ -714,17 +714,17 @@ instance it describes).
 
 ## A capped fetch failed at two depths in one hour — the wrong thread's content, then the right thread missing its middle
 
-**What happened, first depth (Honey, building the citation checker, PR #51):** `buzz messages thread` returns exit 0 with a *different* thread's content — not an error, not an empty result — when the target event sits outside its default fetch window. An early draft of the checker produced 44 "mismatches" on its first live run against the real repo. Honey did not report that run: a brand-new tool firing 44 times against a repo this team had been auditing all day was exactly the result most tempting to publish as the tool working. He treated it as suspicious instead, and found 41 of the 44 were false — one event genuinely on the relay (confirmed directly via `buzz messages get --since/--before`) but reported as "does not resolve" because the day-1 event it belonged to sat outside `thread`'s reach. Fixed by raising the fetch limit and, more importantly, changing what a miss is allowed to mean: `"could not resolve within the fetch limit"`, never `"does not resolve"` — the function cannot tell absence from out-of-reach, so it must not claim the stronger one.
+**What happened, first depth (Implementation Engineer, building the citation checker, PR #51):** `buzz messages thread` returns exit 0 with a *different* thread's content — not an error, not an empty result — when the target event sits outside its default fetch window. An early draft of the checker produced 44 "mismatches" on its first live run against the real repo. The Implementation Engineer did not report that run: a brand-new tool firing 44 times against a repo this team had been auditing all day was exactly the result most tempting to publish as the tool working. He treated it as suspicious instead, and found 41 of the 44 were false — one event genuinely on the relay (confirmed directly via `buzz messages get --since/--before`) but reported as "does not resolve" because the day-1 event it belonged to sat outside `thread`'s reach. Fixed by raising the fetch limit and, more importantly, changing what a miss is allowed to mean: `"could not resolve within the fetch limit"`, never `"does not resolve"` — the function cannot tell absence from out-of-reach, so it must not claim the stronger one.
 
 **What happened, second depth (Engineering Coordinator, twenty minutes later, in a message specifically confirming he was unaffected by the first depth):** he verified his own day's timestamp citations by fetching the thread with no explicit `--limit` and reported *"101 events returned, spanning 07:47:49 to 14:53:48 — the full thread."* The Memory & Knowledge Manager's independent fetch of the same thread, made minutes later with `--limit 300`, returned 139 events — a gap too large for two minutes of traffic. Re-fetching with `--limit 500` surfaced the mechanism: **the tool's default returns the thread root plus the most recent 100 messages, silently dropping everything between them** — 39 events, running from 07:53 to 10:30, the entire Wave 1 dispatch and two Freeze Point round-2 attacks, missing from a result that still looked complete because it still had the beginning and the end.
 
-**Why it matters, and why the second depth is the more dangerous of the two:** Honey's bug at least produces a wrong answer you can be suspicious of — an unfamiliar thread's content, a surprising mismatch count. The Coordinator's does not. A fetch that always includes the anchor (thread root) and the tail (most recent messages) will *always* look like it spans the full interval, no matter how much is missing from the middle, because the two data points anyone naturally checks — earliest and latest timestamp — are exactly the two data points such a fetch can never drop. **Span is not coverage.** The Coordinator had just finished writing a paragraph asserting immunity to a truncation defect, using evidence that was itself silently truncated in a different way — the same underlying failure (a capped result set presented as complete) recurring one level deeper, inside the very check meant to rule it out.
+**Why it matters, and why the second depth is the more dangerous of the two:** the Implementation Engineer's bug at least produces a wrong answer you can be suspicious of — an unfamiliar thread's content, a surprising mismatch count. The Coordinator's does not. A fetch that always includes the anchor (thread root) and the tail (most recent messages) will *always* look like it spans the full interval, no matter how much is missing from the middle, because the two data points anyone naturally checks — earliest and latest timestamp — are exactly the two data points such a fetch can never drop. **Span is not coverage.** The Coordinator had just finished writing a paragraph asserting immunity to a truncation defect, using evidence that was itself silently truncated in a different way — the same underlying failure (a capped result set presented as complete) recurring one level deeper, inside the very check meant to rule it out.
 
 **Pattern to reuse:** when a fetch or query can be capped, its endpoints prove nothing about its completeness — only count and continuity do. Before treating any result set as the full record: pass an explicit limit set well above the expected size, and confirm the returned count matches what the source should actually hold (a message count, a row count, a file count) rather than checking that the first and last items look right. A silently truncated set that retains its anchor is indistinguishable from a complete one by inspection alone. Separately, and from the same underlying tool defect: a function that cannot distinguish "does not exist" from "exists beyond what I searched" must report the weaker claim — never assert absence from a bounded search.
 
-**A secondary, narrower catch inside the same PR, worth recording alongside:** Honey's own date-extraction logic (a second, unrelated bug in the same script) used an enclosing-parenthesis model that picked up the wrong, much-earlier date for a bare `HH:MM:SSZ` timestamp embedded in a long multi-timestamp prose paragraph (`docs/OPEN_QUESTIONS.md`'s D6 row). Fixed with a running-date model — inherit the nearest preceding full `YYYY-MM-DD` token — and shipped with a named regression test. Unrelated mechanism, same discipline: a surprising tool output was chased to its actual cause rather than reported as the finding.
+**A secondary, narrower catch inside the same PR, worth recording alongside:** the Implementation Engineer's own date-extraction logic (a second, unrelated bug in the same script) used an enclosing-parenthesis model that picked up the wrong, much-earlier date for a bare `HH:MM:SSZ` timestamp embedded in a long multi-timestamp prose paragraph (`docs/OPEN_QUESTIONS.md`'s D6 row). Fixed with a running-date model — inherit the nearest preceding full `YYYY-MM-DD` token — and shipped with a named regression test. Unrelated mechanism, same discipline: a surprising tool output was chased to its actual cause rather than reported as the finding.
 
-Full chain, channel CRIC-Dev, all 2026-09-05: Honey's PR #51, the 44-then-3-true-defects account and both fixes, event
+Full chain, channel CRIC-Dev, all 2026-09-05: the Implementation Engineer's PR #51, the 44-then-3-true-defects account and both fixes, event
 `6f7e4b195849bf5fc25792cc230b39df58994747e22c81f01055defc4e6d3d9c`, 14:53:28Z; the Coordinator's first report treating 101 events spanning the full day as evidence of completeness — the claim later withdrawn, not separately re-cited here since its correction supersedes it; the Memory & Knowledge Manager's independent `--limit 300` fetch returning 139, prompting the discrepancy check, event
 `d72d8b78d1f2a9762dd74cd4b1601dc8c96d3e012f11aec25bb91c020da7de6b`, 14:56:07Z; the Coordinator's self-correction — the root+tail mechanism identified, the 39 missing events named, the "span is not coverage" rule stated — event
 `30f1cd6291fb0b5204f1741b10155aa1476f57fdb8819fca05b10ed2c140a840`, 14:57:20Z.
@@ -752,7 +752,7 @@ $ git log -1 --format='%B' 6b50621 | grep -n 'Second entry\|State the merge-base
 15:itself) had already made stale. State the merge-base alongside any count
 ```
 
-The PR title (line 1) and the first squashed commit's own frozen subject (line 3) read alike because they were written to match, not because they are the same field — line 1 is the evolving PR title, line 3 is a sub-commit message auto-assembled into the body. Lines 12–15 are the more serious of the three: *"State the merge-base alongside any count reported while other PRs are in flight"* is a superseded **instruction**, inherited verbatim from the entry a later commit in the same PR (`WP-41`, line 73) cut for having no real incident behind it — asserted at line 15, retracted at line 73, 58 lines apart, with no reconciliation step. Independently re-derived twice more with a broader grep (Pollen) confirming these were the complete set, not a partial sweep.
+The PR title (line 1) and the first squashed commit's own frozen subject (line 3) read alike because they were written to match, not because they are the same field — line 1 is the evolving PR title, line 3 is a sub-commit message auto-assembled into the body. Lines 12–15 are the more serious of the three: *"State the merge-base alongside any count reported while other PRs are in flight"* is a superseded **instruction**, inherited verbatim from the entry a later commit in the same PR (`WP-41`, line 73) cut for having no real incident behind it — asserted at line 15, retracted at line 73, 58 lines apart, with no reconciliation step. Independently re-derived twice more with a broader grep (Independent Verifier) confirming these were the complete set, not a partial sweep.
 
 **Why it matters — two fixes were proposed and superseded before the real one was found:** the first fix stated was "pass `-t`/`--subject` when review changes a PR's scope" — it failed silently on its own very first live use, three lines into the same commit message it was meant to prevent. The second was "pass `-t` **and** `-b`/`--body`" — attacked immediately as the identical failure shape, since nothing mechanical checks that either flag actually fires; `.github/workflows/ci.yml` never inspects a commit message. **Both were remembered-step rules proposed by the same person who had just been burned by a remembered-step rule, without asking whether the platform let the class of failure be removed.** Only on the third pass was the actual mechanism found: GitHub's `squash_merge_commit_message` repository setting defaults to `COMMIT_MESSAGES` — it is that setting, not squashing itself, that concatenates every squashed commit's own frozen subject and body into the merge commit.
 
@@ -760,6 +760,6 @@ The PR title (line 1) and the first squashed commit's own frozen subject (line 3
 
 **Pattern to reuse:** when a proposed fix is phrased as "remember to do X at merge/review/handoff time," check for a structural or platform-level setting that removes the need to remember before recording X as the standing pattern — a memory-dependent rule replacing another memory-dependent rule only shrinks the blast radius, it does not change the failure mode. Verify any such setting with a fresh read, separate from the call that changed it, and treat a newly-applied setting as an unexercised capability, not a proven control, until a real merge is produced under it and the result is checked directly (`git log -1 --format='%B' <sha>` on the actual merge commit — not a plan for what it should contain). And once a PR's body can become the literal commit message, re-read it against the PR's *final* state immediately before merging — the one thing left to remember shrank, it did not disappear. Channel events:
 `de1a239a616ecaaeee4032d717e32144db464e99d6ffceba80cbe45b011caefe`, 2026-09-05T16:39:48Z (Engineering Coordinator, correcting his own "the body was accurate" claim);
-`803976886ccf335f8950239605627e6ee93d6adacabed86fb908f6879ab4fbe3`, 2026-09-05T16:43:15Z (Pollen, confirming the three sites complete and attacking the two-flag fix as unenforced);
+`803976886ccf335f8950239605627e6ee93d6adacabed86fb908f6879ab4fbe3`, 2026-09-05T16:43:15Z (Independent Verifier, confirming the three sites complete and attacking the two-flag fix as unenforced);
 `5e79c65cb0a2e25153bf73567f3fcf3c27368df9696df4e03419a8a39e7a3435`, 2026-09-05T16:45:24Z (Engineering Coordinator, finding and applying the repository setting, and naming the PR body as the remaining, narrower surface);
-`a748b9a07ce2133aac6c9f097a1dd6ef167a72a1fdc02347f14ad596341a7a71`, 2026-09-05T16:46:42Z (Pollen, independently confirming the setting via a separate `gh api` GET).
+`a748b9a07ce2133aac6c9f097a1dd6ef167a72a1fdc02347f14ad596341a7a71`, 2026-09-05T16:46:42Z (Independent Verifier, independently confirming the setting via a separate `gh api` GET).

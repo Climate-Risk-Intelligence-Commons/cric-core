@@ -64,7 +64,7 @@ states a constraint on what gets added to it going forward.
 ## Consequences
 
 - **Not a Freeze Point.** Reversible by ordinary amendment; no migration required.
-- **Critical-path dependency for Honey's WP-33** (the generation mechanism itself),
+- **Critical-path dependency for the Implementation Engineer's WP-33** (the generation mechanism itself),
   dispatched after WP-18. **Correction, 2026-09-05:** this line originally named the
   package "WP-24" — the Coordinator re-dispatched the same mechanism under a new
   number without checking against this ADR first, and WP-33 (children 33a generator/CI,

@@ -36,7 +36,7 @@ it is an **unratified proposal**, stated as such, never as a settled requirement
 table below applies that test to every Freeze-Point-bearing item, verified directly
 against `decisions/` (currently `0001`–`0009`, no entry for FP2/3/4/5/8) and
 `src/cric_core/` at this document's citation pin, `fa22597` (`identifiers/` and
-`knowledge_state/` only). **Stale-on-arrival correction, caught by Honey's non-author
+`knowledge_state/` only). **Stale-on-arrival correction, caught by the Implementation Engineer's non-author
 review of PR #39 (this branch was rebased onto `origin/main` `72f3fb7` after this
 prose was drafted, to avoid conflicts, without updating the prose to match):** this
 branch's actual tip also carries `src/cric_core/review/` — WP-32, PR #38, merged
@@ -105,7 +105,7 @@ Detail per Freeze-Point-bearing item, each independently verified:
   (`72f3fb7`)**, `src/cric_core/review/__init__.py`. At this document's own citation
   pin (`fa22597`) it was still WP-32's current work, not yet merged; corrected here
   because the branch that ships this prose sits past that point in history (caught by
-  Honey's PR #39 review). Framed precisely: FP7 is ratified (ADR-0009 branch 2
+  the Implementation Engineer's PR #39 review). Framed precisely: FP7 is ratified (ADR-0009 branch 2
   satisfied) with a partial down payment in branch-1 territory from WP-18, and WP-32
   now completes branch 1 for the item as a whole — item 9 is fully shipped code, not
   partial.

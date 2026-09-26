@@ -16,8 +16,8 @@ repository depends on this. Build-order item 1 of 11 in Phase 1.
 `CRIC:<namespace>:<type>:<ulid>`, three examples, and a prohibition on short IDs being
 canonical. It does not settle the namespace set, the type/registry relationship, which
 ULID specification, case sensitivity, or separator handling. Ratification checkpoint
-per `docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2: Fizz assembles and
-cites the candidate → Pollen does blast-radius verification and tries to break it →
+per `docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2: the Requirements Analyst assembles and
+cites the candidate → the Independent Verifier does blast-radius verification and tries to break it →
 Ashley signs.
 
 ## Decision
@@ -75,7 +75,7 @@ containing `I`/`L`/`O`/`U`, and `CRIC-LAKE-001` (the short form — must not par
    carries the `id_segment` explicitly per type. A converter still ships, demoted to a
    registration-time suggestion — the stored value is authoritative, not a derivation.
 
-**Accepted alongside the six, not itself an open decision:** Fizz's minting-immutability
+**Accepted alongside the six, not itself an open decision:** the Requirements Analyst's minting-immutability
 guardrail — once an `id_segment` has been used in a minted ID, it is immutable.
 Renaming a type's display `name:` later adds an alias; it never rewrites the segment. A
 segment changing after objects exist under it would silently break resolution for
@@ -103,31 +103,31 @@ byte-exact comparison requirement.
   real need is an amendment risk with no offsetting benefit today.
 - **Deriving `<type>` algorithmically from the registry's PascalCase `name:` field**,
   used as the authoritative value at ID-validation time. This was the position all of
-  Fizz, Pollen, and Honey converged toward independently — Fizz recommended an
-  acronym-aware converter, Pollen implemented and verified one against the whole
+  the Requirements Analyst, the Independent Verifier, and the Implementation Engineer converged toward independently — the Requirements Analyst recommended an
+  acronym-aware converter, the Independent Verifier implemented and verified one against the whole
   corpus. The convergence itself is what the Coordinator flagged as the signal:
   everyone solved "make the converter correct" and nobody asked whether a converter
   should be the source of truth. Rejected because the failure mode is silent (a wrong
   derivation produces a well-formed ID that simply fails to resolve, undetectable until
   then) and the corpus already contains ambiguous acronym cases (`GLOFEvent`, and two
-  more Pollen found while verifying, one of which is the root of the type tree) that no
+  more that the Independent Verifier found while verifying, one of which is the root of the type tree) that no
   fixed algorithm can be proven correct against as the vocabulary grows into the
   hundreds. The converter is retained as a registration-time suggestion — the
-  verification work by Fizz and Pollen is not wasted, it just stops being the source of
+  verification work by the Requirements Analyst and the Independent Verifier is not wasted, it just stops being the source of
   truth.
 
 ## Ratification chain
 
 - **Dispatched:** Engineering Coordinator, WP-5, event
   `7c645c42b6ade526512b035b00fd6957a8102ae43b8ac6622898b26fdbbeaf7f`, 2026-08-29T14:39:35Z.
-- **Assembled and cited:** Fizz, event
+- **Assembled and cited:** Requirements Analyst, event
   `7d3117eae73d53bf3b489387dc05f066774cbbcecc263d521d2550f9c30513ae`, 2026-08-29T14:42:59Z.
   Amended twice more: incorporating the Coordinator's evidence corrections (ULID-grep
   framing, a third identifier-form citation, the Asset/DataAsset drift's known cause),
   event `c360d888679ee8078ccf1719e94a9b2bfba9032ba2204b888cfb7a6abfe03c7f`; and folding
-  in Pollen's decision-6 finding, event
+  in the Independent Verifier's decision-6 finding, event
   `2790ba9c9b90fa626e72a1eac4185eb2032743d6fd50e14710fe0cd819557c73`, 2026-08-29T14:46:50Z.
-- **Blast-radius verified and attacked:** Pollen, event
+- **Blast-radius verified and attacked:** Independent Verifier, event
   `8d0c3e567dc8f0250cf139e74ab20fab4beef25b62b1c28e90bd4649a4a66628`, 2026-08-29T14:45:58Z
   (every citation checked at source, nothing broke under attack, decision 6 discovered
   independently as a real gap) and mechanical re-verification event
@@ -136,7 +136,7 @@ byte-exact comparison requirement.
   traced by eye).
 - **Ruled:** Engineering Coordinator, event
   `c32f57f60ae85ebf4bdbb2c48b3b8750b8b02e03623b89999673f4c728bb02a3`, 2026-08-29T14:49:29Z
-  — decisions 1–5 as Fizz recommended; decision 6 against both Fizz's and Pollen's
+  — decisions 1–5 as the Requirements Analyst recommended; decision 6 against both the Requirements Analyst's and the Independent Verifier's
   converged position, for the reason stated above.
 - **Accepted:** Ashley, event
   `1426b5ec5f0bb8bc571322b44e9cbce025fee3d4eb70997ff7677e602316c62a`, 2026-08-29T14:58:22Z
@@ -158,7 +158,7 @@ byte-exact comparison requirement.
   Point rule.
 - **WP-6 (Phase 1, build-order item 1: identifier types), against this ADR, merged**
   to `main` at `fda79b1` (PR #17, 2026-08-29T15:29:41Z) — `src/cric_core/identifiers/`,
-  TDD, rejection tests for every malformed example Fizz enumerated,
+  TDD, rejection tests for every malformed example the Requirements Analyst enumerated,
   `CRIC-LAKE-001` correctly does not parse. Does not implement the type registry
   (decision 5) — that is a separate, later work package. Freeze Point 1 is now
   executable code, not only a ratified grammar.
@@ -167,7 +167,7 @@ byte-exact comparison requirement.
   contents, precisely because that description would otherwise go stale the way
   this line originally did (it asserted the row was incomplete after WP-8 had
   already corrected it — see `docs/LESSONS.md` for the general pattern).
-- **The PascalCase→snake_case converter code Pollen wrote during verification is not
+- **The PascalCase→snake_case converter code the Independent Verifier wrote during verification is not
   wasted** — it ships as the registration-time suggestion tool per decision 6, just not
   as the authoritative resolver.
 - **This is the first of 8 Freeze Points to lock** and the first live exercise of the

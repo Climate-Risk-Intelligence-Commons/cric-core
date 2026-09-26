@@ -51,7 +51,7 @@ decision anymore — D1 (org) and D2 (licence) are both Resolved in
 | State & sequence | GSD (`.planning/`) | PROJECT/REQUIREMENTS/ROADMAP/STATE, phase status |
 | Task shape | CRIC's own Coding-Agent Work Package Rule (YAML) | Binding — no implementation starts without one |
 | Per-package craft | superpowers skills | TDD by default, worktrees, debugging, review, verification |
-| Accountability | Fizz / Honey / Pollen / Memory & Knowledge Manager / Engineering Coordinator | Decide / implement / verify / record / coordinate |
+| Accountability | Requirements Analyst / Implementation Engineer / Independent Verifier / Memory & Knowledge Manager / Engineering Coordinator | Decide / implement / verify / record / coordinate |
 
 Codex (`codex-cli 0.146.1`) is an adversarial second opinion (review / challenge /
 consult modes) on freeze-point and security-sensitive work packages for v0.1 — not a
@@ -72,8 +72,8 @@ Current status of the one run that's happened: `docs/OPEN_QUESTIONS.md` D6.
 temporal model, provenance model, relationship representation, knowledge-state
 vocabulary, review decision schema, agent manifest schema. Per
 `CRIC-Repository-Dependency-and-Implementation-Sequence.md`, each "remains possible to
-change but requires explicit migration after freeze." Ratification checkpoint: Fizz
-assembles and cites the candidate → Pollen does blast-radius verification → Ashley
+change but requires explicit migration after freeze." Ratification checkpoint: the Requirements Analyst
+assembles and cites the candidate → the Independent Verifier does blast-radius verification → Ashley
 signs off (`docs/CRIC-Implementation-Team/02-New-Role-Gap-Analysis.md` §2).
 **Freeze Point 1 (ID format) is ratified and locked** — `decisions/0004-freeze-point-1-identifier-format.md`,
 approver Ashley, 2026-08-29. WP-6 (build-order item 1, identifier types), against the
@@ -82,17 +82,17 @@ locked grammar, is **merged** — `main` at `fda79b1` (PR #17): `src/cric_core/i
 
 **Freeze Points 6 and 7 (knowledge-state vocabulary; review decision schema) are
 ratified and locked as one unit** — `decisions/0007-freeze-points-6-7-knowledge-state-review-decision.md`,
-approver Ashley, 2026-09-03. **Implemented** — Honey's WP-18 (build-order item 2,
+approver Ashley, 2026-09-03. **Implemented** — the Implementation Engineer's WP-18 (build-order item 2,
 knowledge-state models), PR #29, merged to `main` `f5d8a06` (2026-09-04):
 `src/cric_core/knowledge_state/`, verified against the ADR decision-by-decision and
-attacked by planted violation on all four highest-risk criteria (Pollen), full suite
+attacked by planted violation on all four highest-risk criteria (Independent Verifier), full suite
 re-verified 139 passed. Freeze Point 1 and Freeze Points 6+7 are now both executable,
 tested code — two of the now-six ratified Freeze Points implemented (see below;
 Freeze Points 3, 4 and 5 ratified 2026-09-05, no shipped code yet). Freeze Point 4
 (provenance model) briefly looked coupled into the FP6+7 ratification and was found
 not to be — it ratified separately as ADR-0011, below.
 
-**Freeze Point 7 gained a second piece of shipped code, 2026-09-05: Honey's WP-32
+**Freeze Point 7 gained a second piece of shipped code, 2026-09-05: the Implementation Engineer's WP-32
 (build-order item 9, registry §10), PR #38, merged to `main` `72f3fb7`** —
 `src/cric_core/review/__init__.py`: `ReviewQueueState` (9 values) and
 `ReviewDecisionValue` (6 values), same `StrEnum`+`.parse()`-raises idiom as
@@ -106,7 +106,7 @@ assumed: ADR-0007 ratified FP7 without enumerating either vocabulary, so transcr
 values" is the ADR-0006 precedent (propagation), not an amendment (contrast §8's
 hedged "include"/"may include" for predicates, which is why FP5 needed a closure
 decision — ADR-0010, below — and this didn't). Non-author-reviewed per this package's
-own requirement (Pollen, clean pass). Full local gate at merge: `ruff`/`mypy` clean,
+own requirement (Independent Verifier, clean pass). Full local gate at merge: `ruff`/`mypy` clean,
 bare `pytest` **166 passed** (139 existing + 27 new), `rev-parse` unchanged
 before/after.
 
@@ -181,17 +181,17 @@ saying it didn't apply), FP3's original `Observation.value` placement (an untype
 field with nothing saying it was closed), and this morning's `derived_from` inference
 that wrongly closed carve-out #4. All three caught, none by the author alone.
 
-**FP2 has an unresolved internal disagreement, found 2026-09-04 (WP-28, Fizz/Pollen/Engineering
+**FP2 has an unresolved internal disagreement, found 2026-09-04 (WP-28, Requirements Analyst/Independent Verifier/Engineering
 Coordinator) and not yet a dispatched work package.** FP2's entire subject is "which
 fields every canonical object carries." **Three** documents purport to declare that,
 and they disagree. `Core-Ontology-Specification.md`'s `# CRICObject` lists 13 fields;
 `OKF-Knowledge-Graph-Specification.md`'s `# Universal Frontmatter` YAML lists 16 keys.
-Arithmetic closes exactly (independently re-derived by both Pollen and the Coordinator,
+Arithmetic closes exactly (independently re-derived by both the Independent Verifier and the Coordinator,
 `main` `f5d8a06`): `CRICObject`'s `schema_version` splits into `cric_schema_version` +
 `okf_version` (net +1), and `spatial` + `epistemic` are wholly absent from `CRICObject`
 (net +2) — 13 − 1 + 2 = 16. Neither list is a miscount of the other; they are two
 genuinely different canonical declarations. **A third surfaced testing ADR-0009**
-(2026-09-04, found by the Coordinator, attacked and confirmed by Pollen same day):
+(2026-09-04, found by the Coordinator, attacked and confirmed by the Independent Verifier same day):
 `.planning/REQUIREMENTS.md`'s `OKF-01` (rescue ref `74ac966`) lists 6 mandatory header
 fields, of which only 2 (`id`, `knowledge_state`) match the 12 the other two
 declarations agree on — `source_type` is invented outright (zero occurrences
@@ -210,7 +210,7 @@ need its own FP6 despite living in FP2's frontmatter block), not FP3 (`Sequence.
 own FP3 line is three words, "temporal model," no "epistemic"). Blocks build-order item
 6 (`CRICObject` base hierarchy) once picked up — not yet dispatched as a work package;
 the Coordinator is deliberately taking time on the routing rather than ruling quickly,
-having withdrawn one same-day routing ruling already (FP2, in favour of Pollen's "gap,
+having withdrawn one same-day routing ruling already (FP2, in favour of the Independent Verifier's "gap,
 not a choice" finding). New open item, not ratified, not attacked: whether
 `modified_values` should also exclude `epistemic.status` on policy grounds separate
 from ADR-0007's own stated scope.
@@ -230,7 +230,7 @@ covered in Architecture Freeze Points above. Confirmed live in this worktree at 
 citation pin, `fa22597`: `ls src/cric_core/` shows both directories present with real
 content, not stubs — `identifiers/__init__.py` (3737 bytes) and
 `knowledge_state/__init__.py` (12794 bytes). **Item 9 has since shipped too — caught
-stale by Honey's PR #39 review, not by this pass:** this branch was rebased onto
+stale by the Implementation Engineer's PR #39 review, not by this pass:** this branch was rebased onto
 `origin/main` `72f3fb7` after this prose was drafted (to avoid conflicts) without the
 prose being updated to match, and `72f3fb7` includes PR #38 (WP-32,
 `src/cric_core/review/`, review contracts) merged before that rebase point. **Items
@@ -287,7 +287,7 @@ checks on `main` are **enabled** (`contexts: ["test"]`, `strict: true`) — conf
 live via `gh api repos/.../branches/main/protection`, not narrated from the
 Engineering Coordinator's own report of taking the action.
 
-`[project.optional-dependencies] dev` (PR #31, WP-26/27, Honey): `ruff` and `mypy` are
+`[project.optional-dependencies] dev` (PR #31, WP-26/27, Implementation Engineer): `ruff` and `mypy` are
 **pinned exact** (`ruff==0.16.6`, `mypy==2.3.1`, read from a green CI log, not off
 PATH) so the required check can't go red from an unrelated upstream release; `pytest`
 and `build` stay unpinned deliberately (the Coordinator's reasoning, not re-litigated
@@ -323,7 +323,7 @@ tests: #31 linter pinning, #32 docs, #28 README, #25 CoC), re-verified directly 
 pass, `rev-parse` confirmed. **166 as of 2026-09-05, `main` `72f3fb7`** (PR #38/WP-32
 merged — `src/cric_core/review/` plus its test modules, 27 new; no test-affecting
 merge between `a3e88a1` and here). Verified twice, independently, the same day:
-Honey's own gate on the PR branch, and separately the Engineering Coordinator's
+the Implementation Engineer's own gate on the PR branch, and separately the Engineering Coordinator's
 clean-clone install-and-test run of the merged README instructions — his **first**
 attempt, against the local checkout at a stale ref rather than a fresh clone of the
 public repo, wrongly reported 32 and was caught and corrected before being reported
@@ -442,11 +442,11 @@ restating it:
 | Area | File(s) | Status | Record |
 |---|---|---|---|
 | Licence | `LICENSE` | AGPL-3.0, decided, applied | D2, `docs/OPEN_QUESTIONS.md` |
-| README | `README.md` | Dual-audience rebuild (Fizz, WP-23a), contact filled (D8) — merged to `main`, PR #28. **WP-33's restructure landed, PR #42, `main` `1945c2a`**: hand-written module list retired for a CI-generated `<!-- BUILD-STATUS:START/END -->` block, `contributes to`→`refines` predicate fix applied, heading renamed to "Build status" (not the Coordinator's "keep 'What exists today'" recommendation — D16's own row flags this as unconfirmed whether deliberate or overlooked, not asserted either way). Separately, D17 (funder-class naming in the existing contributor table) resolved as stands-as-shipped. | this thread, D16, D17 |
-| Contributing / Governance | `CONTRIBUTING.md`, `GOVERNANCE.md` | Root pointer files to existing PRD specs (Honey, WP-19) | `docs/OPEN_QUESTIONS.md` |
-| Code of Conduct | `CODE_OF_CONDUCT.md` | Contributor Covenant v2.1 verbatim; enforcement contact resolved 2026-09-04 (D8) — both addresses, per the Coordinator's ruling — merged to `main`, PR #25 (Honey, WP-19c) | D8, `docs/OPEN_QUESTIONS.md` |
-| Security | `SECURITY.md` | Private Vulnerability Reporting, live, stated unconditionally (Honey, WP-19a) | `docs/OPEN_QUESTIONS.md` |
+| README | `README.md` | Dual-audience rebuild (Requirements Analyst, WP-23a), contact filled (D8) — merged to `main`, PR #28. **WP-33's restructure landed, PR #42, `main` `1945c2a`**: hand-written module list retired for a CI-generated `<!-- BUILD-STATUS:START/END -->` block, `contributes to`→`refines` predicate fix applied, heading renamed to "Build status" (not the Coordinator's "keep 'What exists today'" recommendation — D16's own row flags this as unconfirmed whether deliberate or overlooked, not asserted either way). Separately, D17 (funder-class naming in the existing contributor table) resolved as stands-as-shipped. | this thread, D16, D17 |
+| Contributing / Governance | `CONTRIBUTING.md`, `GOVERNANCE.md` | Root pointer files to existing PRD specs (Implementation Engineer, WP-19) | `docs/OPEN_QUESTIONS.md` |
+| Code of Conduct | `CODE_OF_CONDUCT.md` | Contributor Covenant v2.1 verbatim; enforcement contact resolved 2026-09-04 (D8) — both addresses, per the Coordinator's ruling — merged to `main`, PR #25 (Implementation Engineer, WP-19c) | D8, `docs/OPEN_QUESTIONS.md` |
+| Security | `SECURITY.md` | Private Vulnerability Reporting, live, stated unconditionally (Implementation Engineer, WP-19a) | `docs/OPEN_QUESTIONS.md` |
 | CI | `.github/workflows/ci.yml` | ruff → mypy → pytest → build; `test` required check; **no job added without an existing subject to examine**. **Build-status freshness check added, PR #42** (`generate_build_status.py --check`, in the `test` job after Test, before Build). **Hazard found and fixed in the same PR, not left open:** the generator's first cut derived "N of 8 Freeze Points ratified" by mechanically matching the substring "Architecture Freeze Point" in a `decisions/` Status line — which would have counted `decisions/0010`'s pre-signature "Proposed — Architecture Freeze Point candidate… not yet signed" as ratified (the Coordinator caught this reviewing PR #40). Fixed to require the Status line's value be literally `Accepted` **and** contain "Architecture Freeze Point" — a positive-marker check, not a phrase future ADR authors have to write around. | ADR-0008 |
 | Branch protection | GitHub repo settings | Strict mode + `enforce_admins`, unchanged; stated exit condition if a batch stalls badly | D3, `docs/OPEN_QUESTIONS.md` |
 | Decision records | `decisions/`, `docs/DECISION_REGISTER.md` | Established convention, unchanged | `decisions/0001` |
-| Build status (README) | — | **CI-generated, not hand-typed** — mechanism built as **WP-33** (children 33a generator/CI, 33b README restructure). **Numbering correction, 2026-09-05:** ADR-0008's text named this "Honey's WP-24," a discrepancy this file flagged as unreconciled in WP-34 (this row's own prior text, superseded here). Ruled by the Coordinator: he re-dispatched the same mechanism under a new number without checking; WP-33 is the identifier that actually ran and shipped, WP-24 its earlier working name. `decisions/0008-ci-generated-build-status.md` corrected to say so in this same records package. **Landed, PR #42, `main` `1945c2a`** — see D16. | ADR-0008, D16 |
+| Build status (README) | — | **CI-generated, not hand-typed** — mechanism built as **WP-33** (children 33a generator/CI, 33b README restructure). **Numbering correction, 2026-09-05:** ADR-0008's text named this "the Implementation Engineer's WP-24," a discrepancy this file flagged as unreconciled in WP-34 (this row's own prior text, superseded here). Ruled by the Coordinator: he re-dispatched the same mechanism under a new number without checking; WP-33 is the identifier that actually ran and shipped, WP-24 its earlier working name. `decisions/0008-ci-generated-build-status.md` corrected to say so in this same records package. **Landed, PR #42, `main` `1945c2a`** — see D16. | ADR-0008, D16 |

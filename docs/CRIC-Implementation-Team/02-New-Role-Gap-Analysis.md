@@ -4,7 +4,7 @@
 
 Stated up front because it governs every conclusion below: **a role only earns
 creation when a specific named phase or task needs it and the four existing
-generalists (Fizz, Honey, Pollen, Memory & Knowledge Manager) provably don't cover
+generalist roles (Requirements Analyst, Implementation Engineer, Independent Verifier, Memory & Knowledge Manager) provably don't cover
 it.** The default answer to "should we add a role" is no. This document is not trying
 to produce a complete-looking org chart — it is trying to name the smallest set of
 exceptions to "the four generalists handle everything," and to reframe as much as
@@ -19,9 +19,9 @@ says so and stops there.
 
 Walking all 14 phases (plus Phase 0) against the four generalists' functions
 (requirements/domain analysis, implementation, verification, decisions/documentation),
-most phases show no gap: Fizz can supply the authoritative-PRD-sections framing (as
-already demonstrated in `Domain-Phase-Mapping.md`), Honey can implement against a
-Work Package Rule YAML, Pollen can verify against its `acceptance_criteria`, and the
+most phases show no gap: the Requirements Analyst can supply the authoritative-PRD-sections framing (as
+already demonstrated in `Domain-Phase-Mapping.md`), the Implementation Engineer can implement against a
+Work Package Rule YAML, the Independent Verifier can verify against its `acceptance_criteria`, and the
 Memory & Knowledge Manager can record the outcome and any decisions made. This is true
 without further scrutiny for Phases 2, 3, 5, 6, 9, 10, 11, 12, and 13 — none of them
 introduce a function the four don't already have a plausible claim to.
@@ -62,19 +62,19 @@ functions the four generalists already own:
 - Assembling the candidate freeze-point specification with correct citations to its
   authoritative PRD sections, and checking it doesn't contradict a higher-precedence
   document (`CRIC-Schema-and-Vocabulary-Registry.md` outranks specialised docs per
-  `CRIC-PRD-MASTER.md`) — this is Fizz's existing function, exercised at one
+  `CRIC-PRD-MASTER.md`) — this is the Requirements Analyst's existing function, exercised at one
   particularly consequential moment rather than a new function.
 - Independently verifying the candidate against downstream impact — `Domain-Phase-Mapping.md`'s
   Freeze Point table already shows exactly which phases (e.g. Freeze Point 3, the
   temporal model, gates Phases 4, 5, 6, 9, 10) would be affected by getting this
-  wrong — this is a blast-radius verification, which is Pollen's existing function.
+  wrong — this is a blast-radius verification, which is the Independent Verifier's existing function.
 - Final human sign-off given the "explicit migration" cost of reversing a bad freeze —
-  this is Ashley's role, not any agent's.
+  this is the Core Maintainer's role, not any agent's.
 
 No new capability is missing; what's missing (if anything) is a defined *moment* —
 a named checkpoint at Phase 1's exit (and again, rarely, whenever a migration to an
-already-locked Freeze Point is proposed) where Fizz and Pollen are explicitly
-dispatched together against the freeze-point candidate before Ashley signs off. That
+already-locked Freeze Point is proposed) where the Requirements Analyst and the Independent Verifier are explicitly
+dispatched together against the freeze-point candidate before the Core Maintainer signs off. That
 checkpoint should be written into the Phase 1 exit-criterion review (see
 `00-Overview-and-Superpowers-Codex-Pathway.md` §2's row on `requesting-code-review` /
 `receiving-code-review`), not staffed by a new identity.
@@ -98,13 +98,12 @@ repositories at once* — branch protection and CI conventions that every later 
 must inherit consistently, and a release manifest/compatibility matrix that has to be
 true of ten-plus independently-buildable repositories simultaneously.
 
-This could plausibly already sit inside Honey's "Implementation Engineer" mandate —
+This could plausibly already sit inside the Implementation Engineer's "Implementation Engineer" mandate —
 setting up CI and branch protection is still "build to spec," just applied to
 repository infrastructure instead of product code, and a release manifest is still a
-deliverable with acceptance criteria Pollen can verify. The reason this document
-accepts it as a genuine (if narrow) gap rather than folding it silently into Honey's
-existing mandate: the confirmed cross-project identity finding means Honey's mandate
-was tuned against EnergyMatrix, which — as far as this study can determine — is a
+deliverable with acceptance criteria the Independent Verifier can verify. The reason this document
+accepts it as a genuine (if narrow) gap rather than folding it silently into the Implementation Engineer's
+existing mandate: the Implementation Engineer mandate as written was tuned against EnergyMatrix, which — as far as this study can determine — is a
 single-repo project. Coordinating CI conventions, branch protection, and a
 compatibility matrix *consistently across ten-plus independently-versioned
 repositories at once* is a different surface area than implementing features inside
@@ -116,11 +115,11 @@ only load-bearing at two of them.
 ### Spec: Build & Release Engineer (temporary/rotating responsibility)
 
 - **Not a permanent identity.** This is a responsibility that activates at named
-  phases, most plausibly carried by Honey under an explicitly widened brief for just
-  those phases — confirm with Ashley whether Honey should simply carry this brief
+  phases, most plausibly carried by the Implementation Engineer under an explicitly widened brief for just
+  those phases — confirm with the Core Maintainer whether the Implementation Engineer should simply carry this brief
   directly, before standing up any separate instruction set. The spec below is
-  written so it can be handed to Honey-scoped-for-this-purpose or to a distinct
-  identity, whichever Ashley prefers.
+  written so it can be handed to Implementation-Engineer-scoped-for-this-purpose or to a distinct
+  identity, whichever the Core Maintainer prefers.
 - **Activation window:** Phase 0 (full activation), a light standing custodial tail
   through Phases 1–13 (apply Phase 0's CI/branch-protection template consistently as
   each new repository comes online — no new judgment calls, just consistent
@@ -150,17 +149,17 @@ only load-bearing at two of them.
   four roles need by default — plus write access to CI configuration files and
   read-only access to every repository's test results for the Phase 14 compatibility
   matrix. Should **not** have merge rights into product-code branches; that stays
-  with Honey and the normal review gates.
-- **Handoff points:** receives the repository list and dependency order from Fizz's
-  domain-mapping function (already produced in `Domain-Phase-Mapping.md`); Honey owns
+  with the Implementation Engineer and the normal review gates.
+- **Handoff points:** receives the repository list and dependency order from the Requirements Analyst's
+  domain-mapping function (already produced in `Domain-Phase-Mapping.md`); the Implementation Engineer owns
   all product-code implementation once Phase 0 scaffolding exists, with no overlap;
-  Pollen verifies each repository's CI actually enforces the Coding-Agent Work
+  the Independent Verifier checks that each repository's CI actually enforces the Coding-Agent Work
   Package Rule's `tests_required`/`acceptance_criteria` fields before the Phase 14
   manifest is finalized; the Memory & Knowledge Manager records the release manifest
   and compatibility matrix as the permanent record once Phase 14 closes.
-- **Restraint note, restated:** confirm with Ashley whether Honey's existing mandate
+- **Restraint note, restated:** confirm with the Core Maintainer whether the Implementation Engineer's existing mandate
   already covers this before treating it as a separate instruction set at all — the
-  case for a distinct brief rests on an unverified assumption (that Honey's tuning is
+  case for a distinct brief rests on an unverified assumption (that the Implementation Engineer's tuning is
   single-repo-shaped), not a confirmed one.
 
 ---
@@ -186,8 +185,8 @@ authoritative PRD sections for this phase per `Domain-Phase-Mapping.md`'s citati
 them. If those documents already fully specify the schema (which this study did not
 verify by reading them directly — see caveat below), then Phase 4's build-time job is
 schema *implementation* against a written spec plus the explicit
-extend-don't-redefine constraint, which sits inside Fizz's requirements-interpretation
-function and Honey's implementation function without requiring new scientific
+extend-don't-redefine constraint, which sits inside the Requirements Analyst's requirements-interpretation
+function and the Implementation Engineer's implementation function without requiring new scientific
 judgment.
 
 **Caveat on this conclusion:** this study did not deep-read
@@ -207,12 +206,12 @@ the gap, if it exists at all, is narrow and occasional, not a permanent function
 
 | Candidate | Verdict | Disposition |
 |---|---|---|
-| Freeze Point ratification | Reject as new role | Joint Fizz (assemble + cite) + Pollen (blast-radius verify) + Ashley (sign-off) checkpoint at Phase 1 exit and any later migration proposal |
-| DevOps/Release Engineer (Phase 0 + Phase 14) | **Accept**, narrowly | Temporary/rotating "Build & Release Engineer" brief, most plausibly carried by Honey under a widened scope for just these two phases — confirm with Ashley before treating as a separate instruction set |
+| Freeze Point ratification | Reject as new role | Joint Requirements Analyst (assemble + cite) + Independent Verifier (blast-radius verify) + Core Maintainer (sign-off) checkpoint at Phase 1 exit and any later migration proposal |
+| DevOps/Release Engineer (Phase 0 + Phase 14) | **Accept**, narrowly | Temporary/rotating "Build & Release Engineer" brief, most plausibly carried by the Implementation Engineer under a widened scope for just these two phases — confirm with the Core Maintainer before treating as a separate instruction set |
 | Domain/Ontology Specialist (Phase 4) | Reject as standing role | Escalation-only: a named one-off subject-matter reviewer if and only if Phase 4 work surfaces an open scientific judgment call the written domain PRD docs don't resolve |
 
 One genuine gap surfaces from this pass, and it is scoped as narrowly as the evidence
 supports: two bookend phases needing a release-engineering brief that may or may not
-already live inside Honey's mandate. Everything else in the 14-phase sequence is
-covered by Fizz, Honey, Pollen, and the Memory & Knowledge Manager, either directly or
+already live inside the Implementation Engineer's mandate. Everything else in the 14-phase sequence is
+covered by the Requirements Analyst, Implementation Engineer, Independent Verifier, and Memory & Knowledge Manager, either directly or
 via the checkpoint/escalation patterns above.

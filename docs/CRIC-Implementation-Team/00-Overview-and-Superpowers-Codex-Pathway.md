@@ -42,7 +42,7 @@ software engineering on the repositories the product agents live in.**
 - `docs/CRIC-PRD-v0.1/ai/Agent-Team-Specifications.md` and
   `.../ai/Agent-Commons-Architecture.md` — read for the product-vs-build-time
   distinction above; not otherwise used in this study.
-- The companion document `Domain-Phase-Mapping.md` (produced by Fizz, currently on
+- The companion document `Domain-Phase-Mapping.md` (produced by the Requirements Analyst, currently on
   branch `fizz/cric-implementation-team-domain-mapping`, to be merged into this folder
   — see §6) — maps each of the 14 phases to its authoritative PRD sections, which
   Freeze Points gate it, and where it can run in parallel. This document assumes that
@@ -110,7 +110,7 @@ criteria are engine-agnostic by construction. This is most plausible for:
   version before either is merged (this is a stronger form of `requesting-code-review`,
   not a replacement for it).
 
-This placement is a reasonable default, not a confirmed methodology — Ashley's brief
+This placement is a reasonable default, not a confirmed methodology — the Core Maintainer's brief
 names Codex as "methodology" alongside superpowers without further detail, and the
 exact operational contract (does Codex receive the same YAML work package? does it
 run inside the same worktree?) should be confirmed before this is relied on for real
@@ -137,7 +137,7 @@ schema and states its purpose plainly: "This prevents coding agents from
 opportunistically redesigning CRIC architecture while implementing a narrow task."
 This study adopts it, unmodified, as the **mandatory shape for every task handed to
 any build-time agent** — Claude Code, Codex, or otherwise — regardless of which of the
-four existing generalists (see `01-Existing-Agent-Fit-Assessment.md`) or which new role
+existing generalist roles (see `AGENTS.md` §9) or which new role
 (see `02-New-Role-Gap-Analysis.md`) is doing the work.
 
 ```yaml
@@ -197,7 +197,7 @@ work_package:
       flexibility" — Freeze Point 1 is singular by design
   review_required: >
     Independent verification against the acceptance criteria above before
-    merge (see 01-Existing-Agent-Fit-Assessment.md for who). Because this work
+    merge (see AGENTS.md §9 for who). Because this work
     package establishes a Freeze Point, it additionally requires the
     freeze-point ratification checkpoint described in
     02-New-Role-Gap-Analysis.md before any phase depending on Freeze Point 1 is
@@ -212,7 +212,7 @@ only the content of each field changes.
 ## 6. Companion document — the domain-phase mapping
 
 `Domain-Phase-Mapping.md`, in this same folder, is the domain-mapping half of this
-study, produced independently by Fizz and merged in alongside this document and the
+study, produced independently by the Requirements Analyst and merged in alongside this document and the
 two that follow it — for each of the 14 phases, which PRD sections are authoritative,
 which of the 8 Architecture Freeze Points gate it, and where parallelism is safe. It
 is deliberately not duplicated or re-derived here; read it as this document's

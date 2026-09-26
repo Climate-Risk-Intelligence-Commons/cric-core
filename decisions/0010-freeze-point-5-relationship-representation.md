@@ -25,12 +25,12 @@ not had that specific check run against it yet.
 `CRIC-Schema-and-Vocabulary-Registry.md` §8 lists predicates but hedges with
 "include"/"may include" (no exhaustiveness claim), and separately states "Predicates
 MUST be registered and versioned" without specifying a registration mechanism —
-confirmed verbatim, zero exceptions, by direct reading (Pollen, WP-31 verification
+confirmed verbatim, zero exceptions, by direct reading (Independent Verifier, WP-31 verification
 pass). `OKF-Knowledge-Graph-Specification.md:269` corroborates the hedge ("§8 is the
 sole authority... illustrative, not exhaustive") and `:271` supplies the missing
 mechanism: "domain repositories may extend predicates through ontology proposals."
 
-Assembled by Fizz as WP-31 from two children; attacked by Pollen, who confirmed the
+Assembled by the Requirements Analyst as WP-31 from two children; attacked by the Independent Verifier, who confirmed the
 direction-representation claim holds against three separate attempts to break it, and
 confirmed the evidence-field gap (below) is real rather than manufactured.
 
@@ -39,7 +39,7 @@ confirmed the evidence-field gap (below) is real rather than manufactured.
 **1. Predicate vocabulary — closed at exactly 35.** The canonical set is precisely
 the predicates registry §8 enumerates: 11 core relationship predicates, 23
 spatial/domain predicates, 1 structural predicate (35 total, independently counted
-twice — Fizz's assembly and Pollen's verification pass agree). Explicitly excluded:
+twice — the Requirements Analyst's assembly and the Independent Verifier's verification pass agree). Explicitly excluded:
 the two deprecated predicates (`connected_to`, `associated_with`) and the rejected
 `caused_by`. Future additions go through the extension mechanism already written into
 `OKF-Knowledge-Graph-Specification.md:271` ("domain repositories may extend
@@ -50,7 +50,7 @@ invent one.
 field.** `Core-Ontology-Specification.md:440` requires each edge to retain "evidence
 and confidence where appropriate"; no field literally named `evidence` exists on the
 schema, and `evidence_nodes` is attested corpus-wide only on the Claim schema, never
-on Relationships (Pollen). This ADR does not rule on that gap — it stays open, tracked
+on Relationships (Independent Verifier). This ADR does not rule on that gap — it stays open, tracked
 as `docs/OPEN_QUESTIONS.md` D19 — and nothing in this Decision should be read as
 having resolved it by omission.
 
@@ -72,7 +72,7 @@ no dedup collision.
 - **Option B — close the set at the union including FP4's five ML-flavoured
   illustrative predicates (`generated_by, trained_on, evaluated_on, predicted_by,
   reviewed_by`) as required, on the theory that FP4 and FP5 are coupled here the way
-  FP6 and FP7 were.** Rejected. Pollen's direct grep of
+  FP6 and FP7 were.** Rejected. The Independent Verifier's direct grep of
   `Evidence-Provenance-and-Trust.md` found zero occurrences of `derived_from` or
   `predicate` anywhere in that document — nothing documented today requires those
   five predicates for FP4's own text, so coupling FP4 into FP5's closure here would
@@ -106,7 +106,7 @@ no dedup collision.
    this ADR.** `Core-Ontology-Specification.md:440` requires each edge to retain
    "evidence and confidence where appropriate"; the entry schema (`predicate, target,
    confidence, status, source_nodes, valid_time.{from,to}`) has `confidence` but no
-   field literally named `evidence`. Pollen confirmed `evidence_nodes` exists at 7
+   field literally named `evidence`. The Independent Verifier confirmed `evidence_nodes` exists at 7
    locations corpus-wide, all on the Claim schema, zero on Relationships; `evidence.node_ids`
    has zero hits anywhere. This ADR's signature covers the predicate vocabulary and
    direction representation only — the evidence-field gap remains open, tracked as
@@ -119,10 +119,10 @@ no dedup collision.
 
 ## Ratification chain
 
-- WP-31 assembled (Fizz), event `a8480a1e5f677b922c8ddb916fc09541e92074bbba810f34b7e6178ea60f4eaa`,
+- WP-31 assembled (Requirements Analyst), event `a8480a1e5f677b922c8ddb916fc09541e92074bbba810f34b7e6178ea60f4eaa`,
   2026-09-05T10:07:38Z.
 - WP-31 attacked and direction-representation claim confirmed to hold; evidence-field
-  gap confirmed real (Pollen), event `3239ebfa7c476d20aa136195baeddcfceaaeae2cf0affb964a4ce5f1d5203fb8`,
+  gap confirmed real (Independent Verifier), event `3239ebfa7c476d20aa136195baeddcfceaaeae2cf0affb964a4ce5f1d5203fb8`,
   2026-09-05T10:16:54Z.
 - Ruling — Option C chosen, both consequences and the evidence-field carve-out stated
   explicitly (Engineering Coordinator), event
